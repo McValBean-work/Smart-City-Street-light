@@ -1,42 +1,69 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.authentication-page-grid{
+  display: grid;
+  grid-template-columns: 40% 60%;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.authentication-page-hero-div{
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+.authentication-page-hero{
+  width: 100%;
+  height: 100%;
+  background-color: #1CAC78;
+  border-radius:1rem;
+  border: 1px solid green;
+  box-shadow: 1rem 5rem 5rem gray;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.authentication-page-form{
+  display:flex;
+  flex-direction: column;
+  margin:1rem;
+  justify-self: center;
+  align-items: center;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.form-data{
+  display:flex;
+  flex-direction: column;
 }
-
-.card {
-  padding: 2em;
+.authentication-page-form h1 {
+  margin-bottom: 5rem;
 }
+.authentication-page-form h3{
+  margin-bottom: 0.5rem;
+}
+.authentication-page-form label{
+  margin:0.5rem 0 2px 0;
+}
+.authentication-page-form input{
 
-.read-the-docs {
-  color: #888;
+  width: 20rem;
+  padding: 0.5rem;
+  border: 1px solid #1CAC78;
+  border-radius: 0.5rem;
+}
+.authentication-page-form input:focus{
+  border: 2px solid #1CAC78;
+  outline: none;
+}
+.submit{
+  margin: 1rem 0 1rem 0;
+  background-color: #1CAC78;
+  color:white;
+}
+.form-bottom{
+  display: flex;
+  justify-content: center;
+
+}
+.form-links{
+  margin: 0 0.5rem ;
+  color: #1CAC78;
+  font-weight: 500;
 }
