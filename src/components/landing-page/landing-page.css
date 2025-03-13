@@ -1,0 +1,16 @@
+.landing-page-main-background{
+    display: flex;
+    padding: 2rem;
+    margin:0;
+    width:100%;
+    height: 100%;
+    background: #1CAC78;
+}
+.landing-page-main-h{
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+.landing-page-main-p{
+    font-size:1.5rem;
+}

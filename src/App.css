@@ -1,13 +1,4 @@
-*{
-  padding:0;
-  margin:0;
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-
-
-.landing-page-body{
+.authentication-page-grid{
   display: grid;
   grid-template-columns: 40% 60%;
   width: 100vw;
@@ -15,12 +6,12 @@
   justify-content: center;
   align-items: center;
 }
-.landing-page-hero-div{
+.authentication-page-hero-div{
   padding: 1rem;
   height: 100%;
   width: 100%;
 }
-.landing-page-hero{
+.authentication-page-hero{
   width: 100%;
   height: 100%;
   background-color: #1CAC78;
@@ -30,7 +21,7 @@
 }
 
 
-.landing-page-form{
+.authentication-page-form{
   display:flex;
   flex-direction: column;
   margin:1rem;
@@ -41,23 +32,23 @@
   display:flex;
   flex-direction: column;
 }
-.landing-page-form h1 {
+.authentication-page-form h1 {
   margin-bottom: 5rem;
 }
-.landing-page-form h3{
+.authentication-page-form h3{
   margin-bottom: 0.5rem;
 }
-.landing-page-form label{
+.authentication-page-form label{
   margin:0.5rem 0 2px 0;
 }
-.landing-page-form input{
+.authentication-page-form input{
 
   width: 20rem;
   padding: 0.5rem;
   border: 1px solid #1CAC78;
   border-radius: 0.5rem;
 }
-.landing-page-form input:focus{
+.authentication-page-form input:focus{
   border: 2px solid #1CAC78;
   outline: none;
 }
@@ -66,11 +57,12 @@
   background-color: #1CAC78;
   color:white;
 }
-.form-span{
-  justify-content: space-between;
+.form-bottom{
+  display: flex;
+  justify-content: center;
 
 }
-.form-bottom-links{
+.form-links{
   margin: 0 0.5rem ;
   color: #1CAC78;
   font-weight: 500;
