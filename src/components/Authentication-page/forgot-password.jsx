@@ -6,13 +6,13 @@ function ForgotPasswordForm(){
       <h2>Retrieve Password</h2>
       <div className="form-data">
       <label htmlFor="recoveryEmail" >Email</label>
-      <input type="email" placeholder="Enter email address" required />
+      <input type="email" placeholder="Enter email address" id="recoveryEmail" required />
       <label htmlFor="recoveryPassword">Recovery password</label>
-      <input type="password" placeholder="Enter sent Password" required/>
+      <input type="password" placeholder="Enter sent Password" id= "recoveryPassword" required/>
       <label htmlFor="newPassword">New password</label>
-      <input type="password" placeholder= "Enter new password" required />
+      <input type="password" placeholder= "Enter new password" id="newPassword"  required/>
       <label htmlFor="confirmNewPassword">Confirm new password</label>
-      <input type="password" placeholder="Confirm new password" required />
+      <input type="password" placeholder="Confirm new password" id="confirmNewPassword" required/>
       <input type="submit" className="submit" />
       <span className="form-bottom"> Remember password?<Link to="/Login" className="form-links">Login</Link></span>
       </div>

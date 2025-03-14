@@ -6,15 +6,32 @@
     align-items: center;
 }
 .nav-icon{
-    font-size: 2rem;
+    display:flex;
+    width:20rem;
+    height:20rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/images/omni-logo.webp");
+
 }
 .nav-link{
     font-size: 18px;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     font-weight: 400;
     margin-right: 1rem;
+    color:black;
 }
 .nav-link:hover{
-    border-bottom: 2px solid #1CAC78;
-    color: #1CAC78;
+    border-bottom: 5px solid #1CAC78;
+}
+
+#login-link{
+    background-color: #1CAC78;
+    color: white;
+    border-radius: 1rem;
+}
+
+#login-link:hover{
+    border-bottom: none;
 }

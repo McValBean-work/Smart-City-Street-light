@@ -1,9 +1,9 @@
 import './main.css'
 
-function Main({children , mainClass}) {
+function Main({children}) {
     return(
         <>
-        <main className={mainClass}>
+        <main>
             {children}
         </main>
         </>
