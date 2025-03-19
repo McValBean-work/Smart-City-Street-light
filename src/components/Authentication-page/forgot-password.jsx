@@ -19,7 +19,6 @@ function ForgotPasswordForm(){
      </form>
     </>
     )
-
   }
   function AuthenticationHero(){
     return(

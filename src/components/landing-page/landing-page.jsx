@@ -1,18 +1,10 @@
 import './landing-page.css'
 import Header from "../layout/header"
 import Main from "../layout/main"
-import Footer from "../layout/footer"
 
 
-function LandingPageVideo(){
-    return(
-        <>
-                <video>
-                    <source src= "../../assets/images/globe.mp4" type="video/mp4"/>
-                </video>
-        </>
-    )
-}
+
+
 
 function LandingPageMainContent() {
     return (
@@ -28,7 +20,6 @@ function LandingPageMainContent() {
             </p>
             </div>
             <div className="landing-main-background">
-                <LandingPageVideo />
             </div>
 
         </div>

@@ -52,6 +52,10 @@
   border: 2px solid #1CAC78;
   outline: none;
 }
+.authentication-page-form input:user-invalid{
+  border:2px solid red;
+  outline: none;
+}
 .submit{
   margin: 1rem 0 1rem 0;
   background-color: #1CAC78;

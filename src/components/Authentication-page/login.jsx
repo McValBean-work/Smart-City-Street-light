@@ -11,7 +11,7 @@ function LoginForm(){
     return(
       <>
       <form action={LoginToHome} id="loginForm" className="authentication-page-form">
-      <h1 class="authentication-page-header">OmniStreet Lights</h1>
+      <h1 className="authentication-page-header">OmniStreet Lights</h1>
       <h2>Please enter your account details</h2>
       <div className="form-data">
       <label htmlFor="loginEmail">Email</label>

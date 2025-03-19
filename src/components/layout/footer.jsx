@@ -13,7 +13,7 @@ function Footer(){
             <div className="footer-socials">
 
             </div>
-            <div class="footer-copyright-info">
+            <div className="footer-copyright-info">
 
             </div>
 

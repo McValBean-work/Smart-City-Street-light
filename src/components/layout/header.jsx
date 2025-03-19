@@ -3,9 +3,9 @@ import './header.css'
 function NavBar(){
     return(
         <>
-        <nav class="navbar">
+        <nav className="navbar">
             <Link to="/" className="nav-icon"></Link>
-            <div class="nav-links">
+            <div className="nav-links">
                 <Link to="/Home" className="nav-link">Home</Link>
                 <Link to="/About" className="nav-link">About</Link>
                 <Link to="/Contact-us"className="nav-link">Contact Us</Link>
