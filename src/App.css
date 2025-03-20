@@ -1,3 +1,7 @@
+*{
+  margin:0;
+  padding:0;
+}
 .authentication-page-grid{
   display: grid;
   grid-template-columns: 40% 60%;
@@ -17,14 +21,14 @@
   background-color: #1CAC78;
   border-radius:1rem;
   border: 1px solid green;
-  box-shadow: 1rem 5rem 5rem gray;
+  box-shadow: 0rem 0rem 5rem 1rem gray;
 }
 
 
 .authentication-page-form{
   display:flex;
   flex-direction: column;
-  margin:1rem;
+  margin: 1rem;
   justify-self: center;
   align-items: center;
 }

@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom"
-import { useState } from "react"
-
-const UserInfo =[]
 
 function SignUpSubmit(e){
   e.preventDefault()
-  const firstName = document.getElementById("firstName").value
-  const lastName = document.getElementById("lastName").value
-  const userName = document.getElementById("userName").value
-  const signUpEmail = document.getElementById("signUpEmail").value
-  const firstPassword = document.getElementById("firstPassword").value
-  const confirmPassword = document.getElementById("confirmPassword").value
 
+  const firstPassword = document.getElementById("firstPassword").value
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+// const firstName = document.getElementById("firstName").value
+// const lastName = document.getElementById("lastName").value
+// const userName = document.getElementById("userName").value
+// const signUpEmail = document.getElementById("signUpEmail").value
 
   if(firstPassword === confirmPassword){
     console.log("same password");

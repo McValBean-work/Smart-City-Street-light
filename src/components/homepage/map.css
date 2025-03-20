@@ -1,0 +1,19 @@
+.map-container-div{
+    width: 96vw;
+    display:flex;
+    flex-direction: column;
+    justify-self: center;
+    box-shadow: 0rem 0rem 0.5rem 0.1rem gray;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+.map-container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+}
+.tile-layer{
+    width: 100%;
+    height: 100%;
+}
