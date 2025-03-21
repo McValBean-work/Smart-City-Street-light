@@ -1,4 +1,4 @@
-import Header from "../layout/header"
+import Header from "../landing-page/header"
 import Main from "../layout/main"
 import StreetLightMap from "./map";
 
