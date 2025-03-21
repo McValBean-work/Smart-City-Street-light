@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-self: center;
     box-shadow: 0rem 0rem 0.5rem 0.1rem gray;
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
 }
 .map-container{
     display: flex;

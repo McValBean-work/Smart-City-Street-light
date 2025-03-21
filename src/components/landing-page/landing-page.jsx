@@ -1,5 +1,5 @@
 import './landing-page.css'
-import Header from "../layout/header"
+import Header from "./header"
 import Main from "../layout/main"
 
 
