@@ -1,21 +1,20 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker , Popup  } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { APIProvider, Map ,Marker } from "@vis.gl/react-google-maps";
 import './map.css'
 import '../../assets/icons/streetlight.svg'
 
+
 function StreetLightMap(){
-    const currentPosition = [7.9465, -1.0232];
+    const currentPosition = { lat:5.6358, lng:-0.1614 };
+    const apiKey = "AIzaSyD48PVvwczR-cT2dsJ3qxrGWiASf42OSSs";
     return(
         <div className="map-container-div">
-        <MapContainer center={currentPosition} zoom={1} className="map-container" style={{ width: "100%", height: "100%" }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" className="tile-layer" noWrap={true} />
-            <Marker position={currentPosition} >
-                <Popup>
-                    <p>hi there</p>
-                </Popup>
-            </Marker>
-            </MapContainer>
+            <APIProvider apiKey={apiKey} className="map-container">
+                <Map zoom={10} center={currentPosition}>
+                    <Marker position ={currentPosition}>
+                    </Marker>
+                </Map>
+            </APIProvider>
         </div>
     )
 }

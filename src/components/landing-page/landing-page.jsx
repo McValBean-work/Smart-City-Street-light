@@ -1,5 +1,5 @@
 import './landing-page.css'
-import Header from "./header"
+import HomeHeader from "./home-header"
 import Main from "../layout/main"
 
 
@@ -30,7 +30,7 @@ function LandingPageMainContent() {
 function LandingPage(){
     return(
         <>
-        <Header />
+        <HomeHeader />
         <Main>
         <LandingPageMainContent />
         </Main>
