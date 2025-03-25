@@ -12,10 +12,9 @@
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.3",
     "@vis.gl/react-google-maps": "^1.5.2",
+    "concurrent": "^0.3.2",
     "leaflet": "^1.9.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-leaflet": "^5.0.0",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
