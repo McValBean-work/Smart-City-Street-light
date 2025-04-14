@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import '../layout/header.css'
+import './landing-header.css'
 function NavBar(){
     return(
         <>
-        <nav className="navbar">
-            <Link to="/" className="nav-icon"></Link>
+        <nav className="landing-navbar">
+            <Link to="/" className="main-icon"></Link>
             <div className="nav-links">
                 <Link to="/Home" className="nav-link">Home</Link>
                 <Link to="/About" className="nav-link">About</Link>

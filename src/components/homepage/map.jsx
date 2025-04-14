@@ -6,11 +6,11 @@ import '../../assets/icons/streetlight.svg'
 
 function StreetLightMap(){
     const currentPosition = { lat:5.6358, lng:-0.1614 };
-    const apiKey = "AIzaSyD48PVvwczR-cT2dsJ3qxrGWiASf42OSSs";
+    const googleApiKey = import.meta.env;
     return(
         <div className="map-container-div">
-            <APIProvider apiKey={apiKey} className="map-container">
-                <Map zoom={10} center={currentPosition}>
+            <APIProvider apiKey={googleApiKey.VITE_GOOGLE_MAPS_API_KEY} className="map-container">
+                <Map minZoom={3} maxZoom={20} center={currentPosition}>
                     <Marker position ={currentPosition}>
                     </Marker>
                 </Map>

@@ -1,11 +1,11 @@
-.navbar{
+.landing-navbar{
     display: flex;
     width: 100vw;
     padding:2rem;
     justify-content: space-between;
     align-items: center;
 }
-.nav-icon{
+.main-icon{
     display:flex;
     width:20rem;
     height:20rem;
@@ -17,13 +17,10 @@
 }
 .nav-link{
     font-size: 18px;
-    padding: 0.5rem 1rem;
+    padding: 0rem 1rem;
     font-weight: 400;
     margin-right: 1rem;
     color:black;
-}
-.nav-link:hover{
-    border-bottom: 5px solid #1CAC78;
 }
 
 #login-link{

@@ -1,7 +1,3 @@
-body{
-    display:grid;
-    grid-template-rows: 20vh  80vh;
-}
 .main-background{
     display: flex;
     padding: 2rem;
@@ -9,6 +5,7 @@ body{
     width:100%;
     height:100%;
     gap: 2rem;
+    background-color: white;
 
 }
 .landing-page-main-text{
@@ -32,8 +29,6 @@ body{
     background-size: contain;
     background-repeat: no-repeat;
     background: url('../../assets/images/globe.png');
-
-
 }
 
 .landing-page-main-h{
@@ -43,4 +38,15 @@ body{
 }
 .landing-page-main-p{
     font-size:1.5rem;
+}
+.report-button{
+    padding: 0.5rem 1rem;
+    background-color: #1CAC78;
+    font-size: large;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    border: none;
+}
+.report-button:hover{
+    color:white;
 }
