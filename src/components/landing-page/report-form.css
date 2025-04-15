@@ -1,8 +1,8 @@
 
 .report-form-div{
-    display: none;
+    display: flex;
     width: 100%;
-    height: 100%;
+    height:100vh;
     justify-content: center;
     align-items: center;
     -webkit-backdrop-filter: blur(2rem);
@@ -11,14 +11,33 @@
 .report-form{
     display: flex;
     flex-direction: column;
-    width: 25%;
-    height:25%;
+    justify-self: center;
+    width: 30%;
     padding: 1rem;
     border-radius: 2rem;
     background-color: white;
     border: 2px solid #1CAC78;
 }
+label{
+    color:#1CAC78;
+    font-weight: 500;
+}
+input{
+    padding: 0.5rem ;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    outline:none;
+    border: 1px solid #1CAC78;
+    align-items: center;
+}
 input:focus{
     outline: none;
-    border: none;
+    border: 2px solid #1CAC78;
+}
+.status-div{
+    display: flex;
+    width: 100%;
+}
+.picture-input{
+    min-height:7rem;
 }

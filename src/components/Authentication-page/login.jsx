@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './authentication-page.css'
 function LoginToHome(){
     const emailName = document.getElementById("loginEmail").value;
     const loginPassword = document.getElementById("loginPassword").value;

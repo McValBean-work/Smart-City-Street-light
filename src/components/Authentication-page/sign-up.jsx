@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import './authentication-page.css'
 
 function SignUpSubmit(e){
   e.preventDefault()

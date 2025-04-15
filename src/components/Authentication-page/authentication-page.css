@@ -21,7 +21,7 @@
     background-color: #1CAC78;
     border-radius:1rem;
     border: 1px solid green;
-    box-shadow: 0rem 0rem 5rem 1rem gray;
+    box-shadow: 0rem 0rem 1rem 0.5rem gray;
   }
 
   .authentication-page-form{
