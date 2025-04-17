@@ -14,9 +14,9 @@ function App(){
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/Report" element={<ReportForm />} />
-          <Route path="/Login" element={<LoginPage />}/>
-          <Route path="/Sign-up" element={<SignUpPage />}/>
-          <Route path="/Forgot-password" element={<ForgotPasswordPage />}/>
+          <Route path="/portal/Login" element={<LoginPage />}/>
+          <Route path="/portal/Sign-up" element={<SignUpPage />}/>
+          <Route path="/portal/Forgot-password" element={<ForgotPasswordPage />}/>
           <Route path="/Home" element={<HomePage />} />
 
         </Routes>

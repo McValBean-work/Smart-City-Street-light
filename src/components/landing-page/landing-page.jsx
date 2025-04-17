@@ -19,12 +19,15 @@ function LandingPageMainContent() {
             <p className="landing-page-main-p">
             We firmly believe that with your support, we can achieve our goal of safer, well-lit streets. Join the OmniStreet Lights community today and help us light the path we all walk on.
             <Link to= "/Report" className="report-button" id= "reportFormButton">Report</Link>
-            </p> 
+            </p>
             </div>
             <div className="landing-main-background">
+      <video autoPlay loop muted playsInline className="background-video">
+        <source src="src\assets\videos\globe.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
             </div>
-
-        </div>
+            </div>
         </>
     )
 }

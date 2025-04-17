@@ -6,11 +6,11 @@
     height:100%;
     gap: 2rem;
     background-color: white;
+    position:relative;
 
 }
 .landing-page-main-text{
     width:50%;
-    height:100%;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -23,12 +23,16 @@
 .landing-main-background{
     display:flex;
     width: 50%;
-    height: 100%;
     border-radius: 1rem;
+    border-radius: 1rem;
+
+}
+.background-video{
+    display:flex;
+    width: 100%;
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
-    background: url('../../assets/images/globe.png');
 }
 
 .landing-page-main-h{

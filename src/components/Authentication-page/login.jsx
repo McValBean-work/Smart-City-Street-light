@@ -11,21 +11,20 @@ function LoginToHome(){
 function LoginForm(){
     return(
       <>
-      <form action={LoginToHome} id="loginForm" className="authentication-page-form">
+      <div className='Authentication-page-form-div'>
       <h1 className="authentication-page-header">OmniStreet Lights</h1>
       <h2>Please enter your account details</h2>
+      <form action={LoginToHome} id="loginForm" className="authentication-page-form">
       <div className="form-data">
       <label htmlFor="loginEmail">Email</label>
-      <input type="email" id="loginEmail" placeholder="Enter email address" required />
+      <input type="email" id="loginEmail" placeholder="Enter email address"  required/>
       <label htmlFor="loginPassword">Password</label>
-      <input type="password" id="loginPassword" placeholder= "Enter password" required minLength="8" maxLength="30" autoComplete="true"/>
+      <input type="password" id="loginPassword" placeholder= "Enter password" minLength="8" maxLength="30" autoComplete="true" required/>
       <Link to="/Forgot-password" className='form-links'>Forgot password?</Link>
-      < input type="submit" className='submit' />
-      <span className="form-bottom">Don't Have An Account?
-      <Link to="/Sign-up" className="form-links">Sign up </Link>
-       </span>
+      <input type="submit" className='submit' />
        </div>
     </form>
+    </div>
     </>
     )
   }

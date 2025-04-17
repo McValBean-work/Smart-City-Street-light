@@ -23,7 +23,13 @@
     border: 1px solid green;
     box-shadow: 0rem 0rem 1rem 0.5rem gray;
   }
-
+ .Authentication-page-form-div{
+    display: flex;
+    flex-direction:column;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+ }
   .authentication-page-form{
     display:flex;
     flex-direction: column;
@@ -34,6 +40,8 @@
   .form-data{
     display:flex;
     flex-direction: column;
+    min-width:21rem;
+    flex-wrap: wrap;
   }
   .authentication-page-form h1 {
     margin-bottom: 5rem;
@@ -44,15 +52,19 @@
   .authentication-page-form label{
     margin:0.5rem 0 2px 0;
   }
-  .authentication-page-form input{
-    width: 20rem;
+  .authentication-input{
     padding: 0.5rem;
     border: 1px solid #1CAC78;
     border-radius: 0.5rem;
+    accent-color: #1CAC78;
+    outline: none;
   }
   .authentication-page-form input:focus{
     border: 2px solid #1CAC78;
     outline: none;
+  }
+  .authentication-page-form input{
+    accent-color: #1ACc78;
   }
   .authentication-page-form input:user-invalid{
     border:2px solid red;
@@ -72,4 +84,12 @@
     margin: 0 0.5rem 0 0;
     color: #1CAC78;
     font-weight: 500;
+  }
+  .form-note{
+    font-weight: 500;
+  }
+  .report-link{
+    color: #1CAC78;
+    text-decoration: underline;
+    font-weight: 600;
   }

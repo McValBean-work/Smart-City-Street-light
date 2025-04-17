@@ -27,10 +27,22 @@ function SignUpForm(){
       <h1 className="authentication-page-header">Welcome to Omni Street Lights</h1>
       <h2>Sign Up</h2>
       <div className="form-data">
+      <label htmlFor="role">Role:</label>
+      <select name="role" className="authentication-input" required>
+        <option value="Worker">Worker</option>
+        <option value="Supervisor">Supervisor</option>
+        <option value="Admin">Admin</option>
+        <label htmlFor="worker"></label>
+        <input type="radio" name="role" id="" />
+        <label htmlFor="supervisor"></label>
+        <input type="radio" name="role" id="" />
+        <label htmlFor="admin"></label>
+        <input type="radio" name="role" id="" />
+      </select>
       <label htmlFor="firstName">First Name</label>
       <input type="text" placeholder="Enter first name" id="firstName" required />
       <label htmlFor="lastName">Last Name</label>
-      <input type="text" placeholder="Enter last name" id="lastName" />
+      <input type="text" placeholder="Enter last name" id="lastName" required/>
       <label htmlFor="username">Username</label>
       <input type="text" placeholder= "Enter username" id="userName" required/>
       <label htmlFor="signUpEmail">Email</label>
@@ -40,7 +52,6 @@ function SignUpForm(){
       <label htmlFor="confirmPassword" >Confirm Password</label>
       <input type="password" placeholder="Confirm password" id="confirmPassword" minLength="8" maxLength="30" required/>
       <input type="submit" className="submit"/>
-      <span className="form-bottom">Already Have An Account?<Link to="/Login" className="form-links">Login</Link></span>
       </div>
     </form>
     </>
