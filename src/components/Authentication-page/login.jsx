@@ -20,7 +20,7 @@ function LoginForm(){
       <input type="email" id="loginEmail" placeholder="Enter email address"  required/>
       <label htmlFor="loginPassword">Password</label>
       <input type="password" id="loginPassword" placeholder= "Enter password" minLength="8" maxLength="30" autoComplete="true" required/>
-      <Link to="/Forgot-password" className='form-links'>Forgot password?</Link>
+      <Link to="/portalForgot-password" className='form-links'>Forgot password?</Link>
       <input type="submit" className='submit' />
        </div>
     </form>

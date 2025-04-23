@@ -16,13 +16,12 @@
     padding: 1rem;
     border-radius: 2rem;
     background-color: white;
-    border: 2px solid #1CAC78;
 }
 label{
     color:#1CAC78;
     font-weight: 500;
 }
-input{
+.report-form-input{
     padding: 0.5rem ;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
@@ -30,13 +29,9 @@ input{
     border: 1px solid #1CAC78;
     align-items: center;
 }
-input:focus{
+.report-form-input:focus{
     outline: none;
     border: 2px solid #1CAC78;
-}
-.status-div{
-    display: flex;
-    width: 100%;
 }
 .picture-input{
     min-height:7rem;

@@ -15,7 +15,7 @@ function ForgotPasswordForm(){
       <label htmlFor="confirmNewPassword">Confirm new password</label>
       <input type="password" placeholder="Confirm new password" id="confirmNewPassword" required/>
       <input type="submit" className="submit" />
-      <span className="form-bottom"> Remember password?<Link to="/Login" className="form-links">Login</Link></span>
+      <span className="form-bottom"> Remember password?<Link to="/portalLogin" className="form-links">Login</Link></span>
       </div>
      </form>
     </>

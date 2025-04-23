@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom"
 import './landing-header.css'
+import MainIcon from '../../assets/images/omni-logo.webp'
 function NavBar(){
     return(
         <>
         <nav className="landing-navbar">
-            <Link to="/" className="main-icon"></Link>
+            <Link to="/" className="main-icon"><img src={MainIcon} alt="omni street light"/>
+            </Link>
             <div className="nav-links">
-                <Link to="/Home" className="nav-link">Home</Link>
-                <Link to="/About" className="nav-link">About</Link>
-                <Link to="/Contact-us"className="nav-link">Contact Us</Link>
-                <Link to="/Login"className="nav-link" id="login-link">Login</Link>
-                <Link to="/Sign-up"className="nav-link">Sign Up</Link>
+                <Link to="/" className="user-nav-link">Home</Link>
+                <Link to="/About" className="user-nav-link">About</Link>
+                <Link to="/Contact-us" className="user-nav-link">Contact Us</Link>
+                <Link to="/FAQs" className="user-nav-link">FAQs</Link>
             </div>
         </nav>
         </>
@@ -21,9 +22,7 @@ function NavBar(){
 
 function LandingHeader (){
     return(
-        <>
             <NavBar />
-        </>
     )
 }
 
