@@ -1,11 +1,12 @@
 import './report-form.css'
+import Main from'../layout/main'
 function ReportForm (){
- onsubmit
 
     return(
-        <>
+        <Main>
         <div className="report-form-div" id="reportFormDiv">
         <form action={onsubmit} id="reportForm" className="report-form">
+            {/*<h1>Help Us Light The Path You Walk On</h1>*/}
             <label htmlFor="poleId">Pole ID</label>
             <input type="text" id="poleId" placeholder="pole id" className="report-form-input" required/>
             <label htmlFor="PoleLightId">Pole Light ID</label>
@@ -22,7 +23,7 @@ function ReportForm (){
             <input type="submit" value="Submit" className="submit report-form-input" />
         </form>
         </div>
-        </>
+        </Main>
     )
 }
 

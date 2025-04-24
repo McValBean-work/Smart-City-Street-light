@@ -1,0 +1,25 @@
+.contact-us-form{
+    display:flex;
+    flex-direction: column;
+    padding:1rem;
+    width:30%;
+    justify-self: center;
+
+}
+.contact-us-form input , textarea {
+    padding:1rem;
+    border-radius: 1rem;
+    border: 1px solid #1CAC70;
+    margin-bottom: 1rem;
+}
+
+.contact-us-form input:focus , textarea:focus {
+    outline:none;
+    border:2px solid #1CAC70;
+}
+
+.form-header{
+    width:100%;
+    display:flex;
+    justify-content: center;
+}

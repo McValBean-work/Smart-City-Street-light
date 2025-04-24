@@ -5,9 +5,9 @@ function NavBar(){
     return(
         <>
         <nav className="landing-navbar">
-            <Link to="/" className="main-icon"><img src={MainIcon} alt="omni street light"/>
+            <Link to="/LandingPage" className="main-icon"><img src={MainIcon} alt="omni street light"/>
             </Link>
-            <div className="nav-links">
+            <div className="user-nav-links">
                 <Link to="/" className="user-nav-link">Home</Link>
                 <Link to="/About" className="user-nav-link">About</Link>
                 <Link to="/Contact-us" className="user-nav-link">Contact Us</Link>

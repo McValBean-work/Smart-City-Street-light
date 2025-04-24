@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
+import HomePage from './components/landing-page/home-page'
 import LandingPage from './components/landing-page/landing-page'
 import AboutPage from './components/about/about-page'
+import ContactUsPage from './components/landing-page/contact-us-page'
 import LoginPage from './components/Authentication-page/login'
 import SignUpPage from './components/Authentication-page/sign-up'
 import ForgotPasswordPage from'./components/Authentication-page/forgot-password'
@@ -13,12 +15,14 @@ function App(){
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="About" element={<AboutPage />}/>
-          <Route path="/portalLogin" element={<LoginPage />}/>
-          <Route path="/portalSign-up" element={<SignUpPage />}/>
-          <Route path="/portalForgot-password" element={<ForgotPasswordPage />}/>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/LandingPage" element={<LandingPage />} />
+          <Route path="/About" element={<AboutPage />}/>
+          <Route path="/Contact-Us" element={<ContactUsPage />}/>
           <Route path="/Report" element={<ReportForm />} />
+          <Route path="/Login" element={<LoginPage />}/>
+          <Route path="/Sign-up" element={<SignUpPage />}/>
+          <Route path="/Forgot-password" element={<ForgotPasswordPage />}/>
           <Route path="/portal/Dashboard" element={<DashboardPage />} />
 
         </Routes>

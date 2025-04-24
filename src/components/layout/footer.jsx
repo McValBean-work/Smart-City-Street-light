@@ -1,7 +1,7 @@
 import './footer.css'
 function Footer(){
     return(
-        <div className="footer-main-div">
+        <footer className="footer-main-div">
             <div className="footer-branding">
                 <div
                 className="footer-icon"></div>
@@ -17,7 +17,7 @@ function Footer(){
 
             </div>
 
-        </div>
+        </footer>
     )
 }
 
