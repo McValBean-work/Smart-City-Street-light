@@ -1,14 +1,16 @@
 .map-container-div{
     width: 100%;
+    height:100%;
+    padding:1rem;
     display:flex;
     flex-direction: column;
-    justify-self: center;
-    box-shadow: 0rem 0rem 0.5rem 0.1rem gray;
-    margin: 1rem 0 0 0;
-    overflow: hidden;
+    outline:none;
+    border-radius: 1rem;
+    background:  rgb(50, 50, 50);
+
 }
 .map-container{
     height:100%;
     width: 100%;
-    
+    outline: none;
 }
