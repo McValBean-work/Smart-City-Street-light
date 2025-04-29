@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot , faHome , faReceipt , faFile} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot , faHome , faReceipt , faFile ,faRightFromBracket} from "@fortawesome/free-classic-svg-icons";
 function NavBar(){
     return(
         <>
@@ -18,6 +18,13 @@ function NavBar(){
                 </Link>
                 <Link to="/Contact-us"className="nav-link">
                 <FontAwesomeIcon icon={faFile} size="2x" />
+                
+                </Link>
+                
+            </div>
+            <div className="nav-links">
+            <Link className="nav-link">
+                <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
                 </Link>
             </div>
         </nav>
