@@ -32,26 +32,20 @@ function SignUpForm(){
         <option value="Worker">Worker</option>
         <option value="Supervisor">Supervisor</option>
         <option value="Admin">Admin</option>
-        <label htmlFor="worker"></label>
-        <input type="radio" name="role" id="" />
-        <label htmlFor="supervisor"></label>
-        <input type="radio" name="role" id="" />
-        <label htmlFor="admin"></label>
-        <input type="radio" name="role" id="" />
       </select>
       <label htmlFor="firstName">First Name</label>
-      <input type="text" placeholder="Enter first name" id="firstName" required />
+      <input type="text" placeholder="Enter first name" id="firstName" className="authentication-input" required />
       <label htmlFor="lastName">Last Name</label>
-      <input type="text" placeholder="Enter last name" id="lastName" required/>
+      <input type="text" placeholder="Enter last name" id="lastName" className="authentication-input" required/>
       <label htmlFor="username">Username</label>
-      <input type="text" placeholder= "Enter username" id="userName" required/>
+      <input type="text" placeholder= "Enter username" id="userName" className="authentication-input" required/>
       <label htmlFor="signUpEmail">Email</label>
-      <input type="email" placeholder= "Enter email address" id="signUpEmail" required/>
+      <input type="email" placeholder= "Enter email address" id="signUpEmail" className="authentication-input" required/>
       <label htmlFor="firstPassword">Enter Password</label>
-      <input type="password" placeholder="Enter password" id= "firstPassword" minLength="8" maxLength="30" required/>
+      <input type="password" placeholder="Enter password" id= "firstPassword" minLength="8" maxLength="30" className="authentication-input" required/>
       <label htmlFor="confirmPassword" >Confirm Password</label>
-      <input type="password" placeholder="Confirm password" id="confirmPassword" minLength="8" maxLength="30" required/>
-      <input type="submit" className="submit"/>
+      <input type="password" placeholder="Confirm password" id="confirmPassword" minLength="8" maxLength="30" className="authentication-input" required/>
+      <input type="submit" className="authentication-input submit"/>
       </div>
     </form>
     </>

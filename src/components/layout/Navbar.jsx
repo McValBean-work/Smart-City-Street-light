@@ -1,34 +1,35 @@
 import { Link } from "react-router-dom"
 import './Navbar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot , faHome , faReceipt , faFile ,faRightFromBracket} from "@fortawesome/free-classic-svg-icons";
-function NavBar(){
+import { faLocationDot , faHome , faReceipt , faFile ,faRightFromBracket, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+function SideBar(){
     return(
         <>
-        <nav className="navbar">
-            <div className="nav-links">
-                <Link to="/Home" className="nav-link">
-                <FontAwesomeIcon icon={faHome} size="2x" />
+        <nav className="sidebar">
+            <div className="sidebar-links">
+                <Link to="/" className="sidebar-link">
+                <FontAwesomeIcon icon={faHome}  />
                 </Link>
-                <Link to="/About" className="nav-link">
-                <FontAwesomeIcon icon={faLocationDot} size="2x" />
+                <Link to="/portal/Dashboard" className="sidebar-link">
+                <FontAwesomeIcon icon={faLocationDot}  />
                 </Link>
-                <Link to="/Contact-us"className="nav-link">
-                <FontAwesomeIcon icon={faReceipt} size="2x" />
+                <Link to="/Contact-us"className="sidebar-link">
+                <FontAwesomeIcon icon={faReceipt}  />
                 </Link>
-                <Link to="/Contact-us"className="nav-link">
-                <FontAwesomeIcon icon={faFile} size="2x" />
-                
+                <Link to="/Contact-us"className="sidebar-link">
+                <FontAwesomeIcon icon={faFile}  />
                 </Link>
-                
             </div>
-            <div className="nav-links">
-            <Link className="nav-link">
-                <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
+            <div className="sidebar-links">
+                <Link to="/Sign-Up" className="sidebar-link" >
+                <FontAwesomeIcon icon={faUserPlus}  />
+                </Link>
+            <Link className="sidebar-link">
+                <FontAwesomeIcon icon={faRightFromBracket}  />
                 </Link>
             </div>
         </nav>
         </>
     )
 }
-export default NavBar
+export default SideBar

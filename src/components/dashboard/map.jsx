@@ -18,10 +18,11 @@ function StreetLightMap(){
 
   return isLoaded ? (
     <GoogleMap
-      mapContainerClassName="map-container-div"
+      mapContainerClassName="map-container"
       center={center}
       zoom={13}
-      options={{
+      options={
+        {
         draggable: true,
         zoomControl: true,
         fullscreenControl: false,

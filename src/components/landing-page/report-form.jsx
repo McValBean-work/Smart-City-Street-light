@@ -7,10 +7,8 @@ function ReportForm (){
         <div className="report-form-div" id="reportFormDiv">
         <form action={onsubmit} id="reportForm" className="report-form">
             {/*<h1>Help Us Light The Path You Walk On</h1>*/}
-            <label htmlFor="poleId">Pole ID</label>
-            <input type="text" id="poleId" placeholder="pole id" className="report-form-input" required/>
-            <label htmlFor="PoleLightId">Pole Light ID</label>
-            <input type="text" id= "poleLightId" placeholder="pole light id" className="report-form-input"  required/>
+            <label htmlFor="propertyId">Property ID</label>
+            <input type="text" id="propertyId" placeholder="property id" className="report-form-input" required/>
             <label htmlFor="Status">Status</label>
             <select name="" id="" className="report-form-input">
                 <option value="Working">Working</option>
