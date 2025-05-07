@@ -8,6 +8,7 @@ function DashboardPage(){
     return(
 <>
    <div className='dashboard'>
+    <TopSection />
     <div className='dashboard-body'>
 
                 <Navbar />

@@ -1,26 +1,32 @@
 import { Link } from "react-router-dom"
 import './authentication-page.css'
+import { useNavigate } from "react-router-dom"
 
-function SignUpSubmit(e){
-  e.preventDefault()
 
-  const firstPassword = document.getElementById("firstPassword").value
-  const confirmPassword = document.getElementById("confirmPassword").value;
 
 // const firstName = document.getElementById("firstName").value
 // const lastName = document.getElementById("lastName").value
 // const userName = document.getElementById("userName").value
 // const signUpEmail = document.getElementById("signUpEmail").value
 
-  if(firstPassword === confirmPassword){
-    console.log("same password");
-  }
-  else{
-  console.log("the two passwords are not the same");
-  }
-}
+
 
 function SignUpForm(){
+
+const navigate = useNavigate();
+ const SignUpSubmit = (e)=> {
+  e.preventDefault()
+  const firstPassword = document.getElementById("firstPassword").value
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if(firstPassword === confirmPassword){
+    console.log("same password");
+    navigate(-1);
+  }
+  else{
+ alert("the two passwords are not the same");
+  }
+ }
     return(
       <>
       <form id="SignUpForm" onSubmit={SignUpSubmit} className="authentication-page-form">

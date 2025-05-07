@@ -10,7 +10,7 @@ function ReportForm (){
             <label htmlFor="propertyId">Property ID</label>
             <input type="text" id="propertyId" placeholder="property id" className="report-form-input" required/>
             <label htmlFor="Status">Status</label>
-            <select name="" id="" className="report-form-input">
+            <select name="status" id="" className="report-form-input">
                 <option value="Working">Working</option>
                 <option value="Not-working">Not working</option>
             </select>

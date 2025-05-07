@@ -8,9 +8,74 @@
     border: 2px solid rgb(70, 70, 70);
     background:  rgb(50, 50, 50);
 
+
 }
 .map-container{
     height:100%;
     width: 100%;
     overflow:hidden;
+    position: relative;
+}
+.form-overlay{
+    display:flex;
+    top:0;
+    left: 0;
+    justify-content: center;
+    align-items:center;
+    width:100vw;
+    height: 100vh;
+    position:fixed;
+    z-index:9999;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.new-property-form-div{
+    display:flex;
+    background: white;
+    justify-content: center;
+    align-items: center;
+    padding:5rem 10rem;
+    border-radius: 1rem;
+    position:absolute;
+    border:2px solid #1CAC70;
+    z-index:9999;
+}
+
+.new-property-form{
+    display:flex;
+    flex-direction: column;
+    padding:1rem;
+    justify-self: center;
+
+}
+.new-property-form>input , .new-property-form>textarea,  .new-property-form>select {
+    padding:0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #1CAC70;
+    margin-bottom: 1rem;
+}
+
+.new-property-form>input:focus , .new-property-form>textarea:focus , .new-property-form>select:focus{
+    outline:none;
+    border:2px solid #1CAC70;
+}
+
+.new-property-form>h1 {
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+.new-property-submit{
+
+    font-weight:650;
+    background: #1CAC70;
+    color:white;
+}
+.close-button{
+    border: none;
+}
+.close-button-icon{
+    font-size: 1.5rem;
+}
+.close-button-icon:hover{
+    color:darkred;
 }
