@@ -73,15 +73,18 @@ console.log({NewProperty});
       }}
     >
       <Marker position={center} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />
+      {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
+      <>
       <div className='form-overlay'>
       <div className="new-property-form-div">
+      <div>
         <button onClick={() => setShowNewPropertyForm(false)} className="close-button">
           <FontAwesomeIcon icon={faCircleXmark} className='close-button-icon' />
         </button>
-      <div>
-        <h1>Create New Property</h1>
+
+        <h1 className='create-property-header'>Create New Property</h1>
       <form onSubmit={NewPropertySubmit} className="new-property-form">
         <label htmlFor="lat">Lat:</label>
         <input type="text" value={NewProperty.lat} read-only required/>
@@ -89,8 +92,8 @@ console.log({NewProperty});
         <input type="text" value= {NewProperty.lng} read-only required/>
         <label htmlFor="property-type">Property type</label>
         <select name="property-type" required>
-          <option value="streetlight">streetlight </option>
-          <option value="bench">bench</option>
+          <option value="streetlight">Streetlight </option>
+          <option value="bench">Bench</option>
           <option value="garbage bin">Garbage bin</option>
         </select>
         <input type="submit" value="Create New Property" className="new-property-submit" />
@@ -98,6 +101,7 @@ console.log({NewProperty});
       </div>
     </div>
     </div>
+    </>
     )}
 
     </>
