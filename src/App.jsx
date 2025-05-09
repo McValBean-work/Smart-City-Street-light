@@ -21,7 +21,7 @@ function App(){
           <Route path="/Contact-Us" element={<ContactUsPage />}/>
           <Route path="/Report" element={<ReportForm />} />
           <Route path="/Login" element={<LoginPage />}/>
-          <Route path="/Sign-up" element={<SignUpPage />}/>
+          <Route path="/Sign-Up" element={<SignUpPage />}/>
           <Route path="/Forgot-password" element={<ForgotPasswordPage />}/>
           <Route path="/portal/Dashboard" element={<DashboardPage />} />
 

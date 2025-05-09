@@ -77,6 +77,17 @@
     background: #1CAC70;
     color:white;
 }
+
+
+.new-property-toast{
+    display:flex;
+    padding-bottom:1rem;
+    justify-self: center;
+    align-self: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color:#1CAC70;
+}
 .close-button{
     border: none;
     background: none;

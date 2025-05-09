@@ -1,17 +1,36 @@
 import { Link } from 'react-router-dom';
 import './authentication-page.css'
 import { useNavigate } from 'react-router-dom';
+import api from '../api/axios-instance';
 
 function LoginForm(){
   const navigate = useNavigate();
+  
   const LoginToHome = (e) => {
     e.preventDefault();
-    
+    api.post('api/auth/login' , {loginEmail , loginPassword}).then(res => {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.user.role);
+    });
+    const role = localStorage.getItem("role");
+    console.log(role);
+    { role === 'admin' ? (
+      navigate("/portal/Admin")
+    )
+    : role === 'supervisor' ? (
+      navigate("portal/Supervisor")
+    )
+   : role === 'engineer' ? (
+    navigate('portal/Engineer')
+   ): (
+    navigate('/')
+   )}
+
     navigate ("/portal/Dashboard");
-    {/*const emailName = document.getElementById("loginEmail").value;
+    const loginEmail = document.getElementById("loginEmail").value;
     const loginPassword = document.getElementById("loginPassword").value;
 
-    console.log({emailName},{loginPassword});*/}
+    console.log({loginEmail},{loginPassword});
 }
     return(
       <>
@@ -21,11 +40,11 @@ function LoginForm(){
       <form action="" onSubmit={LoginToHome} id="loginForm" className="authentication-page-form">
       <div className="form-data">
       <label htmlFor="loginEmail">Email</label>
-      <input type="email" id="loginEmail" placeholder="Enter email address"  required/>
+      <input type="email" id="loginEmail" placeholder="Enter email address" className="authentication-input"  required/>
       <label htmlFor="loginPassword">Password</label>
-      <input type="password" id="loginPassword" placeholder= "Enter password" minLength="8" maxLength="30" autoComplete="true" required/>
+      <input type="password" id="loginPassword" placeholder= "Enter password" minLength="8" maxLength="30" autoComplete="true"  className="authentication-input" required/>
       <Link to="/portalForgot-password" className='form-links'>Forgot password?</Link>
-      <input type="submit" value="login" className='submit' />
+      <input type="submit" value="login" className="authentication-input submit" />
        </div>
     </form>
     </div>

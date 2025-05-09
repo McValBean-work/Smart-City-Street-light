@@ -18,6 +18,7 @@
     "@googlemaps/markerclusterer": "^2.5.3",
     "@react-google-maps/api": "^2.20.6",
     "@vis.gl/react-google-maps": "^1.5.2",
+    "axios": "^1.9.0",
     "concurrent": "^0.3.2",
     "leaflet": "^1.9.4",
     "react-qr-scanner": "^1.0.0-alpha.11",

@@ -10,34 +10,40 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 
 
 
-function NewPropertySubmit(e) {
-  e.preventDefault();
-  console.log("success, created new property");
 
 
-}
 
 function StreetLightMap(){
 
 const [NewProperty , setNewProperty] = useState({lat: null , lng : null});
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
+const [ShowToast , setShowToast] = useState(false);
+
+
+
 
 function MapOnclick(e) {
-const Lat= e.latLng.lat();
-const Lng = e.latLng.lng();
+const lat= e.latLng.lat();
+const lng = e.latLng.lng();
 
 
-setNewProperty({lat:Lat, lng:Lng});
+setNewProperty({lat:lat, lng:lng});
 setShowNewPropertyForm(true);
 
 
 
 console.log({NewProperty});
 
+};
+
+function NewPropertySubmit(e) {
+  e.preventDefault();
+  setShowToast(true);
+  console.log("success, created new property");
+};
 
 
 
-}
   const center = {
     lat: 5.6358,
     lng: -0.1614,
@@ -80,16 +86,16 @@ console.log({NewProperty});
       <div className='form-overlay'>
       <div className="new-property-form-div">
       <div>
-        <button onClick={() => setShowNewPropertyForm(false)} className="close-button">
+        <button onClick={() => {setShowNewPropertyForm(false); setShowToast(false);}} className="close-button">
           <FontAwesomeIcon icon={faCircleXmark} className='close-button-icon' />
         </button>
 
         <h1 className='create-property-header'>Create New Property</h1>
       <form onSubmit={NewPropertySubmit} className="new-property-form">
         <label htmlFor="lat">Lat:</label>
-        <input type="text" value={NewProperty.lat} read-only required/>
+        <input type="text" value={NewProperty.lat} readOnly required/>
         <label htmlFor="lng">Lng:</label>
-        <input type="text" value= {NewProperty.lng} read-only required/>
+        <input type="text" value= {NewProperty.lng} readOnly required/>
         <label htmlFor="property-type">Property type</label>
         <select name="property-type" required>
           <option value="streetlight">Streetlight </option>
@@ -97,10 +103,15 @@ console.log({NewProperty});
           <option value="garbage bin">Garbage bin</option>
         </select>
         <input type="submit" value="Create New Property" className="new-property-submit" />
-      </form>
+
+  </form>
+  {ShowToast &&(
+              <span className='new-property-toast'>Success, new property created</span>
+)}
       </div>
     </div>
     </div>
+
     </>
     )}
 

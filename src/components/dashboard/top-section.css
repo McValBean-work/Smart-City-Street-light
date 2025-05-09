@@ -13,9 +13,12 @@
     align-items: center;
     justify-content: space-between;
 }
+.top-section>*>input{
+    margin-right: 1rem;
+}
+
 .dashboard-icon{
     width:15%;
-   
 }
 .role-name{
     color:#1CAC78;

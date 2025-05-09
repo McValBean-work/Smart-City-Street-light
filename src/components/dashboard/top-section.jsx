@@ -15,7 +15,6 @@ function TopSection(){
                 <input type="search" name="" id="" className="search-input" />
                 <FontAwesomeIcon icon={faUserCircle} className='nav-link'/>
             </div>
-         
         </div>
         </>
     )

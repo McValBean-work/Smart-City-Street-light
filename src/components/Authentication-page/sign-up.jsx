@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom"
+import api from '../api/axios-instance'
 import './authentication-page.css'
 import { useNavigate } from "react-router-dom"
+import { useState} from 'react'
 
 
 
@@ -14,10 +15,13 @@ import { useNavigate } from "react-router-dom"
 function SignUpForm(){
 
 const navigate = useNavigate();
+const [showSignUpToast , setShowSignUpToast] = useState(false);
  const SignUpSubmit = (e)=> {
   e.preventDefault()
+  api.post('/api/users' , {}).then()
   const firstPassword = document.getElementById("firstPassword").value
   const confirmPassword = document.getElementById("confirmPassword").value;
+  setShowSignUpToast(true);
 
   if(firstPassword === confirmPassword){
     console.log("same password");
@@ -27,6 +31,8 @@ const navigate = useNavigate();
  alert("the two passwords are not the same");
   }
  }
+
+ 
     return(
       <>
       <form id="SignUpForm" onSubmit={SignUpSubmit} className="authentication-page-form">
@@ -39,12 +45,10 @@ const navigate = useNavigate();
         <option value="Supervisor">Supervisor</option>
         <option value="Admin">Admin</option>
       </select>
-      <label htmlFor="firstName">First Name</label>
-      <input type="text" placeholder="Enter first name" id="firstName" className="authentication-input" required />
-      <label htmlFor="lastName">Last Name</label>
-      <input type="text" placeholder="Enter last name" id="lastName" className="authentication-input" required/>
-      <label htmlFor="username">Username</label>
-      <input type="text" placeholder= "Enter username" id="userName" className="authentication-input" required/>
+      <label htmlFor="fullName">Full Name</label>
+      <input type="text" placeholder="Enter full name" id="firstName" className="authentication-input" required />
+      <label htmlFor="PhoneNumber">Phone Number</label>
+      <input type="text" placeholder="+233" id="PhoneNumber" className="authentication-input" required/>
       <label htmlFor="signUpEmail">Email</label>
       <input type="email" placeholder= "Enter email address" id="signUpEmail" className="authentication-input" required/>
       <label htmlFor="firstPassword">Enter Password</label>
@@ -54,6 +58,11 @@ const navigate = useNavigate();
       <input type="submit" className="authentication-input submit"/>
       </div>
     </form>
+    {showSignUpToast && (
+      <>
+      <span>Success, You created a new user</span>
+      </>
+    )}
     </>
     )
 
