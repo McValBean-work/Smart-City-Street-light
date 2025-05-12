@@ -19,7 +19,7 @@ const [NewProperty , setNewProperty] = useState({lat: null , lng : null});
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
 const [ShowToast , setShowToast] = useState(false);
 
-
+const [Properties , setProperties] = useState([]);
 
 
 function MapOnclick(e) {
@@ -32,17 +32,22 @@ setShowNewPropertyForm(true);
 
 
 
+
 console.log({NewProperty});
+
+
 
 };
 
 function NewPropertySubmit(e) {
   e.preventDefault();
+  const showProperties = Properties.map((property) => console.log(property));
+  setProperties(Properties.push(setNewProperty));
+  showProperties;
+  console.log(Properties.length);
   setShowToast(true);
   console.log("success, created new property");
 };
-
-
 
   const center = {
     lat: 5.6358,

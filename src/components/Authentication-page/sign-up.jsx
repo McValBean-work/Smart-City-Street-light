@@ -32,16 +32,16 @@ const [showSignUpToast , setShowSignUpToast] = useState(false);
   }
  }
 
- 
+
     return(
       <>
       <form id="SignUpForm" onSubmit={SignUpSubmit} className="authentication-page-form">
       <h1 className="authentication-page-header">Welcome to Omni Street Lights</h1>
-      <h2>Sign Up</h2>
+      <h2>Add New User</h2>
       <div className="form-data">
       <label htmlFor="role">Role:</label>
       <select name="role" className="authentication-input" required>
-        <option value="Worker">Worker</option>
+        <option value="Engineer">Engineer</option>
         <option value="Supervisor">Supervisor</option>
         <option value="Admin">Admin</option>
       </select>

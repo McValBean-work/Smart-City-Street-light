@@ -24,7 +24,7 @@ function SideBar(){
                 <Link to="/Sign-Up" className="sidebar-link" >
                 <FontAwesomeIcon icon={faUserPlus}  />
                 </Link>
-            <Link className="sidebar-link">
+            <Link to="/Login" className="sidebar-link">
                 <FontAwesomeIcon icon={faRightFromBracket}  />
                 </Link>
             </div>

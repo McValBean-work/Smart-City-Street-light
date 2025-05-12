@@ -1,30 +1,14 @@
 import { Link } from 'react-router-dom';
 import './authentication-page.css'
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios-instance';
+
 
 function LoginForm(){
   const navigate = useNavigate();
-  
+
   const LoginToHome = (e) => {
     e.preventDefault();
-    api.post('api/auth/login' , {loginEmail , loginPassword}).then(res => {
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.user.role);
-    });
-    const role = localStorage.getItem("role");
-    console.log(role);
-    { role === 'admin' ? (
-      navigate("/portal/Admin")
-    )
-    : role === 'supervisor' ? (
-      navigate("portal/Supervisor")
-    )
-   : role === 'engineer' ? (
-    navigate('portal/Engineer')
-   ): (
-    navigate('/')
-   )}
+
 
     navigate ("/portal/Dashboard");
     const loginEmail = document.getElementById("loginEmail").value;
