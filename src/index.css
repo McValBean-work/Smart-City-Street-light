@@ -12,16 +12,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html body #root {
+html, body, #root {
   height:100%;
 }
 
 a{
   text-decoration:none;
 }
- body{
-  background: white;
- }
+
  .active-link{
   color:#1CAC78;
 }

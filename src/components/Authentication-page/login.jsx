@@ -1,6 +1,8 @@
+import api from "../api/axios-instance";
 import { Link } from 'react-router-dom';
 import './authentication-page.css'
 import { useNavigate } from 'react-router-dom';
+
 
 
 function LoginForm(){
@@ -8,9 +10,9 @@ function LoginForm(){
 
   const LoginToHome = (e) => {
     e.preventDefault();
+    api.post('api/auth/login', ).then(
+      navigate ("/portal/Dashboard") )
 
-
-    navigate ("/portal/Dashboard");
     const loginEmail = document.getElementById("loginEmail").value;
     const loginPassword = document.getElementById("loginPassword").value;
 

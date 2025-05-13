@@ -18,7 +18,7 @@ const navigate = useNavigate();
 const [showSignUpToast , setShowSignUpToast] = useState(false);
  const SignUpSubmit = (e)=> {
   e.preventDefault()
-  api.post('/api/users' , {}).then()
+  api.post('/api/users' , ).then()
   const firstPassword = document.getElementById("firstPassword").value
   const confirmPassword = document.getElementById("confirmPassword").value;
   setShowSignUpToast(true);

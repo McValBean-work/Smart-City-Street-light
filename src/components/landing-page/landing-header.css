@@ -1,10 +1,11 @@
 .landing-navbar{
     display: flex;
+    background:whitesmoke;
     width: 100%;
-    padding:2rem;
+    padding:1rem;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 0 0.5rem 0.5rem rgb(110, 110, 110);
+    box-shadow: 0 0 0.1rem 0.1rem rgb(110, 110, 110);
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 
@@ -12,18 +13,18 @@
 
 .main-icon{
     display:flex;
-    width:5rem;
-    height:5rem;
+    width:3rem;
+    height:4rem;
     background-position: center;
     background-repeat: no-repeat;
 
 }
 .user-nav-links{
-    background: #1CAC70;
     padding: 1rem;
     border-radius: 1rem;
 }
 .user-nav-link{
+    text-align:center;
     font-size: 2rem;
     padding: 0rem 1rem;
     font-weight: 400;
@@ -31,6 +32,9 @@
     color:black;
 }
 .user-nav-link:hover{
-    color:  white;
-    border-radius: 0.1rem;
+    background: #bbe6d4;
+    border-radius: 0.2rem;
+}
+.user-nav-link:active{
+    color:#1a7;
 }
