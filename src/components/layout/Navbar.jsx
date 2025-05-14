@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"
 import './Navbar.css'
+{/* import  { useState } from "react" */}
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot , faHome , faReceipt , faFile ,faRightFromBracket, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 function SideBar(){
+    { /* const [activePage , setActivePage] = useState(); */}
     return(
         <>
         <nav className="sidebar">
@@ -10,7 +12,7 @@ function SideBar(){
                 <Link to="/" className="sidebar-link">
                 <FontAwesomeIcon icon={faHome}  />
                 </Link>
-                <Link to="/portal/Dashboard" className="sidebar-link">
+                <Link to="/portal/dashboard" className="sidebar-link">
                 <FontAwesomeIcon icon={faLocationDot}  />
                 </Link>
                 <Link to="/Contact-us"className="sidebar-link">

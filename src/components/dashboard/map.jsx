@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from'../api/axios-instance'
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import './map.css'
 import streetLightIcon from '../../assets/icons/streetlight.svg'
@@ -15,7 +16,14 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 
 function StreetLightMap(){
 
-const [NewProperty , setNewProperty] = useState({lat: null , lng : null , propertyType : null});
+const [NewProperty , setNewProperty] = useState(
+  {
+    lat: null ,
+    lng : null ,
+    propertyType : null,
+    state: null
+    });
+
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
 const [ShowToast , setShowToast] = useState(false);
 
@@ -26,8 +34,7 @@ function MapOnclick(e) {
 const lat= e.latLng.lat();
 const lng = e.latLng.lng();
 
-
-setNewProperty({lat:lat, lng:lng});
+setNewProperty(prev => ({ ...prev, lat, lng }));
 setShowNewPropertyForm(true);
 
 
@@ -39,8 +46,29 @@ console.log("NewProperty (click):", { lat, lng });
 
 };
 
-function NewPropertySubmit(e) {
+async function NewPropertySubmit(e) {
   e.preventDefault();
+  const formattedProperty =
+  {
+    type: NewProperty.propertyType,
+    location : {
+    address : 'hmm' ,
+    coordinates:{
+      lat: NewProperty.lat ,
+      lng : NewProperty.lng ,
+   }},
+    state : NewProperty.state};
+
+  try {
+    const response = await api.post("api/properties" , formattedProperty)
+    console.log(response.data);
+}
+catch(error){
+  console.log("Error creating property" ,error);
+}
+
+
+
   setShowToast(true);
   console.log(NewProperty);
 };
@@ -98,17 +126,27 @@ function NewPropertySubmit(e) {
         <label htmlFor="lng">Lng:</label>
         <input type="text" value= {NewProperty.lng} readOnly required/>
         <label htmlFor="property-type">Property type</label>
-        <select name="property-type" value={NewProperty.propertyType}onChange={(e) => setNewProperty(prev => ({...prev ,propertyType: e.target.value}))} required>
+        <select name="property-type" value={NewProperty.propertyType}
+        onChange={(e) =>
+         setNewProperty(prev => ({...prev ,propertyType: e.target.value}))}   required>
           <option value=""></option>
-          <option value="streetlight">Streetlight </option>
-          <option value="bench">Bench</option>
-          <option value="garbage bin">Garbage bin</option>
+          <option value="Streetlight">Streetlight </option>
+          <option value="Bench">Bench</option>
+          <option value="Garbage bin">Garbage bin</option>
+        </select>
+        <label htmlFor="state">State</label>
+        <select name="state" value={NewProperty.state} onChange={(e) =>
+          setNewProperty( prev => ({...prev , state: e.target.value}))
+        } >
+          <option value=""></option>
+          <option value="working">Working</option>
+          <option value="notWorking">Not Working</option>
         </select>
         <input type="submit" value="Create New Property" className="new-property-submit" />
 
   </form>
   {ShowToast &&(
-              <span className='new-property-toast'>Success, new property created</span>
+              <span className='new-property-toast'> {NewProperty.propertyType} added successfully</span>
 )}
       </div>
     </div>
