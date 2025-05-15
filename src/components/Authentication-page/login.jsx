@@ -19,15 +19,15 @@ function LoginForm(){
     try{
       console.log(loginCredentials);
      const response = await api.post('api/auth/login', loginCredentials)
+     localStorage.setItem("authToken", response.data.token)
+     console.log(response.data.token);
      console.log(response.data);
+     console.log('Hello', response.role);
       navigate ("/portal/dashboard")
     }
     catch(error)
     {
       console.log(error);
-    }
-    finally{
-      navigate("portal/dashboard")
     }
 
 
