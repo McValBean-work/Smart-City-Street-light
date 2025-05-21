@@ -23,3 +23,20 @@
     display:flex;
     justify-content: center;
 }
+
+/*
+@media only screen and (min-width:600px) and (max-width:800px){
+
+    .contact-us-form{
+    width:60%;
+
+
+}
+}
+
+@media (min-width:450px)and(max-width:600px){
+
+    .contact-us-form{
+        width:90%;
+    }
+}

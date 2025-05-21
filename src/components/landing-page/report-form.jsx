@@ -1,23 +1,57 @@
 import './report-form.css'
 import Main from'../layout/main'
+import { useState } from 'react'
+
+
 function ReportForm (){
+const [reportFormData , setReportFormData] = useState(
+    {
+        propertyId:null,
+        description: null,
+        media: null
+    }
+);
+const handleChange = (e)=>{
+    const {name , value} = e.target;
+
+      setReportFormData(prev =>({...prev, [name]: value}))
+
+  }
+
+const onSubmit = (e)=> {
+e.preventDefault()
+console.log(reportFormData);
+
+}
 
     return(
         <Main>
         <div className="report-form-div" id="reportFormDiv">
-        <form action={onsubmit} id="reportForm" className="report-form">
-            {/*<h1>Help Us Light The Path You Walk On</h1>*/}
+        <form action={onSubmit} id="reportForm" className="report-form">
+            <h1>Report Property</h1>
             <label htmlFor="propertyId">Property ID</label>
-            <input type="text" id="propertyId" placeholder="property id" className="report-form-input" required/>
-            <label htmlFor="Status">Status</label>
-            <select name="status" id="" className="report-form-input">
-                <option value="Working">Working</option>
-                <option value="Not-working">Not working</option>
-            </select>
+            <input type="text"
+            id="propertyId"
+            name="propertyId"
+            value={reportFormData.propertyId}
+            onChange={handleChange}
+            placeholder="property id"
+            className="report-form-input" required/>
             <label htmlFor="description">Description</label>
-            <textarea name="" id="description" className="report-form-input"  placeholder="type description here" rows="4" />
-            <label htmlFor="picture/video">Picture/Video (Optional)</label>
-            <input type="file" id="picture/video" placeholder= "add picture here" className="report-form-input picture-input" />
+            <textarea name="description"
+             id="description"
+             value={reportFormData.description}
+             onChange={handleChange}
+             className="report-form-input"
+             placeholder="type description here" rows="4" />
+            <label htmlFor="media"> Picture/Video (Optional)</label>
+            <input type="file"
+            id="media"
+            name="media"
+            value={reportFormData.media}
+            onChange={handleChange}
+            placeholder= "add picture here"
+            className="report-form-input picture-input" />
             <input type="submit" value="Submit" className="submit report-form-input" />
         </form>
         </div>

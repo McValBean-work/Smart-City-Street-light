@@ -22,7 +22,7 @@ function LoginForm(){
      localStorage.setItem("authToken", response.data.token)
      console.log(response.data.token);
      console.log(response.data);
-     console.log('Hello', response.role);
+     console.log('Hello', response.data.user.role);
       navigate ("/portal/dashboard")
     }
     catch(error)

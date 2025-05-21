@@ -16,13 +16,13 @@ function App(){
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/LandingPage" element={<LandingPage />} />
-          <Route path="/About" element={<AboutPage />}/>
-          <Route path="/Contact-Us" element={<ContactUsPage />}/>
-          <Route path="/Report" element={<ReportForm />} />
-          <Route path="/Login" element={<LoginPage />}/>
-          <Route path="/Sign-Up" element={<SignUpPage />}/>
-          <Route path="/Forgot-password" element={<ForgotPasswordPage />}/>
+          <Route path="/landing page" element={<LandingPage />} />
+          <Route path="/about" element={<AboutPage />}/>
+          <Route path="/contact-Us" element={<ContactUsPage />}/>
+          <Route path="/report" element={<ReportForm />} />
+          <Route path="/login" element={<LoginPage />}/>
+          <Route path="/sign-Up" element={<SignUpPage />}/>
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/portal/dashboard" element={<DashboardPage />} />
 
         </Routes>

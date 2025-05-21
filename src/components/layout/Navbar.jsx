@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import './Navbar.css'
 {/* import  { useState } from "react" */}
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot , faHome , faReceipt , faFile ,faRightFromBracket, faUserPlus, faListCheck} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot , faHome , faFile ,faRightFromBracket, faUserPlus, faListCheck} from "@fortawesome/free-solid-svg-icons";
 function SideBar(){
     { /* const [activePage , setActivePage] = useState(); */}
     return(
@@ -20,9 +20,6 @@ function SideBar(){
                 <Link to="/portal/dashboard" className="sidebar-link">
                 <FontAwesomeIcon icon={faLocationDot}  />
                 <span>Properties</span>
-                </Link>
-                <Link to="/Contact-us"className="sidebar-link">
-                <FontAwesomeIcon icon={faReceipt}  />
                 </Link>
                 <Link to="/Contact-us"className="sidebar-link">
                 <FontAwesomeIcon icon={faFile}  />

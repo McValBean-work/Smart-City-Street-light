@@ -12,7 +12,7 @@ function ContactUsForm(){
             <label htmlFor="EmailAddress">Email Address</label>
             <input type="text" placeholder='Enter Email Address' required/>
             <label htmlFor="PhoneNumber">Phone Number</label>
-            <input type="number" name="" id="" placeholder='Enter Your Phone Number' required/>
+            <input type="text" name="" id="" placeholder='Enter Your Phone Number' required/>
             <label htmlFor="Message">Message</label>
             <textarea name="" id="" required/>
             <input type="submit" className='submit' />
