@@ -12,7 +12,6 @@ function TopSection(){
                 <img src={OmniStreetLightIcon} alt="" className='dashboard-icon' />
             </div>
             <div>
-                <input type="search" name="" id="" className="search-input" />
                 <FontAwesomeIcon icon={faUserCircle} className='nav-link'/>
             </div>
         </div>

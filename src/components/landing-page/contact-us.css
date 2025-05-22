@@ -1,42 +1,4 @@
-.contact-us-form{
-    display:flex;
-    flex-direction: column;
-    padding:1rem;
-    width:30%;
-    justify-self: center;
-
-}
-.contact-us-form input , textarea {
-    padding:0.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #1CAC70;
-    margin-bottom: 1rem;
-}
-
-.contact-us-form input:focus , textarea:focus {
-    outline:none;
-    border:2px solid #1CAC70;
-}
-
-.form-header{
-    width:100%;
-    display:flex;
-    justify-content: center;
-}
-
-/*
-@media only screen and (min-width:600px) and (max-width:800px){
-
-    .contact-us-form{
-    width:60%;
 
 
-}
-}
 
-@media (min-width:450px)and(max-width:600px){
 
-    .contact-us-form{
-        width:90%;
-    }
-}

@@ -7,11 +7,11 @@ function NavBar(){
     return(
         <>
         <nav className="landing-navbar">
-            <Link to="/landing page" className="main-icon">
-            <img src={MainIcon} alt="omni street light"/>
+            <Link to="/landing page" className='main-icon-link'>
+            <img src={MainIcon} alt="omni street light" className="main-icon" />
             </Link>
             <div>
-            <FontAwesomeIcon icon={faBars} />
+            <FontAwesomeIcon icon={faBars} className='menubar' />
             </div>
             <div className="user-nav-links">
                 <Link to="/" className="user-nav-link">Home</Link>

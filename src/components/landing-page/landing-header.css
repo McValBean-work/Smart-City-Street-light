@@ -13,23 +13,28 @@
 
 .main-icon{
     display:flex;
-    width:3rem;
-    height:4rem;
+    width:30%;
+    height:30%;
     background-position: center;
     background-repeat: no-repeat;
 
 }
+
 .user-nav-links{
+    display:flex;
+    align-items: center;
     padding: 1rem;
     border-radius: 1rem;
+    flex-wrap:nowrap;
 }
 .user-nav-link{
-    text-align:center;
+    white-space: nowrap;
     font-size: 2rem;
     padding: 0rem 1rem;
     font-weight: 400;
     margin-right: 1rem;
     color:black;
+    white-space: none;
 }
 .user-nav-link:hover{
     background: #bbe6d4;
@@ -37,4 +42,70 @@
 }
 .user-nav-link:active{
     color:#1a7;
+}
+.menubar{
+    display:none;
+}
+
+@media (max-width:319px){
+
+    .user-nav-links{
+        display:none;
+        flex-direction: column;
+    }
+    .menubar{
+        display:flex;
+        color:#1a7;
+    }
+    .main-icon{
+        width:40%;
+        height:40%;
+    }
+    .landing-header{
+        padding: 0.5rem 1rem;
+    }
+}
+@media (min-width:320px) and (max-width:480px){
+
+    .user-nav-links{
+        display:none;
+        flex-direction: column;
+    }
+    .menubar{
+        display:flex;
+        color:#1a7;
+    }
+    .main-icon{
+        width:30%;
+        height:30%;
+    }
+
+}
+
+@media only screen and (min-width:481px) and (max-width:768px){
+
+   .user-nav-link{
+    font-size:1rem;
+    font-weight:500;
+    margin-right: 0.2rem;
+   }
+   .main-icon{
+    width: 50%;
+    height:50%;
+   }
+
+
+
+}
+
+@media (min-width:769px) and (max-width:1024px){
+
+
+    .user-nav-link{
+    font-size:1.5rem;
+   }
+   .main-icon{
+    width: 50%;
+    height:50%;
+   }
 }

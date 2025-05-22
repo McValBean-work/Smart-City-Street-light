@@ -26,7 +26,7 @@ console.log(reportFormData);
 
     return(
         <Main>
-        <div className="report-form-div" id="reportFormDiv">
+        <div className="form-div" id="FormDiv">
         <form action={onSubmit} id="reportForm" className="report-form">
             <h1>Report Property</h1>
             <label htmlFor="propertyId">Property ID</label>

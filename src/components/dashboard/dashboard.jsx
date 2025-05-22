@@ -1,4 +1,4 @@
-import Navbar from "../layout/Navbar"
+import Navbar from "../layout/sidebar"
 import './dashboard.css'
 import Main from "../layout/main"
 import StreetLightMap from "./map";
