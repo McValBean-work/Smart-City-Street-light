@@ -2,13 +2,8 @@ import api from '../api/axios-instance'
 import './authentication-page.css'
 import { useNavigate } from "react-router-dom"
 import { useState} from 'react'
-
-
-
-// const firstName = document.getElementById("firstName").value
-// const lastName = document.getElementById("lastName").value
-// const userName = document.getElementById("userName").value
-// const signUpEmail = document.getElementById("signUpEmail").value
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
 
 
 
@@ -16,6 +11,7 @@ function SignUpForm(){
 
 const navigate = useNavigate();
 const [showSignUpToast , setShowSignUpToast] = useState(false);
+const [showPassword , setShowPassword] = useState(false);
 const [newUser , setNewUser] = useState({
   fullName: null,
   email: null ,
@@ -32,19 +28,13 @@ const handleChange = (e)=>{
  const SignUpSubmit = (e)=> {
   e.preventDefault()
   console.log(newUser);
-  const firstPassword = document.getElementById("firstPassword").value
-  const confirmPassword = document.getElementById("confirmPassword").value;
 
 
-  if(firstPassword === confirmPassword){
-    console.log("same password");
+
     api.post('/api/users' , newUser)
     setShowSignUpToast(true);
-   setTimeout(navigate(-1), 5000) ;
-  }
-  else{
- alert("the two passwords are not the same");
-  }
+   setTimeout(navigate(-1), 10000) ;
+
  }
 
 
@@ -61,10 +51,10 @@ const handleChange = (e)=>{
         setNewUser(prev =>({...prev, role: e.target.value}))
       }
       className="authentication-input" required>
-        <option value=""></option>
-        <option value="Engineer">Engineer</option>
-        <option value="Supervisor">Supervisor</option>
-        <option value="Admin">Admin</option>
+
+        <option value="engineer">Engineer</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="admin">Admin</option>
       </select>
       <label htmlFor="fullName">Full Name</label>
       <input type="text"
@@ -90,32 +80,28 @@ const handleChange = (e)=>{
       placeholder= "Enter email address"
       id="signUpEmail"
       className="authentication-input" required/>
-      <label htmlFor="firstPassword">Enter Password</label>
-      <input type="password"
+      <label htmlFor="password">Enter Password</label>
+      <div className='show-password-div'>
+      <input type={ showPassword ? 'text' : 'password'}
       name='password'
       value={newUser.password}
       onChange={handleChange}
       placeholder="Enter password"
-      id= "firstPassword"
+      id= "signUpPassword"
       minLength="8"
       maxLength="30"
       className="authentication-input" required/>
-      <label htmlFor="confirmPassword" >Confirm Password</label>
-      <input type="password"
-      name='password'
-      value={newUser.password}
-      onChange={handleChange}
-      placeholder="Confirm password"
-      id="confirmPassword"
-      minLength="8"
-      maxLength="30"
-      className="authentication-input" required/>
+      <button type="button" className='show-password-button' onClick={()=> setShowPassword(prev =>!prev)}>
+       <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}  />
+
+      </button>
+      </div>
       <input type="submit" className="authentication-input submit"/>
       </div>
     </form>
     {showSignUpToast && (
       <>
-      <span>Success, You created a new user</span>
+      <span>Success, You created a new {newUser.role}</span>
       </>
     )}
     </>

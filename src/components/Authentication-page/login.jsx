@@ -1,4 +1,5 @@
 import api from "../api/axios-instance";
+import getRole from "./auth";
 import { Link } from 'react-router-dom';
 import './authentication-page.css'
 import { useNavigate } from 'react-router-dom';
@@ -17,13 +18,14 @@ function LoginForm(){
   const LoginSubmit = async (e) => {
     e.preventDefault();
     try{
-      console.log(loginCredentials);
-     const response = await api.post('api/auth/login', loginCredentials)
-     localStorage.setItem("authToken", response.data.token)
+     console.log(loginCredentials);
+     const response = await api.post('api/auth/login', loginCredentials);
+     localStorage.setItem("authToken", response.data.token);
+     localStorage.setItem("role", response.data.user.role);
      console.log(response.data.token);
      console.log(response.data);
-     console.log('Hello', response.data.user.role);
-      navigate ("/portal/dashboard")
+     console.log('Hello', getRole());
+     navigate("/portal/dashboard");
     }
     catch(error)
     {

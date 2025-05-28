@@ -1,14 +1,15 @@
 import './report-form.css'
 import Main from'../layout/main'
 import { useState } from 'react'
+import api from '../api/axios-instance'
 
 
 function ReportForm (){
-const [reportFormData , setReportFormData] = useState(
+
+    const [reportFormData , setReportFormData] = useState(
     {
         propertyId:null,
         description: null,
-        media: null
     }
 );
 const handleChange = (e)=>{
@@ -18,16 +19,18 @@ const handleChange = (e)=>{
 
   }
 
-const onSubmit = (e)=> {
-e.preventDefault()
+const reportSubmit = (e)=> {
+e.preventDefault();
 console.log(reportFormData);
+
+api.post('/api/report' , reportFormData);
 
 }
 
     return(
         <Main>
         <div className="form-div" id="FormDiv">
-        <form action={onSubmit} id="reportForm" className="report-form">
+        <form onSubmit={reportSubmit} id="reportForm" className="report-form">
             <h1>Report Property</h1>
             <label htmlFor="propertyId">Property ID</label>
             <input type="text"
@@ -52,7 +55,7 @@ console.log(reportFormData);
             onChange={handleChange}
             placeholder= "add picture here"
             className="report-form-input picture-input" />
-            <input type="submit" value="Submit" className="submit report-form-input" />
+            <input type="submit" value="Submit" className="submit report-form-input" disabled/>
         </form>
         </div>
         </Main>

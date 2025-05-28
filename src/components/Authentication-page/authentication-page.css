@@ -45,6 +45,7 @@
   }
   .authentication-page-form h1 {
     margin-bottom: 5rem;
+    white-space:nowrap;
   }
   .authentication-page-form h3{
     margin-bottom: 0.5rem;
@@ -58,6 +59,7 @@
     border-radius: 0.5rem;
     accent-color: #1CAC78;
     outline: none;
+    width:100%;
   }
   .authentication-page-form input:focus{
     border: 2px solid #1CAC78;
@@ -93,3 +95,13 @@
     text-decoration: underline;
     font-weight: 600;
   }
+.show-password-button{
+  background:none;
+  border:none;
+  font-size: 1rem;
+  color:#1ACc78;
+  margin-left: -1rem;
+}
+.show-password-div{
+  white-space: nowrap;
+}

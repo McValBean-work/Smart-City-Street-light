@@ -2,6 +2,7 @@
     display: flex;
     background:whitesmoke;
     width: 100%;
+    max-height:10rem;
     padding:1rem;
     justify-content: space-between;
     align-items: center;
@@ -13,8 +14,8 @@
 
 .main-icon{
     display:flex;
-    width:30%;
-    height:30%;
+    width:25%;
+    height:25%;
     background-position: center;
     background-repeat: no-repeat;
 
@@ -40,7 +41,7 @@
     background: #bbe6d4;
     border-radius: 0.2rem;
 }
-.user-nav-link:active{
+.user-nav-link.active{
     color:#1a7;
 }
 .menubar{

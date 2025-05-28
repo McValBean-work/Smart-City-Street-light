@@ -1,39 +1,44 @@
+import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import './sidebar.css'
 {/* import  { useState } from "react" */}
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot , faHome , faFile ,faRightFromBracket, faUserPlus, faListCheck} from "@fortawesome/free-solid-svg-icons";
 function SideBar(){
- const [activePage , setActivePage] = useState(
-    
- );
+
+    const logout=()=>{
+        localStorage.setItem("role", '');
+        console.log(localStorage.getItem("role"));
+    };
+
     return(
         <>
         <nav className="sidebar">
             <div className="sidebar-links">
-                <Link to="/" className="sidebar-link">
+                <NavLink to="/portal/dashboard" title="dashboard" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faHome}  />
                 <span>Dashboard</span>
-                </Link>
-                <Link to="/Tasks" className="sidebar-link">
+                </NavLink>
+                <NavLink to="/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faListCheck}  />
                 <span>Tasks</span>
-                </Link>
-                <Link to="/portal/dashboard" className="sidebar-link">
+                </NavLink>
+                <NavLink to="/portal/properties" title="properties" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faLocationDot}  />
                 <span>Properties</span>
-                </Link>
-                <Link to="/Contact-us"className="sidebar-link">
+                </NavLink>
+                <NavLink to="/Contact-us" title="view reports" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faFile}  />
                 <span>Reports</span>
-                </Link>
-            </div>
-            <div className="sidebar-links">
-                <Link to="/Sign-Up" className="sidebar-link" >
+                </NavLink>
+                <Link to="/sign-Up" title="create user" className="sidebar-link" >
                 <FontAwesomeIcon icon={faUserPlus}  />
                 <span>Create User</span>
                 </Link>
-            <Link to="/Login" className="sidebar-link">
+            </div>
+            <div className="sidebar-links">
+
+            <Link to="/login" title="logout" onClick={logout} className="sidebar-link logout">
                 <FontAwesomeIcon icon={faRightFromBracket}  />
                 <span>Logout</span>
                 </Link>

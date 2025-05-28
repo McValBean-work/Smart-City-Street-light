@@ -1,17 +1,16 @@
-import Navbar from "../layout/sidebar"
+import SideBar from "../layout/sidebar"
 import './dashboard.css'
 import Main from "../layout/main"
 import StreetLightMap from "./map";
 import TopSection from "./top-section";
 
-function DashboardPage(){
+function PropertiesPage(){
     return(
 <>
    <div className='dashboard'>
     <TopSection />
     <div className='dashboard-body'>
-
-                <Navbar />
+                <SideBar />
                 <Main>
                     <StreetLightMap />
                 </Main>
@@ -20,4 +19,4 @@ function DashboardPage(){
 </>
     )
 }
-export default DashboardPage;
+export default PropertiesPage;

@@ -3,25 +3,23 @@
     justify-content: space-between;
     align-items: center;
     width:100%;
-    padding:1rem;
-    border-radius: 1rem;
-    background: rgb(50, 50, 50);
+    min-height: 5rem;
+    padding:0.5rem;
 }
-.top-section>*{
+.top-section>div{
     margin-right:1rem;
     display:flex;
+    white-space:nowrap;
     align-items: center;
-    justify-content: space-between;
-}
-.top-section>*>input{
-    margin-right: 1rem;
 }
 
+
 .dashboard-icon{
-    width:15%;
+    max-width:10rem;
 }
 .role-name{
     color:#1CAC78;
+    margin-right: 0.5rem;
 }
 .search-input{
     padding:0.5rem;

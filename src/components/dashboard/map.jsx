@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import  { useEffect, useState } from "react";
 import api from'../api/axios-instance'
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader , MarkerClustererF , MarkerF } from "@react-google-maps/api";
 import './map.css'
+// import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,17 +17,35 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 
 function StreetLightMap(){
 
-const [NewProperty , setNewProperty] = useState(
-  {
+const [properties , setProperties] = useState([]);
+
+
+
+
+  async function getProperties(){
+  const res = await api.get( "api/properties");
+  setProperties(res.data);
+  console.log(res.data);
+}
+
+useEffect(()=>{
+  getProperties();
+  console.log("use effect called");
+},[]);
+
+const InitialNewPropertyState ={
+    propertyId: null ,
+    address: null,
     lat: null ,
-    lng : null ,
+    lng: null ,
     propertyType : null,
     state: null
-    });
+    };
+const [NewProperty , setNewProperty] = useState(InitialNewPropertyState
+  );
 
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
 const [ShowToast , setShowToast] = useState(false);
-
 
 
 
@@ -50,18 +69,19 @@ async function NewPropertySubmit(e) {
   e.preventDefault();
   const formattedProperty =
   {
+    propertyId: NewProperty.propertyId ,
     type: NewProperty.propertyType,
-    location : {
-    address : 'hmm' ,
-    coordinates:{
+    address : NewProperty.address ,
       lat: NewProperty.lat ,
       lng : NewProperty.lng ,
-   }},
     state : NewProperty.state};
 
   try {
     const response = await api.post("api/properties" , formattedProperty)
     console.log(response.data);
+    console.log('properties refreshed')
+    await getProperties();
+
 }
 catch(error){
   console.log("Error creating property" ,error);
@@ -79,7 +99,7 @@ catch(error){
   };
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // <-- Make sure this is set
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // <-- this is for your api key in your env file that we cannot type out directly
   });
 
   return isLoaded ? (
@@ -108,6 +128,23 @@ catch(error){
       }}
     >
       <Marker position={center} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />
+      <MarkerClustererF >
+        { (clusterer)=>
+            {Array.isArray(properties) && properties.map((property)=> (
+              <MarkerF
+               icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}}
+              key={property._id}
+              position={{
+                lat:property.location.coordinates[0]
+                ,lng:property.location.coordinates[1]
+              }}
+             clusterer={clusterer}
+              />
+            )
+            )
+          }
+        }
+      </MarkerClustererF>
       {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
@@ -115,12 +152,21 @@ catch(error){
       <div className='form-overlay'>
       <div className="new-property-form-div">
       <div>
-        <button onClick={() => {setShowNewPropertyForm(false); setShowToast(false);}} className="close-button">
+        <button onClick={() => {
+          setNewProperty(InitialNewPropertyState);
+          setShowNewPropertyForm(false); setShowToast(false);}} className="close-button">
           <FontAwesomeIcon icon={faCircleXmark} className='close-button-icon' />
         </button>
 
         <h1 className='create-property-header'>Create New Property</h1>
       <form onSubmit={NewPropertySubmit} className="new-property-form">
+        <label htmlFor="lat">Property Id</label>
+        <input type="text" placeholder="Enter property id" value={NewProperty.propertyId} onChange={(e) =>
+         setNewProperty(prev => ({...prev ,propertyId: e.target.value}))} required/>
+        <label htmlFor="address">Address</label>
+        <input type="text" placeholder="Enter address" value={NewProperty.address}
+        onChange={(e) =>
+         setNewProperty(prev => ({...prev ,address: e.target.value}))}  />
         <label htmlFor="lat">Lat:</label>
         <input type="text" value={NewProperty.lat} readOnly required/>
         <label htmlFor="lng">Lng:</label>
@@ -129,18 +175,18 @@ catch(error){
         <select name="property-type" value={NewProperty.propertyType}
         onChange={(e) =>
          setNewProperty(prev => ({...prev ,propertyType: e.target.value}))}   required>
-          <option value=""></option>
-          <option value="Streetlight">Streetlight </option>
-          <option value="Bench">Bench</option>
-          <option value="Garbage bin">Garbage bin</option>
+          <option value="">select type</option>
+          <option value="streetlight">Streetlight </option>
+          <option value="bench">Bench</option>
+          <option value="garbage bin">Garbage bin</option>
         </select>
         <label htmlFor="state">State</label>
         <select name="state" value={NewProperty.state} onChange={(e) =>
           setNewProperty( prev => ({...prev , state: e.target.value}))
         } >
-          <option value=""></option>
+          <option value="">select state</option>
           <option value="working">Working</option>
-          <option value="notWorking">Not Working</option>
+          <option value="damaged">Damaged</option>
         </select>
         <input type="submit" value="Create New Property" className="new-property-submit" />
 

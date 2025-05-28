@@ -3,9 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
     padding:0.5rem;
-    border-radius: 1rem;
-    background: rgb(50, 50, 50);
-    border-radius: 1rem;
 
 }
 
@@ -28,8 +25,16 @@
     border-radius: 5px ;
     margin-bottom:1rem ;
     font-weight: 600;
-    color: white;
+    color: black;
     opacity:50%;
+}
+.sidebar-link.active{
+    color:#1a7;
+    opacity:100%;
+    background: rgb(70, 70, 70);
+}
+.sidebar-link.logout{
+    color:red;
 }
 .sidebar-link>*{
     margin-right: 0.5rem;

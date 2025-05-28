@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import './landing-header.css'
 import MainIcon from '../../assets/images/omni-logo.webp'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,17 +7,17 @@ function NavBar(){
     return(
         <>
         <nav className="landing-navbar">
-            <Link to="/landing page" className='main-icon-link'>
+            <NavLink to="/landing page" className='main-icon-link'>
             <img src={MainIcon} alt="omni street light" className="main-icon" />
-            </Link>
+            </NavLink>
             <div>
             <FontAwesomeIcon icon={faBars} className='menubar' />
             </div>
             <div className="user-nav-links">
-                <Link to="/" className="user-nav-link">Home</Link>
-                <Link to="/about" className="user-nav-link">About</Link>
-                <Link to="/contact-us" className="user-nav-link">Contact Us</Link>
-                <Link to="/faqs" className="user-nav-link">FAQs</Link>
+                <NavLink to="/" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>Home</NavLink>
+                <NavLink to="/about" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>About</NavLink>
+                <NavLink to="/contact-us" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>Contact Us</NavLink>
+                <NavLink to="/faqs" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>FAQs</NavLink>
             </div>
         </nav>
         </>
