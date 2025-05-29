@@ -1,17 +1,17 @@
-import './report-form.css'
 import Main from'../layout/main'
 import { useState } from 'react'
 import api from '../api/axios-instance'
 
 
 function ReportForm (){
-
-    const [reportFormData , setReportFormData] = useState(
-    {
+const initialState = {
         propertyId:null,
         description: null,
-    }
+    };
+
+    const [reportFormData , setReportFormData] = useState(initialState
 );
+
 const handleChange = (e)=>{
     const {name , value} = e.target;
 
@@ -19,11 +19,13 @@ const handleChange = (e)=>{
 
   }
 
-const reportSubmit = (e)=> {
+const reportSubmit = async (e) => {
 e.preventDefault();
 console.log(reportFormData);
+setReportFormData(initialState);
 
-api.post('/api/report' , reportFormData);
+const response = await api.post('api/report', reportFormData);
+console.log(response.data);
 
 }
 
@@ -55,7 +57,7 @@ api.post('/api/report' , reportFormData);
             onChange={handleChange}
             placeholder= "add picture here"
             className="report-form-input picture-input" />
-            <input type="submit" value="Submit" className="submit report-form-input" disabled/>
+            <input type="submit" value="Submit" className="submit report-form-input"/>
         </form>
         </div>
         </Main>

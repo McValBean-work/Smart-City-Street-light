@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 import api from'../api/axios-instance'
-import { GoogleMap, Marker, useJsApiLoader , MarkerClustererF , MarkerF } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader , MarkerClusterer } from "@react-google-maps/api";
 import './map.css'
 // import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
@@ -77,7 +77,7 @@ async function NewPropertySubmit(e) {
     state : NewProperty.state};
 
   try {
-    const response = await api.post("api/properties" , formattedProperty)
+    const response = await api.post("api/properties", formattedProperty)
     console.log(response.data);
     console.log('properties refreshed')
     await getProperties();
@@ -127,24 +127,28 @@ catch(error){
         },
       }}
     >
-      <Marker position={center} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />
-      <MarkerClustererF >
-        { (clusterer)=>
-            {Array.isArray(properties) && properties.map((property)=> (
-              <MarkerF
-               icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}}
+      <Marker position={center} icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}} />
+      <MarkerClusterer >
+        {(clusterer)=>
+            {
+              Array.isArray(properties) &&
+              console.log(properties);
+              console.log(properties[0].location.coordinates);
+              properties.map((property) => (
+
+              <Marker
               key={property._id}
-              position={{
-                lat:property.location.coordinates[0]
-                ,lng:property.location.coordinates[1]
-              }}
+              icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}}
+              position={{lat:property.location.coordinates.lat,
+                lng:property.location.coordinates.lng}
+              }
              clusterer={clusterer}
               />
             )
             )
           }
         }
-      </MarkerClustererF>
+      </MarkerClusterer>
       {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (

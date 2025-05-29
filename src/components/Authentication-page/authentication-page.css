@@ -105,3 +105,6 @@
 .show-password-div{
   white-space: nowrap;
 }
+.picture-input{
+  min-height:7rem;
+}

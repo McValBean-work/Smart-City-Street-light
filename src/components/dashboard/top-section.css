@@ -5,6 +5,8 @@
     width:100%;
     min-height: 5rem;
     padding:0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: whitesmoke;
 }
 .top-section>div{
     margin-right:1rem;

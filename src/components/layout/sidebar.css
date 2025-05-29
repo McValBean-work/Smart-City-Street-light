@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-content: space-between;
     padding:0.5rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 
 }
 
@@ -10,7 +12,7 @@
     display: flex;
     margin-top: 1rem;
     flex-direction: column;
-    width:100%;
+    width:min-content;
     justify-content: flex-end;
 
 
@@ -29,16 +31,18 @@
     opacity:50%;
 }
 .sidebar-link.active{
-    color:#1a7;
+    color:#1CAC78;
     opacity:100%;
     background: rgb(70, 70, 70);
 }
 .sidebar-link.logout{
-    color:red;
+    color:darkred;
+    opacity: 100%;
 }
 .sidebar-link>*{
     margin-right: 0.5rem;
     white-space: nowrap;
+    font-weight:500;
 }
 .sidebar-link:hover{
    background: rgb(70, 70, 70);

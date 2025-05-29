@@ -14,7 +14,7 @@ function ContactUsForm(){
             <label htmlFor="PhoneNumber">Phone Number</label>
             <input type="text" name="" id="" placeholder='Enter Your Phone Number' required/>
             <label htmlFor="Message">Message</label>
-            <textarea name="" id="" required/>
+            <textarea name="" id="" placeholder="Enter message" required/>
             <input type="submit" className='submit' />
         </form>
         </>
