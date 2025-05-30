@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
-import api from'../api/axios-instance'
-import { GoogleMap, Marker, useJsApiLoader , MarkerClusterer } from "@react-google-maps/api";
+import api from '../api/axios-instance'
+import { GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 import './map.css'
 // import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
@@ -69,7 +69,7 @@ async function NewPropertySubmit(e) {
   e.preventDefault();
   const formattedProperty =
   {
-    propertyId: NewProperty.propertyId ,
+    propertyId: '',
     type: NewProperty.propertyType,
     address : NewProperty.address ,
       lat: NewProperty.lat ,
@@ -127,29 +127,20 @@ catch(error){
         },
       }}
     >
-      <Marker position={center} icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}} />
-      <MarkerClusterer >
-        {(clusterer)=>
-            {
+        {
               Array.isArray(properties) &&
-              console.log(properties);
-              console.log(properties[0].location.coordinates);
               properties.map((property) => (
-
               <Marker
               key={property._id}
               icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}}
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
               }
-             clusterer={clusterer}
               />
             )
             )
           }
-        }
-      </MarkerClusterer>
-      {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60),}} />)}
+      {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(40, 40),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
       <>
@@ -164,9 +155,6 @@ catch(error){
 
         <h1 className='create-property-header'>Create New Property</h1>
       <form onSubmit={NewPropertySubmit} className="new-property-form">
-        <label htmlFor="lat">Property Id</label>
-        <input type="text" placeholder="Enter property id" value={NewProperty.propertyId} onChange={(e) =>
-         setNewProperty(prev => ({...prev ,propertyId: e.target.value}))} required/>
         <label htmlFor="address">Address</label>
         <input type="text" placeholder="Enter address" value={NewProperty.address}
         onChange={(e) =>

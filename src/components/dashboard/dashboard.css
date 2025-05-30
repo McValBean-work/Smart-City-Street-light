@@ -29,3 +29,40 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding:0.5rem;
 }
+table{
+    margin: 1rem 0 0 0;
+    width:100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+th{
+    text-align: start;
+    font-weight:500;
+}
+td,th{
+    padding: 0.5rem 1rem;
+    border:2px solid white;
+    background:#bbe6d4;
+}
+.more-options{
+    padding: 0.5rem 1rem;
+    size:1rem;
+    font-weight: 700;
+    background:none;
+    outline:none;
+    border:none;
+    display: flex;
+    justify-self: flex-end;
+    align-self: center;
+
+}
+.more-options:hover{
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    
+}
+.confirm-delete{
+    background:darkred;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}

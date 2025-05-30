@@ -51,7 +51,7 @@ const handleChange = (e)=>{
         setNewUser(prev =>({...prev, role: e.target.value}))
       }
       className="authentication-input" required>
-
+        <option value="">Select role</option>
         <option value="engineer">Engineer</option>
         <option value="supervisor">Supervisor</option>
         <option value="admin">Admin</option>

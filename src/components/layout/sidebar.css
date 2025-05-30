@@ -28,12 +28,11 @@
     margin-bottom:1rem ;
     font-weight: 600;
     color: black;
-    opacity:50%;
 }
 .sidebar-link.active{
     color:#1CAC78;
     opacity:100%;
-    background: rgb(70, 70, 70);
+    background: #bbe6d4;
 }
 .sidebar-link.logout{
     color:darkred;
@@ -45,7 +44,7 @@
     font-weight:500;
 }
 .sidebar-link:hover{
-   background: rgb(70, 70, 70);
+   background: #bbe6d4;
    color:#1a7;
    opacity:100%;
 

@@ -19,7 +19,7 @@ function SideBar(){
                 <FontAwesomeIcon icon={faHome}  />
                 <span>Dashboard</span>
                 </NavLink>
-                <NavLink to="/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
+                <NavLink to="/portal/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faListCheck}  />
                 <span>Tasks</span>
                 </NavLink>
@@ -27,7 +27,7 @@ function SideBar(){
                 <FontAwesomeIcon icon={faLocationDot}  />
                 <span>Properties</span>
                 </NavLink>
-                <NavLink to="/Contact-us" title="view reports" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
+                <NavLink to="/portal/reports" title="view reports" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faFile}  />
                 <span>Reports</span>
                 </NavLink>

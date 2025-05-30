@@ -14,6 +14,8 @@ import ReportForm from './components/landing-page/report-form'
 import AdminDashboard from './components/Roles/admin/admin-dashboard'
 import SupervisorDashboard from './components/Roles/supervisor/supervisor-dashboard'
 import EngineerDashboard from './components/Roles/engineer/engineer-dashboard'
+import TasksPage from './components/Roles/tasks'
+import ReportsPage from './components/Roles/reports'
 
 function App(){
    const role = getRole();
@@ -38,6 +40,8 @@ function App(){
           ? <EngineerDashboard />
           : <Navigate to="/login" /> } />
           <Route path="/portal/properties" element={<PropertiesPage />} />
+          <Route path="/portal/tasks" element={<TasksPage />} />
+          <Route path="/portal/reports" element={<ReportsPage />} />
         </Routes>
       </Router>
     </>

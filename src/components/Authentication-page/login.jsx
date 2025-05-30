@@ -22,7 +22,6 @@ function LoginForm(){
      const response = await api.post('api/auth/login', loginCredentials);
      localStorage.setItem("authToken", response.data.token);
      localStorage.setItem("role", response.data.user.role);
-     console.log(response.data.token);
      console.log(response.data);
      console.log('Hello', getRole());
      navigate("/portal/dashboard");
