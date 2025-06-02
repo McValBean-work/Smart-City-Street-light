@@ -1,6 +1,7 @@
 import TopSection from "../../dashboard/top-section";
 import '../../dashboard/dashboard.css'
 import SideBar from "../../layout/sidebar";
+import Main from "../../layout/main";
 
 function SupervisorDashboardBody(){
 
@@ -28,7 +29,9 @@ function SupervisorDashboard(){
         <div className="dashboard-body">
 
                 <SideBar />
-                <SupervisorDashboardBody />
+                <Main className='client-main'>
+                     <SupervisorDashboardBody />
+                </Main>
         </div>
 
         </div>

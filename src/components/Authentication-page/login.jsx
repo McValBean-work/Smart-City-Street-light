@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import './authentication-page.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
 
 
 
 function LoginForm(){
   const navigate = useNavigate();
+  const [showPassword , setShowPassword] = useState(false);
   const [loginCredentials , setLoginCredentials] = useState(
     {
       email: null ,
@@ -41,7 +44,7 @@ function LoginForm(){
       <form action="" onSubmit={LoginSubmit} id="loginForm" className="authentication-page-form">
       <div className="form-data">
       <label htmlFor="loginEmail">Email</label>
-      <input type="email" 
+      <input type="email"
       id="loginEmail"
       value={loginCredentials.email}
       onChange={ (e) =>
@@ -50,8 +53,9 @@ function LoginForm(){
       placeholder="Enter email address"
       className="authentication-input"  required/>
       <label htmlFor="loginPassword">Password</label>
-      <input
-      type="password"
+      <div className='show-password-div'>
+        <input
+      type={ showPassword ? 'text' : "password" }
       id="loginPassword"
       value={loginCredentials.password}
       onChange={ (e) =>
@@ -62,6 +66,10 @@ function LoginForm(){
       maxLength="30"
       autoComplete="true"
       className="authentication-input" required/>
+        <button type="button" className='show-password-button' onClick={()=> setShowPassword(prev =>!prev)}>
+               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}  />
+              </button>
+      </div>
       <Link to="/portalForgot-password" className='form-links'>Forgot password?</Link>
       <input type="submit" value="login" className="authentication-input submit" />
        </div>

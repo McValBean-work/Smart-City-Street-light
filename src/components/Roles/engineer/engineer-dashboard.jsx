@@ -1,6 +1,7 @@
 import TopSection from "../../dashboard/top-section";
 import '../../dashboard/dashboard.css'
 import SideBar from '../../layout/sidebar'
+import Main from "../../layout/main";
 
 
 function EngineerDashboardBody(){
@@ -29,7 +30,9 @@ function EngineerDashboard(){
         <div className="dashboard-body">
 
                 <SideBar />
-                <EngineerDashboardBody />
+                <Main className='client-main'>
+                    <EngineerDashboardBody />
+                </Main>
         </div>
 
         </div>

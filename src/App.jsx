@@ -16,6 +16,7 @@ import SupervisorDashboard from './components/Roles/supervisor/supervisor-dashbo
 import EngineerDashboard from './components/Roles/engineer/engineer-dashboard'
 import TasksPage from './components/Roles/tasks'
 import ReportsPage from './components/Roles/reports'
+import ReportInfoPage from './components/Roles/report-info'
 
 function App(){
    const role = getRole();
@@ -42,6 +43,7 @@ function App(){
           <Route path="/portal/properties" element={<PropertiesPage />} />
           <Route path="/portal/tasks" element={<TasksPage />} />
           <Route path="/portal/reports" element={<ReportsPage />} />
+          <Route path="/portal/report/info" element={<ReportInfoPage />} />
         </Routes>
       </Router>
     </>

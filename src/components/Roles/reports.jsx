@@ -1,5 +1,6 @@
 import api from "../api/axios-instance"
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SideBar from "../layout/sidebar";
 import TopSection from "../dashboard/top-section";
 import Main from "../layout/main";
@@ -12,6 +13,7 @@ function Reports(){
 
      const [allReports, setAllReports] = useState([]);
      const [showPopUp , setShowPopUp] = useState(false);
+     const [showAssignTaskForm , setShowAssignTaskForm] = useState(false);
      const totalReports = allReports.length;
 
     async function getReports(){
@@ -21,27 +23,18 @@ function Reports(){
 
     }
 
-        useEffect(()=>{
+        useEffect(() => {
             getReports();
             console.log("useEffect get all tasks");
     },[]);
 
 
-    const ReportOnClick = ()=>{
-        if(showPopUp(true)){
-            setShowPopUp(false);
-        }
-        else{
-            setShowPopUp(true);
-        }
+    function ReportOnClick (children) {
+        setShowPopUp(true);
+        console.log(children);
+        localStorage.setItem('reportId', children)
     }
-     function AssignReportSubmit(children){
-        return (
-            <>
-            <div>this is {children}</div>
-            </>
-        )
-    }
+
 
 
 
@@ -57,16 +50,52 @@ function Reports(){
                 </tr>
                  { Array.isArray(allReports) &&
                      allReports.map((report)=>(
-                        <tr key={report._id} onClick={AssignReportSubmit(report._id)}>
+                        <tr key={report._id}>
                             <td>{report.propertyId}</td>
                             <td>{report.description}
-                                <button className='more-options' onClick={ReportOnClick}>:</button>
+                                <button className='more-options'
+                                onClick={() => ReportOnClick(report._id)}>
+                                : </button>
                             </td>
                         </tr>
                          ))
                          }
-                         
             </table>
+             {
+                showPopUp && (
+                    <>
+                    <div className ='pop-up-div'>
+                        <span>
+                             <Link to='/portal/report/info'>
+                             More Info
+                             </Link>
+                             </span>
+                        <span onClick={() => setShowAssignTaskForm(true)}>Assign task</span>
+                        <span className="delete">Delete report</span>
+                    </div>
+                    </>
+                )
+            }
+            { showAssignTaskForm && (
+                <>
+                    <div>
+                        <form action="">
+                            <label htmlFor="">Assign to</label>
+                            <select name="" id="">
+                                {(
+                                    <option value=""></option>
+
+                            )}
+                            </select>
+                            <label htmlFor=""></label>
+                            <input type="text" placeholder='add comment' />
+                            <label htmlFor=""></label>
+                        </form>
+                    </div>
+                </>
+            )
+
+            }
                         </div>
                 <div>THIS IS THE SECOND DIV</div>
 
@@ -84,7 +113,7 @@ function ReportsPage(){
                 <TopSection />
                 <div className='dashboard-body'>
                     <SideBar />
-                    <Main>
+                    <Main className='client-main'>
                         <Reports />
                     </Main>
                 </div>

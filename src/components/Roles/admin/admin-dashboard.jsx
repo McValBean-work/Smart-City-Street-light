@@ -11,21 +11,28 @@ function AdminDashboardBody(){
         const [engineers , setEngineers] =useState([]);
         const totalUsers = allUsers.length;
 
-        async function getUsers() {
-        const response = await api.get("api/users");
-        setAllUsers(response.data.accounts);
-        console.log(response.data.accounts);
 
-        setSupervisors(allUsers.filter( user => (user.role === "supervisor")))
-        setEngineers(allUsers.filter( user => (user.role === "engineer")))
-    }
-     console.log(supervisors);
-     console.log(engineers);
 
-        useEffect(()=>{
-            getUsers();
-            console.log("useEffect get users called");
-            },[]);
+                async function getUsers() {
+                const response = await api.get("api/users");
+                setAllUsers(response.data.accounts);
+                const FilterSupervisors = response.data.accounts.filter(user => user.role === "supervisor");
+                const FilterEngineers = response.data.accounts.filter(user => user.role === "engineer");
+                console.log(response.data.accounts);
+
+                setSupervisors(FilterSupervisors);
+                setEngineers(FilterEngineers);
+
+                console.log("this is all users set use state", allUsers);
+                console.log("this is the supervisors set use state", supervisors);
+                console.log("this is the engineers set use state", engineers);
+            }
+
+                useEffect(()=>{
+                    getUsers();
+                    console.log("useEffect get users called");
+                    },[]);
+
 
     return(
         <>
@@ -40,7 +47,7 @@ function AdminDashboardBody(){
             </tr>
              { Array.isArray(allUsers) &&
        allUsers.map((user)=>(
-        <tr>
+        <tr key={user._id}>
             <td>{user.role}</td>
             <td>{user.fullName}</td>
             <td>{user.email}</td>
@@ -66,7 +73,7 @@ function AdminDashboard(){
         <div className="dashboard-body">
 
                 <SideBar />
-                <Main>
+                <Main className='client-main'>
                     <AdminDashboardBody />
                 </Main>
         </div>

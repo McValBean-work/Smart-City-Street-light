@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 import api from '../api/axios-instance'
-import { GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
+import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
 import './map.css'
 // import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
@@ -130,13 +130,14 @@ catch(error){
         {
               Array.isArray(properties) &&
               properties.map((property) => (
-              <Marker
+              <MarkerF
               key={property._id}
               icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}}
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
               }
-              />
+              >
+              </MarkerF>
             )
             )
           }

@@ -10,11 +10,15 @@ function GetUsers(){
         async function getUsers() {
         const response = await api.get("api/users");
         setAllUsers(response.data.accounts);
+        const FilterSupervisors = response.data.accounts.filter(user => user.role === "supervisor");
+        const FilterEngineers = response.data.accounts.filter(user => user.role === "engineer");
         console.log(response.data.accounts);
 
-        setSupervisors(allUsers.filter((user) => (user.role === "supervisor")))
+        setSupervisors(FilterSupervisors);
+        setEngineers(FilterEngineers);
+        
+        console.log(allUsers);
         console.log(supervisors);
-        setEngineers(allUsers.filter((user) => (user.role === "engineer")))
         console.log(engineers);
     }
 
