@@ -18,6 +18,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 function StreetLightMap(){
 
 const [properties , setProperties] = useState([]);
+const [selectedMarker , setSelectedMarker] = useState();
 
 
 
@@ -46,6 +47,10 @@ const [NewProperty , setNewProperty] = useState(InitialNewPropertyState
 
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
 const [ShowToast , setShowToast] = useState(false);
+
+function HandleMarkerClick(children){
+  setSelectedMarker(children);
+}
 
 
 
@@ -136,12 +141,21 @@ catch(error){
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
               }
-              >
+              onClick={() => HandleMarkerClick(property._id)}
+              >{
+                selectedMarker && selectedMarker === property._id &&(
+                <InfoWindowF >
+                      <p>This property, {property.propertyId} is {property.state}</p>
+                </InfoWindowF>
+
+                )
+
+              }
               </MarkerF>
             )
             )
           }
-      {ShowNewPropertyForm && (<Marker position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(40, 40),}} />)}
+      {ShowNewPropertyForm && (<MarkerF position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(40, 40),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
       <>

@@ -3,7 +3,7 @@ import api from "../api/axios-instance";
 
 function GetUsers(){
 
-    const [allUsers , setAllUsers] = useState([]);
+        const [allUsers , setAllUsers] = useState([]);
         const [supervisors , setSupervisors] =useState([]);
         const [engineers , setEngineers] =useState([]);
 
@@ -16,7 +16,7 @@ function GetUsers(){
 
         setSupervisors(FilterSupervisors);
         setEngineers(FilterEngineers);
-        
+
         console.log(allUsers);
         console.log(supervisors);
         console.log(engineers);
@@ -26,6 +26,8 @@ function GetUsers(){
             getUsers();
             console.log("useEffect get users called");
             },[]);
+
+            return allUsers;
 
 }
 

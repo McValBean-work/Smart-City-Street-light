@@ -1,12 +1,14 @@
 import Main from'../layout/main'
 import { useState } from 'react'
 import api from '../api/axios-instance'
+import { toast } from 'react-toastify';
 
 
 function ReportForm (){
 const initialState = {
         propertyId:null,
         description: null,
+        media: ""
     };
 
     const [reportFormData , setReportFormData] = useState(initialState
@@ -24,8 +26,16 @@ e.preventDefault();
 console.log(reportFormData);
 setReportFormData(initialState);
 
+try {
 const response = await api.post('api/report', reportFormData);
 console.log(response.data);
+toast.success(response.data);
+}
+catch(error){
+    toast.error(error.response.data);
+
+}
+
 
 }
 

@@ -22,7 +22,6 @@ function ReportInfoContent(){
     },[])
     return (
         <>
-            <div>
                 {reportDetails && (
                     <>
                     <div className='report-info-content'>
@@ -33,7 +32,6 @@ function ReportInfoContent(){
                 )
 
                 }
-            </div>
         </>
     )
 }

@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import getRole from './components/Authentication-page/auth'
 import HomePage from './components/landing-page/home-page'
@@ -16,7 +18,10 @@ import SupervisorDashboard from './components/Roles/supervisor/supervisor-dashbo
 import EngineerDashboard from './components/Roles/engineer/engineer-dashboard'
 import TasksPage from './components/Roles/tasks'
 import ReportsPage from './components/Roles/reports'
+import UserInfoPage from './components/Roles/user-info'
 import ReportInfoPage from './components/Roles/report-info'
+import PropertyInfoPage from './components/Roles/property-info';
+
 
 function App(){
    const role = getRole();
@@ -44,8 +49,22 @@ function App(){
           <Route path="/portal/tasks" element={<TasksPage />} />
           <Route path="/portal/reports" element={<ReportsPage />} />
           <Route path="/portal/report/info" element={<ReportInfoPage />} />
+          <Route path="/portal/user/info" element={<UserInfoPage />} />
+          <Route path="/portal/property/info" element= {<PropertyInfoPage />} />
+
         </Routes>
       </Router>
+      <ToastContainer
+      position="bottom-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
     </>
   )
 }

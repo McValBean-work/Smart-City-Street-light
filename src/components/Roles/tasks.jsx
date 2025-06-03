@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import SideBar from "../layout/sidebar";
 import TopSection from "../dashboard/top-section";
 import Main from "../layout/main";
+import GetUsers from "./users";
 import '../dashboard/dashboard.css'
 
 
@@ -32,8 +33,10 @@ function Tasks(){
         console.log(response.data);
     }
 
-    function ReportOnClick(){
+    function TaskOnClick(children){
         setShowPopUp(prev => !prev);
+        console.log(children);
+        localStorage.setItem('taskId', children);
     }
 
 
@@ -45,7 +48,7 @@ function Tasks(){
             <table>
                 <thead>
                     <tr>
-                        <th>Task ID</th>
+                        <th>Property ID</th>
                         <th>Assigned By</th>
                         <th>Assigned to</th>
                         <th>Status</th>
@@ -55,11 +58,15 @@ function Tasks(){
 { Array.isArray(allTasks) &&
                      allTasks.map((task)=>(
                         <tr key={task._id}>
-                            <td>{task._id}</td>
+                            <td>{task.property.propertyId}</td>
+                            <td>{task.assignedBy.fullName}</td>
                             <td>{task.assignedTo.fullName}</td>
-                            <td>{task.assignedTo._id}</td>
-                            <td>{task.status} </td>
-                            <button className='more-options' onClick={ReportOnClick}>:</button>
+                            <td>
+                                <span>
+                                    {task.status}
+                                    <button className='more-options' onClick={() =>TaskOnClick}>:</button>
+                                </span>
+                            </td>
                             {showPopUp && (
                                 <>
                                 <div>
@@ -72,7 +79,7 @@ function Tasks(){
                                 </div>
                                 </>
                             )}
-                    {showDeletePrompt && (
+                            {showDeletePrompt && (
                     <>
                     <div className="confirm-delete-task">
                         <p>Are you sure you want to delete this task</p>
@@ -83,12 +90,14 @@ function Tasks(){
                     </>
                  )
             }
+
                         </tr>
                          ))
                          }
+                          
+
                 </tbody>
-
-
+                        
             </table>
                         </div>
                 <div>THIS IS THE SECOND DIV</div>

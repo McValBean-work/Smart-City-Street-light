@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SideBar from "../layout/sidebar";
 import TopSection from "../dashboard/top-section";
 import Main from "../layout/main";
+import GetUsers from './users'
 import '../dashboard/dashboard.css'
 
 
@@ -14,7 +15,11 @@ function Reports(){
      const [allReports, setAllReports] = useState([]);
      const [showPopUp , setShowPopUp] = useState(false);
      const [showAssignTaskForm , setShowAssignTaskForm] = useState(false);
+     const [activeReportId , setActiveReportId] = useState();
      const totalReports = allReports.length;
+
+
+    const Engineers = GetUsers().filter(user => user.role === 'engineer');
 
     async function getReports(){
         const res = await api.get("api/reports");
@@ -30,7 +35,8 @@ function Reports(){
 
 
     function ReportOnClick (children) {
-        setShowPopUp(true);
+        setShowPopUp(prev => !prev);
+        setActiveReportId(children);
         console.log(children);
         localStorage.setItem('reportId', children)
     }
@@ -52,44 +58,55 @@ function Reports(){
                      allReports.map((report)=>(
                         <tr key={report._id}>
                             <td>{report.propertyId}</td>
-                            <td>{report.description}
-                                <button className='more-options'
+                            <td>
+                                <span>
+                                {report.description}
+                                <span>
+                                    <button className='more-options'
                                 onClick={() => ReportOnClick(report._id)}>
-                                : </button>
-                            </td>
-                        </tr>
-                         ))
-                         }
-            </table>
-             {
-                showPopUp && (
+                                :
+                                </button>
+                               {showPopUp && activeReportId === report._id &&  (
                     <>
                     <div className ='pop-up-div'>
+                        <span onClick={() => setShowAssignTaskForm(true)}>
+                            Assign task
+                        </span>
+                        <span className="delete">Delete report</span>
                         <span>
                              <Link to='/portal/report/info'>
                              More Info
                              </Link>
                              </span>
-                        <span onClick={() => setShowAssignTaskForm(true)}>Assign task</span>
-                        <span className="delete">Delete report</span>
                     </div>
                     </>
                 )
             }
+                                </span>
+                            </span>
+                            </td>
+                        </tr>
+                         ))
+                         }
+            </table>
+
             { showAssignTaskForm && (
                 <>
                     <div>
                         <form action="">
                             <label htmlFor="">Assign to</label>
                             <select name="" id="">
-                                {(
-                                    <option value=""></option>
+                                {Array.isArray(Engineers) &&
+                                Engineers.map((engineer) =>
+                                    <option key={engineer._id} value="">
+                                        {engineer.fullName}
+                                        </option>
 
                             )}
                             </select>
-                            <label htmlFor=""></label>
-                            <input type="text" placeholder='add comment' />
-                            <label htmlFor=""></label>
+                            <label htmlFor="comments">Comments</label>
+                            <input type="text" placeholder='add comments' />
+                            <input type="submit"  />
                         </form>
                     </div>
                 </>
