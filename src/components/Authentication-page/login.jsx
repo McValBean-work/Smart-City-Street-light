@@ -9,7 +9,7 @@ import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
 
 
 
-function LoginForm(){
+function LoginForm({ onLogin = () => {} }){
   const navigate = useNavigate();
   const [showPassword , setShowPassword] = useState(false);
   const [loginCredentials , setLoginCredentials] = useState(
@@ -27,6 +27,7 @@ function LoginForm(){
      localStorage.setItem("role", response.data.user.role);
      console.log(response.data);
      console.log('Hello', getRole());
+     onLogin();
      navigate("/portal/dashboard");
     }
     catch(error)
@@ -86,12 +87,12 @@ function LoginForm(){
     );
   }
 
-  function LoginPage(){
+  function LoginPage({ onLogin }){
       return(
           <>
           <div className="authentication-page-grid">
           <div className="landing-page-form-div">
-          <LoginForm />
+          <LoginForm onLogin={onLogin} />
           </div>
           <AuthenticationHero />
           </div>

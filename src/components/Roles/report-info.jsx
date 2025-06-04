@@ -6,8 +6,6 @@ import Main from '../layout/main';
 import '../dashboard/dashboard.css'
 
 function ReportInfoContent(){
-    const [reportDetails , setReportDetails] = useState([]);
-
     const reportId = localStorage.getItem("reportId");
 
     useEffect(() => {
@@ -20,13 +18,56 @@ function ReportInfoContent(){
         getDetails();
         console.log('ueEffect get report details was called');
     },[])
+
+    const [reportDetails , setReportDetails] = useState([]);
+    const [showAssignTaskForm , setShowAssignTaskForm] = useState(false);
+
+    const InitialNewTaskState ={
+        reportId: reportDetails.reportId,
+        propertyId: reportDetails.propertyId,
+        engineerId: null,
+        assignedBy: null
+
+    };
+    //const [newTask , setNewTask] = useState(InitialNewTaskState);
+
+    
+
+    const AssignTaskSubmit = (e) => {
+        e.preventDefault();
+
+    }
+
+    
     return (
         <>
                 {reportDetails && (
                     <>
                     <div className='report-info-content'>
                         <h1>{reportDetails.propertyId}</h1>
+                        <div>
+                            <p>{reportDetails.description}</p>
+                            <p>{reportDetails.submittedAt}</p>
+                        </div>
+
+                        <div>
+                            <button onClick={() => setShowAssignTaskForm(true)}>
+                                Assign as task
+                                </button>
+                                <button>
+                                    Delete Report
+                                </button>
+                        </div>
                     </div>
+                    { showAssignTaskForm && (
+                        <>
+                        <form onSubmit={AssignTaskSubmit}>
+                            <label htmlFor="">report Id</label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                        </form>
+                        </>
+                    )}
 
                     </>
                 )

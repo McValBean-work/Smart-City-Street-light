@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom'
 import './top-section.css'
-import getRole from '../Authentication-page/auth';
+import getUser from '../Authentication-page/auth';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import OmniStreetLightIcon from '../../assets/images/omni-logo.webp'
 
 function TopSection(){
-    const role = getRole();
+    const role = getUser();
     return(
         <>
         <div className='top-section'>

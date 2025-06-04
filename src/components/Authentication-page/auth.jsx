@@ -1,6 +1,12 @@
-function getRole(){
+export default function getRole(){
 
     return localStorage.getItem("role");
 }
 
-export default getRole;
+export function isAuthenticated(){
+
+    return !!localStorage.getItem("authToken");
+}
+
+ isAuthenticated;
+

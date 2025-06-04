@@ -2,7 +2,7 @@ import  { useEffect, useState } from "react";
 import api from '../api/axios-instance'
 import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
 import './map.css'
-// import getRole from "../Authentication-page/auth";
+// import getUser from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

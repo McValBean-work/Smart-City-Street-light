@@ -7,7 +7,7 @@ import { faLocationDot , faHome , faFile ,faRightFromBracket, faUserPlus, faList
 function SideBar(){
 
     const logout=()=>{
-        localStorage.setItem("role", '');
+        localStorage.clear();
         console.log(localStorage.getItem("role"));
     };
 

@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
+import {useEffect , useState} from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import getRole from './components/Authentication-page/auth'
+import ProtectedRoute from './components/Roles/protected-routes';
+import UnauthorizedPage from './components/Roles/unauthorized';
 import HomePage from './components/landing-page/home-page'
 import LandingPage from './components/landing-page/landing-page'
 import AboutPage from './components/about/about-page'
@@ -24,7 +27,23 @@ import PropertyInfoPage from './components/Roles/property-info';
 
 
 function App(){
-   const role = getRole();
+
+  const [role, setRole] = useState(null);
+
+  // Get role on initial mount (e.g., refresh)
+  useEffect(() => {
+    const storedRole = getRole();
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []);
+
+  // Update role after login
+  const handleLogin = () => {
+    const updatedRole = getRole();
+    setRole(updatedRole);
+  };
+
   return (
     <>
       <Router>
@@ -34,9 +53,14 @@ function App(){
           <Route path="/about" element={<AboutPage />}/>
           <Route path="/contact-Us" element={<ContactUsPage />}/>
           <Route path="/report" element={<ReportForm />} />
-          <Route path="/login" element={<LoginPage />}/>
-          <Route path="/sign-Up" element={<SignUpPage />}/>
+          <Route path="/login" element={<LoginPage onLogin ={handleLogin} />}/>
+          <Route path="/sign-up" element={
+            <ProtectedRoute allowedUsers={["admin"]} >
+              <SignUpPage />
+            </ProtectedRoute>
+            } />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
           <Route path="/portal/dashboard" element={
           role === "admin"
            ? <AdminDashboard />
@@ -45,12 +69,35 @@ function App(){
           :role === "engineer"
           ? <EngineerDashboard />
           : <Navigate to="/login" /> } />
-          <Route path="/portal/properties" element={<PropertiesPage />} />
-          <Route path="/portal/tasks" element={<TasksPage />} />
-          <Route path="/portal/reports" element={<ReportsPage />} />
-          <Route path="/portal/report/info" element={<ReportInfoPage />} />
-          <Route path="/portal/user/info" element={<UserInfoPage />} />
-          <Route path="/portal/property/info" element= {<PropertyInfoPage />} />
+          <Route path="/portal/properties" element={
+            <ProtectedRoute allowedUsers={["admin" ,"supervisor"]} >
+              <PropertiesPage />
+            </ProtectedRoute>
+            } />
+          <Route path="/portal/tasks" element={
+          <ProtectedRoute allowedUsers={["admin" ,"supervisor", "engineer"]} >
+              <TasksPage />
+          </ProtectedRoute>
+            } />
+          <Route path="/portal/reports" element={
+            <ProtectedRoute allowedUsers={["admin" ,"supervisor"]} >
+              <ReportsPage />
+            </ProtectedRoute>
+            } />
+          <Route path="/portal/report/info" element={
+           <ProtectedRoute allowedUsers={["admin" ,"supervisor"]} >
+            <ReportInfoPage />
+           </ProtectedRoute>} />
+          <Route path="/portal/user/info" element={
+            <ProtectedRoute allowedUsers={["admin"]} >
+              <UserInfoPage />
+            </ProtectedRoute>
+            } />
+          <Route path="/portal/property/info" element= {
+           <ProtectedRoute allowedUsers={["admin" , "supervisor"]} >
+            <PropertyInfoPage />
+           </ProtectedRoute>
+            } />
 
         </Routes>
       </Router>

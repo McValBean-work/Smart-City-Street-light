@@ -11,8 +11,6 @@ import '../dashboard/dashboard.css'
 function Tasks(){
 
      const [allTasks, setAllTasks] = useState([]);
-     const [showPopUp , setShowPopUp] = useState(false);
-     const [showDeletePrompt , setShowDeletePrompt] = useState(false);
      const totalTasks = allTasks.length;
 
         useEffect(()=>{
@@ -34,7 +32,6 @@ function Tasks(){
     }
 
     function TaskOnClick(children){
-        setShowPopUp(prev => !prev);
         console.log(children);
         localStorage.setItem('taskId', children);
     }
@@ -64,40 +61,16 @@ function Tasks(){
                             <td>
                                 <span>
                                     {task.status}
-                                    <button className='more-options' onClick={() =>TaskOnClick}>:</button>
+                                    <Link to='/portal/task/info' title='view more'
+                                    className='more-options'
+                                    onClick={() =>TaskOnClick}>:</Link>
                                 </span>
                             </td>
-                            {showPopUp && (
-                                <>
-                                <div>
-                                    <p>Update task</p>
-                                    <span
-                                    onClick={() => (
-                                        setShowDeletePrompt(true))}>
-                                        Delete task
-                                    </span>
-                                </div>
-                                </>
-                            )}
-                            {showDeletePrompt && (
-                    <>
-                    <div className="confirm-delete-task">
-                        <p>Are you sure you want to delete this task</p>
-                        <button
-                        className='confirm-delete'
-                        onClick={ConfirmDelete(task._id)}> Confirm delete</button>
-                    </div>
-                    </>
-                 )
-            }
-
                         </tr>
                          ))
-                         }
-                          
+                        }
 
                 </tbody>
-                        
             </table>
                         </div>
                 <div>THIS IS THE SECOND DIV</div>
