@@ -2,7 +2,7 @@ import  { useEffect, useState } from "react";
 import api from '../api/axios-instance'
 import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
 import './map.css'
-// import getUser from "../Authentication-page/auth";
+import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,8 +19,14 @@ function StreetLightMap(){
 
 const [properties , setProperties] = useState([]);
 const [selectedMarker , setSelectedMarker] = useState();
+const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+const [showUpdatePrompt, setShowUpdatePrompt] = useState(false);
+const [currentPropertyId, setCurrentPropertyId] = useState(null);
+const [updatedState, setUpdatedState] = useState({
+  state:null
+})
 
-
+const role = getRole();
 
 
   async function getProperties(){
@@ -53,6 +59,49 @@ function HandleMarkerClick(children){
 }
 
 
+async function UpdateStateSubmit(e){
+  e.preventDefault()
+
+  try{
+    const res = await api.patch(`api/properties/${currentPropertyId}}`, updatedState);
+    console.log(res.data)
+
+    setUpdatedState({
+      state:null
+    });
+    await getProperties();
+    setShowDeletePrompt(false);
+setShowUpdatePrompt(false);
+setCurrentPropertyId(null);
+
+
+  }
+  catch(error){
+    console.log(error);
+  }
+
+}
+async function DeletePropertySubmit(e){
+  e.preventDefault()
+
+  try{
+    const res = await api.delete(`api/properties/${currentPropertyId}`);
+    console.log(res.data);
+
+    await getProperties();
+    setShowDeletePrompt(false);
+setShowUpdatePrompt(false);
+setCurrentPropertyId(null);
+
+
+
+  }
+  catch(error){
+    console.log(error);
+  }
+
+}
+
 
 function MapOnclick(e) {
 const lat= e.latLng.lat();
@@ -60,6 +109,7 @@ const lng = e.latLng.lng();
 
 setNewProperty(prev => ({ ...prev, lat, lng }));
 setShowNewPropertyForm(true);
+
 
 
 
@@ -135,6 +185,7 @@ catch(error){
         {
               Array.isArray(properties) &&
               properties.map((property) => (
+                <>
               <MarkerF
               key={property._id}
               icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}}
@@ -142,19 +193,72 @@ catch(error){
                 lng:property.location.coordinates.lng}
               }
               onClick={() => HandleMarkerClick(property._id)}
-              >{
+              >
+              </MarkerF>
+               {
                 selectedMarker && selectedMarker === property._id &&(
-                <InfoWindowF >
-                      <p>This property, {property.propertyId} is {property.state}</p>
+                <InfoWindowF
+                onCloseClick={() => setSelectedMarker(null)}
+                position={{lat:property.location.coordinates.lat,
+                lng:property.location.coordinates.lng}
+              } >
+
+                  {role === 'admin' && (
+                    <>
+                    <p>This property, {property.propertyId} is {property.state}</p>
+                      <button onClick={()=>
+                        {setShowUpdatePrompt(true);             setCurrentPropertyId(property._id)}}>
+                          Update status
+                        </button>
+                        <button onClick={()=>
+                          {setShowDeletePrompt(true);
+                          setCurrentPropertyId(property._id)}}>
+                        Delete
+                        </button>
+                        </>
+                      )
+
+                      }
                 </InfoWindowF>
 
                 )
 
               }
-              </MarkerF>
+              </>
+
             )
             )
           }
+          {
+  showDeletePrompt && (
+    <>
+    <div>
+      <span>Are you sure you want to delete this property?</span>
+      <button onClick={DeletePropertySubmit}>Confirm delete</button>
+    </div>
+    </>
+  )
+}
+{
+  showUpdatePrompt &&(
+    <>
+    <div>
+      <select name="updatedState"
+      value={updatedState.state}
+      onChange ={ (e) =>(
+      setUpdatedState(prev =>({...prev, state: e.target.value})))}
+    id="">
+    <option value="working">working</option>
+    <option value="damaged">damaged</option>
+    </select>
+    <button onClick={UpdateStateSubmit}>
+      Update State
+    </button>
+
+    </div>
+    </>
+  )
+}
       {ShowNewPropertyForm && (<MarkerF position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(40, 40),}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
@@ -201,6 +305,7 @@ catch(error){
   {ShowToast &&(
               <span className='new-property-toast'> {NewProperty.propertyType} added successfully</span>
 )}
+
       </div>
     </div>
     </div>

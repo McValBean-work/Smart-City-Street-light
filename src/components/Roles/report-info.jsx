@@ -62,9 +62,12 @@ function ReportInfoContent(){
                     { showAssignTaskForm && (
                         <>
                         <form onSubmit={AssignTaskSubmit}>
-                            <label htmlFor="">report Id</label>
-                            <label htmlFor=""></label>
-                            <label htmlFor=""></label>
+                            <label htmlFor="">Assign to</label>
+                            <select name="engineers" id="">
+                                {
+                                    
+                                }
+                            </select>
                         </form>
                         </>
                     )}

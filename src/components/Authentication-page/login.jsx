@@ -23,6 +23,7 @@ function LoginForm({ onLogin = () => {} }){
     try{
      console.log(loginCredentials);
      const response = await api.post('api/auth/login', loginCredentials);
+     localStorage.setItem("userData", JSON.stringify(response.data.user));
      localStorage.setItem("authToken", response.data.token);
      localStorage.setItem("role", response.data.user.role);
      console.log(response.data);

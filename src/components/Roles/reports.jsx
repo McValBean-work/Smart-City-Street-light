@@ -1,142 +1,221 @@
-import api from "../api/axios-instance"
+import api from "../api/axios-instance";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SideBar from "../layout/sidebar";
 import TopSection from "../dashboard/top-section";
 import Main from "../layout/main";
-import GetUsers from './users'
-import '../dashboard/dashboard.css'
+import GetUsers from './users';
+import '../dashboard/dashboard.css';
+
+function Reports() {
+  const CurrentUser = JSON.parse(localStorage.getItem("userData"));
+  console.log(CurrentUser)
+
+  const InitialNewTaskState = {
+    reportId: null,
+    propertyId: null,
+    engineerId: "",
+    assignedBy: CurrentUser.fullName,
+  };
+
+  const [newTask, setNewTask] = useState(InitialNewTaskState);
+  const [allReports, setAllReports] = useState([]);
+  const [allProperties, setAllProperties] = useState([]);
+  const [showPopUpId, setShowPopUpId] = useState(null);
+  const [showAssignTaskForm, setShowAssignTaskForm] = useState(false);
+  const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+  const [activeReportId, setActiveReportId] = useState(null);
+
+  const Engineers = GetUsers().filter(user => user.role === 'engineer');
+  const totalReports = allReports.length;
+
+  useEffect(() => {
+    getReports();
+  }, []);
+
+  async function getReports() {
+    try {
+      const res = await api.get("api/reports");
+      setAllReports(res.data.reports);
+      console.log(res.data.reports)
+    } catch (error) {
+      console.log("Error fetching reports:", error);
+    }
+  }
+
+  useEffect(() => {
+    getProperties();
+  }, []);
+
+  async function getProperties() {
+    try {
+      const res = await api.get("api/properties");
+      setAllProperties(res.data);
+      console.log(res.data)
+    } catch (error) {
+      console.log("Error fetching properties:", error);
+    }
+  }
+
+  function handleReportOptionsClick(reportId, propertyId) {
+    console.log(propertyId);
+    const property = allProperties.filter(p => p.propertyId === `${propertyId}`)
+  console.log(property);
+    setNewTask(prev => ({ ...prev, reportId,  property}));
 
 
+    setShowPopUpId(prev => (prev === reportId ? null : reportId));
+    localStorage.setItem('reportId', reportId);
+  }
 
-function Reports(){
+  async function handleAssignTaskSubmit(e) {
+    e.preventDefault();
+    console.log(activeReportId);
 
+    try {
+        setNewTask({
+      reportId: newTask.reportId,
+      propertyId: newTask.propertyId,
+      engineerId: newTask.engineerId,
+      assignedBy: CurrentUser?.fullName || "admin",
+    });
+    console.log(newTask)
+      const response = await api.post("api/tasks/assign", newTask);
+      console.log("Assigned Task:", response.data);
 
-     const [allReports, setAllReports] = useState([]);
-     const [showPopUp , setShowPopUp] = useState(false);
-     const [showAssignTaskForm , setShowAssignTaskForm] = useState(false);
-     const [activeReportId , setActiveReportId] = useState();
-     const totalReports = allReports.length;
-
-
-    const Engineers = GetUsers().filter(user => user.role === 'engineer');
-
-    async function getReports(){
-        const res = await api.get("api/reports");
-        setAllReports(res.data.reports);
-        console.log(res.data.reports);
-
+      setNewTask(InitialNewTaskState);
+        setShowAssignTaskForm(false);
+        setShowPopUpId(null);
+        setActiveReportId(null);
+    } catch (error) {
+      console.log("Assign Task Error:", error);
     }
 
-        useEffect(() => {
-            getReports();
-            console.log("useEffect get all tasks");
-    },[]);
 
+  }
 
-    function ReportOnClick (children) {
-        setShowPopUp(prev => !prev);
-        setActiveReportId(children);
-        console.log(children);
-        localStorage.setItem('reportId', children)
+  async function handleDeleteReport() {
+    try {
+      const response = await api.delete(`api/report/${activeReportId}`);
+      console.log("Deleted report:", response.data);
+      getReports();
+    } catch (error) {
+      console.log("Delete Report Error:", error);
     }
 
+    setShowDeletePrompt(false);
+    setShowPopUpId(null);
+    setActiveReportId(null);
+  }
 
-
-
-    return(
-        <>
-        <div className='dashboard-layout'>
-            <div>
+  return (
+    <div className='dashboard-layout'>
+        <div>
             <h1>All reports : {totalReports}</h1>
-            <table>
-                <tr>
-                    <th>Property Id</th>
-                    <th>Description</th>
-                </tr>
-                 { Array.isArray(allReports) &&
-                     allReports.map((report)=>(
-                        <tr key={report._id}>
-                            <td>{report.propertyId}</td>
-                            <td>
-                                <span>
-                                {report.description}
-                                <span>
-                                    <button className='more-options'
-                                onClick={() => ReportOnClick(report._id)}>
-                                :
-                                </button>
-                               {showPopUp && activeReportId === report._id &&  (
-                    <>
-                    <div className ='pop-up-div'>
-                        <span onClick={() => setShowAssignTaskForm(true)}>
-                            Assign task
-                        </span>
-                        <span className="delete">Delete report</span>
-                        <span>
-                             <Link to='/portal/report/info'>
-                             More Info
-                             </Link>
-                             </span>
+      <table>
+        <thead>
+          <tr>
+            <th>Property Id</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(allReports) && allReports.map(report => (
+            <tr key={report._id}>
+              <td>{report.propertyId}</td>
+              <td>
+                <span>
+                  {report.description}
+                  <button
+                    className='more-options'
+                    onClick={() => {handleReportOptionsClick(report._id, report.propertyId); setActiveReportId(report._id)}}
+                  >
+                    :
+                  </button>
+
+                  {showPopUpId === report._id && (
+                    <div className='pop-up-div'>
+                      <span onClick={() => {
+                        setShowAssignTaskForm(true);
+                        setShowPopUpId(null);
+                      }}>
+                        Assign task
+                      </span>
+                      <span
+                        className="delete"
+                        onClick={() => {
+                          setShowDeletePrompt(true);
+                          setShowPopUpId(null);
+                        }}
+                      >
+                        Delete report
+                      </span>
+                      <span>
+                        <Link to='/portal/report/info'>More Info</Link>
+                      </span>
                     </div>
-                    </>
-                )
-            }
-                                </span>
-                            </span>
-                            </td>
-                        </tr>
-                         ))
-                         }
-            </table>
-
-            { showAssignTaskForm && (
-                <>
-                    <div>
-                        <form action="">
-                            <label htmlFor="">Assign to</label>
-                            <select name="" id="">
-                                {Array.isArray(Engineers) &&
-                                Engineers.map((engineer) =>
-                                    <option key={engineer._id} value="">
-                                        {engineer.fullName}
-                                        </option>
-
-                            )}
-                            </select>
-                            <label htmlFor="comments">Comments</label>
-                            <input type="text" placeholder='add comments' />
-                            <input type="submit"  />
-                        </form>
-                    </div>
-                </>
-            )
-
-            }
-                        </div>
-                <div>THIS IS THE SECOND DIV</div>
+                  )}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
         </div>
 
-        </>
-    )
+      {/* Assign Task Form */}
+      {showAssignTaskForm && (
+        <div className="assign-task-form">
+          <form onSubmit={handleAssignTaskSubmit}>
+            <label>Assign to: {activeReportId}</label>
+            <select
+              name="engineerId"
+              value={newTask.engineerId}
+              onChange={(e) =>
+                setNewTask(prev => ({ ...prev, engineerId: e.target.value }))
+              }
+            >
+              <option value="">Select Engineer</option>
+              {Engineers.map(engineer => (
+                <option key={engineer._id} value={engineer._id}>
+                  {engineer.fullName}
+                </option>
+              ))}
+            </select>
+            <input type="submit" value="Assign" />
+          </form>
+        </div>
+      )}
+
+      {/* Delete Confirmation Prompt */}
+      {showDeletePrompt && (
+        <div className="confirm-delete">
+          <span>Are you sure you want to delete this report?</span>
+          <button
+            onClick={handleDeleteReport}
+            className="confirm-delete-button"
+          >
+            Confirm Delete
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
 
-function ReportsPage(){
-
-    return(
-        <>
-            <div className="dashboard">
-                <TopSection />
-                <div className='dashboard-body'>
-                    <SideBar />
-                    <Main className='client-main'>
-                        <Reports />
-                    </Main>
-                </div>
-                </div>
-        </>
-    )
+function ReportsPage() {
+  return (
+    <div className="dashboard">
+      <TopSection />
+      <div className='dashboard-body'>
+        <SideBar />
+        <Main className='client-main'>
+          <Reports />
+        </Main>
+      </div>
+    </div>
+  );
 }
 
 export default ReportsPage;

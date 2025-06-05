@@ -68,8 +68,7 @@ function Tasks(){
                             </td>
                         </tr>
                          ))
-                        }
-
+}
                 </tbody>
             </table>
                         </div>

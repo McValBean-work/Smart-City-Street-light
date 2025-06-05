@@ -73,10 +73,28 @@ td span{
     border-radius: 0.5rem;
 }
 .confirm-delete{
+    position: absolute;
+    z-index: auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+}
+.confirm-delete> *{
+    white-space: nowrap;
+    margin-bottom: 1rem;
+}
+.confirm-delete-button{
+    width: min-content;
     background:darkred;
+    color:white;
+    font-weight:500;
     border-radius: 8px;
     padding: 0.5rem 1rem;
 }
+
 .report-info-content{
     display:flex;
     width:100%;
