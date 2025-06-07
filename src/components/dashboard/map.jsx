@@ -58,12 +58,29 @@ function HandleMarkerClick(children){
   setSelectedMarker(children);
 }
 
+async function HandleUpdateStatusOnClick(propertyId){
+  setCurrentPropertyId(propertyId);
+  console.log(propertyId)
+  const res = await api.get(`api/properties/${propertyId}`);
+  console.log(res.data)
+  setShowUpdatePrompt(true);
+
+}
+async function HandleDeleteButtonOnClick(propertyId){
+  setCurrentPropertyId(propertyId);
+  console.log(propertyId)
+  const res = await api.get(`api/properties/${propertyId}`);
+  console.log(res.data)
+  setShowDeletePrompt(true);
+
+}
 
 async function UpdateStateSubmit(e){
   e.preventDefault()
+  console.log(currentPropertyId)
 
   try{
-    const res = await api.patch(`api/properties/${currentPropertyId}}`, updatedState);
+    const res = await api.patch(`api/properties/${currentPropertyId}`,updatedState);
     console.log(res.data)
 
     setUpdatedState({
@@ -83,6 +100,7 @@ setCurrentPropertyId(null);
 }
 async function DeletePropertySubmit(e){
   e.preventDefault()
+  console.log(currentPropertyId)
 
   try{
     const res = await api.delete(`api/properties/${currentPropertyId}`);
@@ -192,11 +210,12 @@ catch(error){
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
               }
-              onClick={() => HandleMarkerClick(property._id)}
+              onClick={() => {HandleMarkerClick(property._id);
+}}
               >
               </MarkerF>
                {
-                selectedMarker && selectedMarker === property._id &&(
+                selectedMarker === property._id &&(
                 <InfoWindowF
                 onCloseClick={() => setSelectedMarker(null)}
                 position={{lat:property.location.coordinates.lat,
@@ -206,13 +225,10 @@ catch(error){
                   {role === 'admin' && (
                     <>
                     <p>This property, {property.propertyId} is {property.state}</p>
-                      <button onClick={()=>
-                        {setShowUpdatePrompt(true);             setCurrentPropertyId(property._id)}}>
+                      <button onClick={()=>{HandleUpdateStatusOnClick(property._id)}}>
                           Update status
                         </button>
-                        <button onClick={()=>
-                          {setShowDeletePrompt(true);
-                          setCurrentPropertyId(property._id)}}>
+                        <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}>
                         Delete
                         </button>
                         </>
@@ -232,9 +248,15 @@ catch(error){
           {
   showDeletePrompt && (
     <>
-    <div>
+    <div className='form-overlay'>
+      <div onClick={() => setShowDeletePrompt(false)}>
+        x
+      </div>
+      <div>
       <span>Are you sure you want to delete this property?</span>
       <button onClick={DeletePropertySubmit}>Confirm delete</button>
+    </div>
+
     </div>
     </>
   )
@@ -242,7 +264,11 @@ catch(error){
 {
   showUpdatePrompt &&(
     <>
-    <div>
+    <div className='form-overlay'>
+      <div onClick={() => setShowUpdatePrompt(false)}>
+        x
+      </div>
+      <div>
       <select name="updatedState"
       value={updatedState.state}
       onChange ={ (e) =>(
@@ -254,6 +280,8 @@ catch(error){
     <button onClick={UpdateStateSubmit}>
       Update State
     </button>
+
+    </div>
 
     </div>
     </>

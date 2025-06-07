@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
+import { toast } from "react-toastify";
 
 
 
@@ -28,12 +29,16 @@ function LoginForm({ onLogin = () => {} }){
      localStorage.setItem("role", response.data.user.role);
      console.log(response.data);
      console.log('Hello', getRole());
+     setTimeout(()=> {
+      toast.success(response.data)
+     },3000)
      onLogin();
      navigate("/portal/dashboard");
     }
     catch(error)
     {
       console.log(error);
+      toast.error(error);
     }
 
 

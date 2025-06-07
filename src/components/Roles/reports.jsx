@@ -8,14 +8,14 @@ import GetUsers from './users';
 import '../dashboard/dashboard.css';
 
 function Reports() {
-  const CurrentUser = JSON.parse(localStorage.getItem("userData"));
+  const CurrentUser = JSON.parse(localStorage.getItem("userData") || "{}");
   console.log(CurrentUser)
 
   const InitialNewTaskState = {
     reportId: null,
     propertyId: null,
     engineerId: "",
-    assignedBy: CurrentUser.fullName,
+    assignedBy: CurrentUser.id,
   };
 
   const [newTask, setNewTask] = useState(InitialNewTaskState);
@@ -59,9 +59,12 @@ function Reports() {
 
   function handleReportOptionsClick(reportId, propertyId) {
     console.log(propertyId);
-    const property = allProperties.filter(p => p.propertyId === `${propertyId}`)
+    console.log(reportId);
+    setActiveReportId(reportId);
+    const property = allProperties.find(p => p.propertyId === propertyId);
+setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
+
   console.log(property);
-    setNewTask(prev => ({ ...prev, reportId,  property}));
 
 
     setShowPopUpId(prev => (prev === reportId ? null : reportId));
@@ -77,7 +80,7 @@ function Reports() {
       reportId: newTask.reportId,
       propertyId: newTask.propertyId,
       engineerId: newTask.engineerId,
-      assignedBy: CurrentUser?.fullName || "admin",
+      assignedBy: CurrentUser?._id || "admin",
     });
     console.log(newTask)
       const response = await api.post("api/tasks/assign", newTask);
@@ -95,6 +98,7 @@ function Reports() {
   }
 
   async function handleDeleteReport() {
+    console.log(activeReportId);
     try {
       const response = await api.delete(`api/report/${activeReportId}`);
       console.log("Deleted report:", response.data);
@@ -146,6 +150,7 @@ function Reports() {
                         onClick={() => {
                           setShowDeletePrompt(true);
                           setShowPopUpId(null);
+                          setActiveReportId(report._id);
                         }}
                       >
                         Delete report
@@ -166,7 +171,11 @@ function Reports() {
 
       {/* Assign Task Form */}
       {showAssignTaskForm && (
-        <div className="assign-task-form">
+        <div className='form-overlay'>
+          <div className="assign-task-form">
+            <div>
+              <button onClick={()=> setShowAssignTaskForm(false)}>x</button>
+            </div>
           <form onSubmit={handleAssignTaskSubmit}>
             <label>Assign to: {activeReportId}</label>
             <select
@@ -186,11 +195,17 @@ function Reports() {
             <input type="submit" value="Assign" />
           </form>
         </div>
+        </div>
+
       )}
 
       {/* Delete Confirmation Prompt */}
       {showDeletePrompt && (
-        <div className="confirm-delete">
+        <div className='form-overlay'>
+           <div className="confirm-delete">
+            <div>
+              <button onClick={()=> setShowDeletePrompt(false)}>x</button>
+            </div>
           <span>Are you sure you want to delete this report?</span>
           <button
             onClick={handleDeleteReport}
@@ -199,6 +214,8 @@ function Reports() {
             Confirm Delete
           </button>
         </div>
+        </div>
+
       )}
     </div>
   );

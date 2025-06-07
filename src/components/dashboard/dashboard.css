@@ -66,6 +66,7 @@ td span{
     border:none;
     display: flex;
     justify-self: flex-end;
+    position:relative;
 
 }
 .more-options:hover{
@@ -104,12 +105,26 @@ td span{
 .pop-up-div{
     display:flex;
     flex-direction: column;
-    justify-self: flex-end;
     padding:0.5rem;
     background:white;
     width:min-content;
     height:min-content;
     position:absolute;
-    overflow:none;
+    right: 0;
+    margin-top:7rem;
+    z-index: 10;
 
+
+}
+.form-overlay{
+    display:flex;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items:center;
+    width:100vw;
+    height: 100vh;
+    position:fixed;
+    z-index:9999;
+    background-color: rgba(0, 0, 0, 0.5);
 }
