@@ -6,13 +6,13 @@ import { toast } from 'react-toastify';
 
 function ReportForm (){
 const initialState = {
-        propertyId:null,
-        description: null,
+        propertyId:"",
+        description: "",
         media: ""
     };
 
-    const [reportFormData , setReportFormData] = useState(initialState
-);
+const [reportFormData , setReportFormData] = useState(initialState);
+const [isSubmitting, setIsSubmitting]= useState(false);
 
 const handleChange = (e)=>{
     const {name , value} = e.target;
@@ -24,17 +24,22 @@ const handleChange = (e)=>{
 const reportSubmit = async (e) => {
 e.preventDefault();
 console.log(reportFormData);
-setReportFormData(initialState);
+setIsSubmitting(true);
+
 
 try {
 const response = await api.post('api/report', reportFormData);
 console.log(response.data);
-toast.success(response.data);
+toast.success(response.data.message || 'Report successfully submitted');
 }
 catch(error){
-    toast.error(error.response.data);
-
+    toast.error(error?.response?.data?.message || 'Error submitting report');
 }
+finally{
+setReportFormData(initialState);
+setIsSubmitting(false);
+}
+
 
 
 }
@@ -67,7 +72,8 @@ catch(error){
             onChange={handleChange}
             placeholder= "add picture here"
             className="report-form-input picture-input" />
-            <input type="submit" value="Submit" className="submit report-form-input"/>
+            <input type="submit"
+            value={isSubmitting? 'submitting...' : 'submit'} className="submit report-form-input"/>
         </form>
         </div>
         </Main>

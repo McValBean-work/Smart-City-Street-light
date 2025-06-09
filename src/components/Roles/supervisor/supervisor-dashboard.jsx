@@ -2,20 +2,19 @@ import TopSection from "../../dashboard/top-section";
 import '../../dashboard/dashboard.css'
 import SideBar from "../../layout/sidebar";
 import Main from "../../layout/main";
+import PropertyTable from "../property-table";
+import TaskTable from "../task-table";
+import ReportsTable from "../reports-table";
 
 function SupervisorDashboardBody(){
 
     return(
         <>
         <div className="dashboard-layout">
-        <div className="supervisor-list">
-
-        </div>
-        <div className="engineer-list">
-
-        </div>
+            <PropertyTable />
+            <TaskTable />
+            <ReportsTable />
     </div>
-    <div className="task-chart"></div>
         </>
     )
 

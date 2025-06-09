@@ -9,7 +9,6 @@
 .dashboard-body{
     display:flex;
     flex:1;
-    grid-template-columns:1fr 1fr;
     width:100%;
     gap: 0.5rem;
 }
@@ -28,13 +27,14 @@
 .dashboard-layout{
     display:grid;
     row-gap:1rem;
-    grid-template-rows: 2;
+    flex:1;
     width:100%;
     min-height:100%;
 }
 .dashboard-layout div{
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding:0.5rem;
+    flex:1;
 }
 table{
     margin: 1rem 0 0 0;
@@ -75,20 +75,25 @@ td span{
 }
 .confirm-delete{
     position: absolute;
+    width:30%;
+    align-items: center;
     z-index: auto;
     display:flex;
     flex-direction: column;
-    align-items: center;
     padding: 1rem;
     background: white;
     border-radius: 0.5rem;
+    white-space:wrap;
 }
 .confirm-delete> *{
-    white-space: nowrap;
+    white-space: wrap;
     margin-bottom: 1rem;
+    width:100%;
+    height:100%;
 }
 .confirm-delete-button{
     width: min-content;
+    white-space: nowrap;
     background:darkred;
     color:white;
     font-weight:500;
@@ -110,7 +115,7 @@ td span{
     width:min-content;
     height:min-content;
     position:absolute;
-    right: 0;
+    right: 1rem;
     margin-top:7rem;
     z-index: 10;
 

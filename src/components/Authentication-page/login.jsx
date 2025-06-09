@@ -13,14 +13,17 @@ import { toast } from "react-toastify";
 function LoginForm({ onLogin = () => {} }){
   const navigate = useNavigate();
   const [showPassword , setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [loginCredentials , setLoginCredentials] = useState(
     {
-      email: null ,
-      password: null
+      email: '' ,
+      password: ''
     });
 
   const LoginSubmit = async (e) => {
     e.preventDefault();
+    setIsLoggingIn(true);
+
     try{
      console.log(loginCredentials);
      const response = await api.post('api/auth/login', loginCredentials);
@@ -29,16 +32,21 @@ function LoginForm({ onLogin = () => {} }){
      localStorage.setItem("role", response.data.user.role);
      console.log(response.data);
      console.log('Hello', getRole());
-     setTimeout(()=> {
-      toast.success(response.data)
-     },3000)
+     toast.success(response.data.message || 'Login successful')
      onLogin();
      navigate("/portal/dashboard");
     }
     catch(error)
     {
       console.log(error);
-      toast.error(error);
+      toast.error(error?.response?.data?.message || 'Error logging in');
+    }
+    finally{
+      setLoginCredentials({
+      email: '' ,
+      password: ''
+    });
+    setIsLoggingIn(false);
     }
 
 
@@ -71,14 +79,14 @@ function LoginForm({ onLogin = () => {} }){
       placeholder= "Enter password"
       minLength="8"
       maxLength="30"
-      autoComplete="true"
+      autoComplete="on"
       className="authentication-input" required/>
         <button type="button" className='show-password-button' onClick={()=> setShowPassword(prev =>!prev)}>
                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}  />
               </button>
       </div>
       <Link to="/portalForgot-password" className='form-links'>Forgot password?</Link>
-      <input type="submit" value="login" className="authentication-input submit" />
+      <input type="submit" value={isLoggingIn? 'logging in...' : 'login'} className="authentication-input submit" />
        </div>
     </form>
     </div>

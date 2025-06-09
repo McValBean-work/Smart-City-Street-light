@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import SideBar from "../layout/sidebar";
 import TopSection from "../dashboard/top-section";
 import Main from "../layout/main";
-import GetUsers from './users';
+import GetUsers from './get-users';
 import '../dashboard/dashboard.css';
+import { toast } from "react-toastify";
 
 function Reports() {
   const CurrentUser = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -34,13 +35,19 @@ function Reports() {
   }, []);
 
   async function getReports() {
+    const toastId = toast.loading('loading...');
     try {
       const res = await api.get("api/reports");
       setAllReports(res.data.reports);
       console.log(res.data.reports)
+      toast.update(toastId, {render: 'Success!',
+      type: 'success',
+      isLoading: false,
+      autoClose: 2000})
     } catch (error) {
       console.log("Error fetching reports:", error);
     }
+
   }
 
   useEffect(() => {
@@ -90,8 +97,10 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         setShowAssignTaskForm(false);
         setShowPopUpId(null);
         setActiveReportId(null);
+        toast.success(response.data.message || 'Task assigned successfully')
     } catch (error) {
       console.log("Assign Task Error:", error);
+      toast.error(error.response.data.message || 'Error assigning task');
     }
 
 
@@ -103,8 +112,10 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
       const response = await api.delete(`api/report/${activeReportId}`);
       console.log("Deleted report:", response.data);
       getReports();
+      toast.success(response.data.message || 'Report deleted Successfully')
     } catch (error) {
       console.log("Delete Report Error:", error);
+      toast.error(error?.response?.data?.message || 'Error deleting report')
     }
 
     setShowDeletePrompt(false);
@@ -156,7 +167,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                         Delete report
                       </span>
                       <span>
-                        <Link to='/portal/report/info'>More Info</Link>
+                        More Info
                       </span>
                     </div>
                   )}
@@ -172,12 +183,12 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
       {/* Assign Task Form */}
       {showAssignTaskForm && (
         <div className='form-overlay'>
-          <div className="assign-task-form">
-            <div>
-              <button onClick={()=> setShowAssignTaskForm(false)}>x</button>
-            </div>
+          <div className="confirm-delete">
+
+          <span onClick={()=> setShowAssignTaskForm(false)}>X</span>
+
           <form onSubmit={handleAssignTaskSubmit}>
-            <label>Assign to: {activeReportId}</label>
+            <label>Assign to:</label>
             <select
               name="engineerId"
               value={newTask.engineerId}
@@ -192,7 +203,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                 </option>
               ))}
             </select>
-            <input type="submit" value="Assign" />
+            <input type="submit" className='submit' value="Assign" />
           </form>
         </div>
         </div>
@@ -203,9 +214,9 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
       {showDeletePrompt && (
         <div className='form-overlay'>
            <div className="confirm-delete">
-            <div>
-              <button onClick={()=> setShowDeletePrompt(false)}>x</button>
-            </div>
+
+             <span onClick={()=> setShowDeletePrompt(false)}>X</span>
+
           <span>Are you sure you want to delete this report?</span>
           <button
             onClick={handleDeleteReport}

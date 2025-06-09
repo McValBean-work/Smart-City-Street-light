@@ -5,15 +5,19 @@ import SideBar from "../../layout/sidebar";
 import Main from "../../layout/main"
 import api from "../../api/axios-instance"
 import { toast } from "react-toastify";
+import PropertyTable from "../property-table";
+import TaskTable from "../task-table";
 import { Link } from 'react-router-dom'
 
-function AdminDashboardBody(){
+function UserTable(){
  const [allUsers , setAllUsers] = useState([]);
         const [supervisors , setSupervisors] =useState([]);
         const [engineers , setEngineers] =useState([]);
         const [activeUserId , setActiveUserId] = useState(null);
+        const [userToDelete, setUserToDelete] = useState(null);
         const [showPopUpId, setShowPopUpId] = useState(null);
         const [showDeletePrompt, setShowDeletePrompt] = useState(null);
+        const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);
         const [userDeleteEmail, setUserDeleteEmail] = useState({
             email:null
         });
@@ -53,22 +57,33 @@ function AdminDashboardBody(){
         }
 
         async function HandleDeleteUser(){
-            console.log(userDeleteEmail)
+            console.log(userDeleteEmail);
+            console.log('active user id is', activeUserId)
             try{
-                const res = await api.delete('api/users',  {data: userDeleteEmail} );
-                console.log(res.data)
-                toast(res.data);
+                const res = await api.delete('api/users',  {data: userDeleteEmail});
+                console.log(res.data);
+                toast.success(res.data.message || 'Deleted Successfully');
             }
             catch(error){
                 console.log(error);
-                toast.error(error);
+                toast.error(error?.response.data.message);
+            }
+            finally{
+                await getUsers();
+                setActiveUserId(null);
+                setShowDeletePrompt(false);
             }
         }
 
+    function HandleMoreInfoOnClick(user){
+        console.log(user);
+        setShowMoreInfoUser(user);
+    }
+
     return(
         <>
-        <div className="dashboard-layout">
-        <div className="supervisor-list">
+        
+        <div>
         <h1>All Users : {totalUsers}</h1>
         <table>
             <tr>
@@ -94,14 +109,13 @@ function AdminDashboardBody(){
                                         onClick={() => {
                                           setShowDeletePrompt(true);
                                           setShowPopUpId(null);
+                                          setUserToDelete(user.fullName);
                                           setActiveUserId(user._id);
                                         }}>
                                         delete user
                                       </span>
-                                      <span>
-                                        <Link to='/portal/user/info'>
+                                      <span onClick={()=> HandleMoreInfoOnClick(user)}>
                                         More Info
-                                        </Link>
                                       </span>
                                     </div>
                                   )}
@@ -118,7 +132,7 @@ function AdminDashboardBody(){
             <div>
               <button onClick={()=> setShowDeletePrompt(false)}>x</button>
             </div>
-          <span>Are you sure you want to delete this User?</span>
+          <span>Are you sure you want to delete {userToDelete}'s account?</span>
           <button
             onClick={HandleDeleteUser}
             className="confirm-delete-button"
@@ -129,10 +143,21 @@ function AdminDashboardBody(){
         </div>
 
       )}
-        <div className="engineer-list">
-            <h1>this is the engineer list div</h1>
+    {showMoreInfoUser && (
+        <div className='form-overlay'>
+           <div className="confirm-delete">
+            <span onClick={()=> setShowMoreInfoUser(null)}>X</span>
+           <ul style={{ listStyle: 'none', paddingLeft: '10px' }}>
+          <li><strong>Full Name:</strong>  {showMoreInfoUser.fullName}</li>
+          <li><strong>Email address:</strong> {showMoreInfoUser.email}</li>
+          <li><strong>Phone number:</strong> {showMoreInfoUser.phoneNumber}</li>
+          <li><strong>Role:</strong> {showMoreInfoUser.role}</li>
+          <li><strong>Date joined:</strong> {showMoreInfoUser.createdAt.split("T")[0]}</li>
+        </ul>
         </div>
-    </div>
+        </div>
+
+      )}
         </>
     )
 
@@ -144,10 +169,13 @@ function AdminDashboard(){
         <div className="dashboard">
         <TopSection />
         <div className="dashboard-body">
-
                 <SideBar />
                 <Main className='client-main'>
-                    <AdminDashboardBody />
+                <div className="dashboard-layout">
+                  <UserTable />
+                  <PropertyTable />
+                  <TaskTable />
+                </div>
                 </Main>
         </div>
         </div>

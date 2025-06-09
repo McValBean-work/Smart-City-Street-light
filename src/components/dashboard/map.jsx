@@ -2,11 +2,11 @@ import  { useEffect, useState } from "react";
 import api from '../api/axios-instance'
 import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
 import './map.css'
-import getRole from "../Authentication-page/auth";
 import streetLightIcon from '../../assets/icons/streetlight.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
+import { toast } from "react-toastify";
 
 
 
@@ -26,7 +26,7 @@ const [updatedState, setUpdatedState] = useState({
   state:null
 })
 
-const role = getRole();
+
 
 
   async function getProperties(){
@@ -37,28 +37,27 @@ const role = getRole();
 
 useEffect(()=>{
   getProperties();
-  console.log("use effect called");
+  console.log("use effect get properties called");
 },[]);
 
 const InitialNewPropertyState ={
-    propertyId: null ,
-    address: null,
-    lat: null ,
-    lng: null ,
-    propertyType : null,
-    state: null
+    propertyId: "" ,
+    address: "",
+    lat: "" ,
+    lng: "" ,
+    propertyType : "",
+    state: ""
     };
 const [NewProperty , setNewProperty] = useState(InitialNewPropertyState
   );
 
 const [ShowNewPropertyForm , setShowNewPropertyForm] = useState(false);
-const [ShowToast , setShowToast] = useState(false);
 
 function HandleMarkerClick(children){
   setSelectedMarker(children);
 }
 
-async function HandleUpdateStatusOnClick(propertyId){
+async function HandleUpdateStateOnClick(propertyId){
   setCurrentPropertyId(propertyId);
   console.log(propertyId)
   const res = await api.get(`api/properties/${propertyId}`);
@@ -81,7 +80,8 @@ async function UpdateStateSubmit(e){
 
   try{
     const res = await api.patch(`api/properties/${currentPropertyId}`,updatedState);
-    console.log(res.data)
+    console.log(res.data);
+    toast.success(res.data.message || 'Property state updated')
 
     setUpdatedState({
       state:null
@@ -95,6 +95,7 @@ setCurrentPropertyId(null);
   }
   catch(error){
     console.log(error);
+    toast.error(error.response?.data?.message || 'Error updatng poroperty state')
   }
 
 }
@@ -105,17 +106,19 @@ async function DeletePropertySubmit(e){
   try{
     const res = await api.delete(`api/properties/${currentPropertyId}`);
     console.log(res.data);
+    toast.success(res.data.message || 'Property deleted')
 
     await getProperties();
     setShowDeletePrompt(false);
-setShowUpdatePrompt(false);
-setCurrentPropertyId(null);
+    setShowUpdatePrompt(false);
+    setCurrentPropertyId(null);
 
 
 
   }
   catch(error){
     console.log(error);
+    toast.error(error?.response?.data?.message || 'Error deleting property')
   }
 
 }
@@ -153,16 +156,16 @@ async function NewPropertySubmit(e) {
     const response = await api.post("api/properties", formattedProperty)
     console.log(response.data);
     console.log('properties refreshed')
+    toast.success(response.data.message || 'Created new property')
     await getProperties();
 
 }
 catch(error){
   console.log("Error creating property" ,error);
+  toast.error(error?.response?.data.message || 'Error creating property')
 }
 
 
-
-  setShowToast(true);
   console.log(NewProperty);
 };
 
@@ -222,19 +225,16 @@ catch(error){
                 lng:property.location.coordinates.lng}
               } >
 
-                  {role === 'admin' && (
                     <>
                     <p>This property, {property.propertyId} is {property.state}</p>
-                      <button onClick={()=>{HandleUpdateStatusOnClick(property._id)}}>
+                      <button onClick={()=>{HandleUpdateStateOnClick(property._id)}}>
                           Update status
                         </button>
                         <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}>
                         Delete
                         </button>
                         </>
-                      )
 
-                      }
                 </InfoWindowF>
 
                 )
@@ -249,13 +249,16 @@ catch(error){
   showDeletePrompt && (
     <>
     <div className='form-overlay'>
-      <div onClick={() => setShowDeletePrompt(false)}>
-        x
+      <div className='confirm-delete'>
+        <div onClick={() => setShowDeletePrompt(false)}>
+        X
       </div>
-      <div>
+
       <span>Are you sure you want to delete this property?</span>
-      <button onClick={DeletePropertySubmit}>Confirm delete</button>
-    </div>
+      <button onClick={DeletePropertySubmit} className="confirm-delete-button"> Confirm delete</button>
+
+
+      </div>
 
     </div>
     </>
@@ -265,24 +268,28 @@ catch(error){
   showUpdatePrompt &&(
     <>
     <div className='form-overlay'>
-      <div onClick={() => setShowUpdatePrompt(false)}>
-        x
+      <div className='confirm-delete'>
+        <div onClick={() => setShowUpdatePrompt(false)}>
+        X
       </div>
-      <div>
       <select name="updatedState"
       value={updatedState.state}
       onChange ={ (e) =>(
       setUpdatedState(prev =>({...prev, state: e.target.value})))}
     id="">
-    <option value="working">working</option>
-    <option value="damaged">damaged</option>
+      <option value="">Select State</option>
+    <option value="working">Working</option>
+    <option value="damaged">Damaged</option>
+    <option value="pending">Pending</option>
+    <option value="under_repair">Under repair</option>
+    <option value="fixed">Fixed</option>
     </select>
-    <button onClick={UpdateStateSubmit}>
+    <button onClick={UpdateStateSubmit} className='submit'>
       Update State
     </button>
 
-    </div>
 
+      </div>
     </div>
     </>
   )
@@ -296,7 +303,7 @@ catch(error){
       <div>
         <button onClick={() => {
           setNewProperty(InitialNewPropertyState);
-          setShowNewPropertyForm(false); setShowToast(false);}} className="close-button">
+          setShowNewPropertyForm(false);}} className="close-button">
           <FontAwesomeIcon icon={faCircleXmark} className='close-button-icon' />
         </button>
 
@@ -330,9 +337,6 @@ catch(error){
         <input type="submit" value="Create New Property" className="new-property-submit" />
 
   </form>
-  {ShowToast &&(
-              <span className='new-property-toast'> {NewProperty.propertyType} added successfully</span>
-)}
 
       </div>
     </div>

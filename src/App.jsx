@@ -21,9 +21,6 @@ import SupervisorDashboard from './components/Roles/supervisor/supervisor-dashbo
 import EngineerDashboard from './components/Roles/engineer/engineer-dashboard'
 import TasksPage from './components/Roles/tasks'
 import ReportsPage from './components/Roles/reports'
-import UserInfoPage from './components/Roles/user-info'
-import ReportInfoPage from './components/Roles/report-info'
-import PropertyInfoPage from './components/Roles/property-info';
 
 
 function App(){
@@ -70,7 +67,7 @@ function App(){
           ? <EngineerDashboard />
           : <Navigate to="/login" /> } />
           <Route path="/portal/properties" element={
-            <ProtectedRoute allowedUsers={["admin" ,"supervisor"]} >
+            <ProtectedRoute allowedUsers={["admin" ,"supervisor", "engineer"]} >
               <PropertiesPage />
             </ProtectedRoute>
             } />
@@ -84,26 +81,13 @@ function App(){
               <ReportsPage />
             </ProtectedRoute>
             } />
-          <Route path="/portal/report/info" element={
-           <ProtectedRoute allowedUsers={["admin" ,"supervisor"]} >
-            <ReportInfoPage />
-           </ProtectedRoute>} />
-          <Route path="/portal/user/info" element={
-            <ProtectedRoute allowedUsers={["admin"]} >
-              <UserInfoPage />
-            </ProtectedRoute>
-            } />
-          <Route path="/portal/property/info" element= {
-           <ProtectedRoute allowedUsers={["admin" , "supervisor"]} >
-            <PropertyInfoPage />
-           </ProtectedRoute>
-            } />
 
         </Routes>
       </Router>
       <ToastContainer
-      position="bottom-center"
-      autoClose={3000}
+      position="top-right"
+      autoClose={5000}
+      style={{zIndex:10000}}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
@@ -111,6 +95,12 @@ function App(){
       pauseOnFocusLoss
       draggable
       pauseOnHover
+      theme="colored"
+      toastStyle={{
+        fontSize: '16px',
+        padding: '16px',
+        borderRadius: '8px'
+      }}
       />
     </>
   )

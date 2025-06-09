@@ -4,21 +4,23 @@ import { useNavigate } from "react-router-dom"
 import { useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
+import { toast } from 'react-toastify'
 
 
 
 function SignUpForm(){
 
+  const initialState = {
+  fullName: '',
+  email: '' ,
+  phoneNumber: '',
+  role: '',
+  password: ''
+};
+const [isCreating, setIsCreating]= useState(false);
 const navigate = useNavigate();
-const [showSignUpToast , setShowSignUpToast] = useState(false);
 const [showPassword , setShowPassword] = useState(false);
-const [newUser , setNewUser] = useState({
-  fullName: null,
-  email: null ,
-  phoneNumber: null,
-  role: null,
-  password: null
-});
+const [newUser , setNewUser] = useState(initialState);
 const handleChange = (e)=>{
   const {name , value} = e.target;
 
@@ -28,13 +30,20 @@ const handleChange = (e)=>{
  const SignUpSubmit = (e)=> {
   e.preventDefault()
   console.log(newUser);
-
-
-
-    api.post('/api/users' , newUser)
-    setShowSignUpToast(true);
-   setTimeout(navigate(-1), 10000) ;
-
+  setIsCreating(true);
+try{
+  const res = api.post('/api/users' , newUser);
+  console.log(res.message);
+  toast.success(res.message || 'New user created');
+  setTimeout(navigate(-1), 10000) ;
+}
+catch(e){
+  toast.error(e.response?.data?.message || 'Error creating user')
+}
+finally{
+  setNewUser(initialState);
+  setIsCreating(false)
+}
  }
 
 
@@ -96,14 +105,10 @@ const handleChange = (e)=>{
 
       </button>
       </div>
-      <input type="submit" className="authentication-input submit"/>
+      <input type="submit"
+      value={isCreating? 'Creating user...' : 'Create user'} className="authentication-input submit"/>
       </div>
     </form>
-    {showSignUpToast && (
-      <>
-      <span>Success, You created a new {newUser.role}</span>
-      </>
-    )}
     </>
     )
 
