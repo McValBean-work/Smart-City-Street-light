@@ -7,6 +7,7 @@ import api from "../../api/axios-instance"
 import { toast } from "react-toastify";
 import PropertyTable from "../property-table";
 import TaskTable from "../task-table";
+import ReportsTable from '../reports-table';
 import { Link } from 'react-router-dom'
 
 function UserTable(){
@@ -114,9 +115,9 @@ function UserTable(){
                                         }}>
                                         delete user
                                       </span>
-                                      <span onClick={()=> HandleMoreInfoOnClick(user)}>
+                                      <button onClick={()=> HandleMoreInfoOnClick(user)}>
                                         More Info
-                                      </span>
+                                      </button>
                                     </div>
                                   )}
                 </span>
@@ -146,7 +147,7 @@ function UserTable(){
     {showMoreInfoUser && (
         <div className='form-overlay'>
            <div className="confirm-delete">
-            <span onClick={()=> setShowMoreInfoUser(null)}>X</span>
+            <button onClick={()=> setShowMoreInfoUser(null)}>X</button>
            <ul style={{ listStyle: 'none', paddingLeft: '10px' }}>
           <li><strong>Full Name:</strong>  {showMoreInfoUser.fullName}</li>
           <li><strong>Email address:</strong> {showMoreInfoUser.email}</li>
@@ -174,7 +175,9 @@ function AdminDashboard(){
                 <div className="dashboard-layout">
                   <UserTable />
                   <PropertyTable />
+                  <ReportsTable />
                   <TaskTable />
+                  
                 </div>
                 </Main>
         </div>

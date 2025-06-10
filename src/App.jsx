@@ -95,7 +95,7 @@ function App(){
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="colored"
+      theme="dark"
       toastStyle={{
         fontSize: '16px',
         padding: '16px',

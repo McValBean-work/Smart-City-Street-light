@@ -57,6 +57,13 @@ td span{
     align-items:center;
     justify-content:space-between;
 }
+button{
+    outline:none;
+    background:none;
+    border:none;
+    font-weight:500;
+    
+}
 .more-options{
     padding: 0.5rem 1rem;
     size:1rem;
@@ -108,6 +115,7 @@ td span{
 
 }
 .pop-up-div{
+    align-items:flex-start;
     display:flex;
     flex-direction: column;
     padding:0.5rem;

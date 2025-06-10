@@ -93,7 +93,7 @@ function Tasks(){
         try{
             const res = await api.patch(`api/tasks/${activeTaskId}`, updatedTaskStatus);
             console.log(res.data);
-            toast.success(res.data.message || 'Task state updated successfullly')
+            toast.success(res.data.message || 'Task state updated successfully')
         }
     catch(error){
         console.log(error);
@@ -151,29 +151,27 @@ function Tasks(){
                                         onClick={() =>HandleTaskOnClick(task._id)}>:</button>
                                         {showPopUpId === task._id && (
                                             <div className='pop-up-div'>
-                                                <span onClick={()=>{setShowCommentPopUp(true);
+                                                <button onClick={()=>{setShowCommentPopUp(true);
                                                 setShowPopUpId(null);
-                                                }}>Comment</span>
-                                                <span onClick={()=> {setShowUpdateStatePopUp(true);
+                                                }}>Comment</button>
+                                                <button onClick={()=> {setShowUpdateStatePopUp(true);
                                                 setShowPopUpId(null)
-                                                }}>Update state</span>
+                                                }}>Update state</button>
 
-                                                    <span onClick={()=> {
+                                                    <button onClick={()=> {
                                                         setShowDeletePrompt(true);
                                                         setShowPopUpId(null);
                                                  ;
-                                                    }}>Delete Task</span>
-                                                <span onClick={()=>{
+                                                    }}>Delete Task</button>
+                                                <button onClick={()=>{
                                                 setShowMoreInfo(true);
-                                                setInfoTask(task)}}>
+                                                setInfoTask(task);
+                                                setShowPopUpId(null);}}>
                                                 More info
-                                                </span>
+                                                </button>
                                             </div>
 
                                         )}
-                                        {
-                                        showMoreInfo && <ObjectList data = {infoTask} />
-                                        }
                                     </span>
                                 </td>
 
@@ -195,22 +193,21 @@ function Tasks(){
                                         onClick={() =>HandleTaskOnClick(myTask._id)}>:</button>
                                         {showPopUpId === myTask._id && (
                                             <div className='pop-up-div'>
-                                                <span onClick={()=> {setShowUpdateStatePopUp(true);
+                                                <button onClick={()=> {setShowUpdateStatePopUp(true);
                                                 setShowPopUpId(null);
                                                 }}>
                                                 Update state
-                                                </span>
-                                                <span onClick={()=>
+                                                </button>
+                                                <button onClick={()=>
                                                     {setShowMoreInfo(true);
                                                     setInfoTask(myTask);
+                                                    setShowPopUpId(null);
                                                     }}>
                                                 More info
-                                                </span>
+                                                </button>
                                             </div>
                                         )}
-                                         {
-                                        showMoreInfo && <ObjectList data={infoTask} />
-                                        }
+
                                     </span>
                                 </td>
                             </tr>
@@ -222,7 +219,7 @@ function Tasks(){
                 <>
                 <div className='form-overlay'>
            <div className="confirm-delete">
-           <span onClick={()=> setShowUpdateStatePopUp(false)}>X</span>
+           <button onClick={()=> setShowUpdateStatePopUp(false)}>X</button>
           <select name="updatedTaskStatus"
           value={updatedTaskStatus.status}
            onChange={(e) => setUpdatedTaskStatus({status: e.target.value})}>
@@ -268,9 +265,9 @@ function Tasks(){
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <span onClick={() => setShowDeletePrompt(false)}>
+        <button onClick={() => setShowDeletePrompt(false)}>
         X
-      </span>
+      </button>
 
       <span>Are you sure you want to delete this task?</span>
       <button onClick={ConfirmDelete} className="confirm-delete-button">Confirm delete</button>
@@ -281,6 +278,54 @@ function Tasks(){
     </div>
     </>
   )
+}
+{
+    showMoreInfo && (
+        <>
+        <div className='form-overlay'>
+            <div className='confirm-delete'>
+            <p>
+                <button onClick={()=> setShowMoreInfo(false)}>X</button>
+            </p>
+            {['admin', 'supervisor'].includes(role) &&(
+                <>
+                <p>{infoTask.property.propertyId}</p>
+                <p>{infoTask.property.type}</p>
+                <p>{infoTask.property.location.address}</p>
+                <p>{infoTask.report.description}</p>
+                <p>{infoTask.status}</p>
+                <p>{infoTask.assignedTo.fullName}</p>
+                <p>{infoTask.updatedAt.split('T')[0]}</p>
+                </>
+            )
+
+            }
+            {showMoreInfo && role === 'engineer' && (
+                <>
+                <p>{infoTask.property.propertyId}</p>
+                <p>{infoTask.property.type}</p>
+                <p>{infoTask.property.location.address}</p>
+                <p>{infoTask.report.description}</p>
+                <p>{infoTask.status}</p>
+                <p>{infoTask.assignedBy.fullName}</p>
+                <p>{infoTask.updatedAt.split('T')[0]}</p>
+                <p>
+                    <Link
+                to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}
+                target="_blank">
+                Get directions to property
+                </Link>
+
+                </p>
+               
+                </>
+            )
+            }
+        </div>
+
+        </div>
+        </>
+    )
 }
             </div>
         </div>

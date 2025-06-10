@@ -150,12 +150,12 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
 
                   {showPopUpId === report._id && (
                     <div className='pop-up-div'>
-                      <span onClick={() => {
+                      <button onClick={() => {
                         setShowAssignTaskForm(true);
                         setShowPopUpId(null);
                       }}>
                         Assign task
-                      </span>
+                      </button>
                       <span
                         className="delete"
                         onClick={() => {
@@ -185,7 +185,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         <div className='form-overlay'>
           <div className="confirm-delete">
 
-          <span onClick={()=> setShowAssignTaskForm(false)}>X</span>
+          <button onClick={()=> setShowAssignTaskForm(false)}>X</button>
 
           <form onSubmit={handleAssignTaskSubmit}>
             <label>Assign to:</label>
@@ -215,7 +215,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         <div className='form-overlay'>
            <div className="confirm-delete">
 
-             <span onClick={()=> setShowDeletePrompt(false)}>X</span>
+          <button onClick={()=> setShowDeletePrompt(false)}>X</button>
 
           <span>Are you sure you want to delete this report?</span>
           <button

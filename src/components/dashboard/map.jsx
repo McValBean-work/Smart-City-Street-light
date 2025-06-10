@@ -5,7 +5,7 @@ import './map.css'
 import streetLightIcon from '../../assets/icons/streetlight.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
+import { faCircleXmark, faTrash, faChair } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 import { toast } from "react-toastify";
 
 
@@ -25,6 +25,7 @@ const [currentPropertyId, setCurrentPropertyId] = useState(null);
 const [updatedState, setUpdatedState] = useState({
   state:null
 })
+
 
 
 
@@ -209,7 +210,10 @@ catch(error){
                 <>
               <MarkerF
               key={property._id}
-              icon={{url: streetLightIcon, scaledSize: new window.google.maps.Size(60, 60)}}
+              icon={property.type === 'garbage-bin' ? {url: faChair}
+              :property.type === 'bench' ? {url: faTrash}
+              : {url: streetLightIcon}
+              }
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
               }
@@ -226,13 +230,28 @@ catch(error){
               } >
 
                     <>
-                    <p>This property, {property.propertyId} is {property.state}</p>
+                    <p className="property-id">{property.propertyId}</p>
+                    <p><span className='property-keys'>Type:</span>
+                    {property.type}
+                    </p>
+                    <p>
+                      <span className='property-keys'>State:</span>
+                      {property.state}
+                      </p>
+                    <p><span className='property-keys'>Address:</span>
+                        {property.location.address}
+                        </p>
+                    <p>Get Directions</p>
+                    <p>
                       <button onClick={()=>{HandleUpdateStateOnClick(property._id)}}>
                           Update status
                         </button>
+                    </p>
+                      <p>
                         <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}>
                         Delete
                         </button>
+                      </p>
                         </>
 
                 </InfoWindowF>
@@ -250,14 +269,14 @@ catch(error){
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <div onClick={() => setShowDeletePrompt(false)}>
+        <button onClick={() => setShowDeletePrompt(false)}>
         X
-      </div>
+      </button>
 
       <span>Are you sure you want to delete this property?</span>
-      <button onClick={DeletePropertySubmit} className="confirm-delete-button"> Confirm delete</button>
-
-
+      <button onClick={DeletePropertySubmit} className="confirm-delete-button">
+         Confirm delete
+      </button>
       </div>
 
     </div>
@@ -269,9 +288,9 @@ catch(error){
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <div onClick={() => setShowUpdatePrompt(false)}>
+        <button onClick={() => setShowUpdatePrompt(false)}>
         X
-      </div>
+      </button>
       <select name="updatedState"
       value={updatedState.state}
       onChange ={ (e) =>(
