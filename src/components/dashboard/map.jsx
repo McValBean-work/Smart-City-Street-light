@@ -96,7 +96,7 @@ setCurrentPropertyId(null);
   }
   catch(error){
     console.log(error);
-    toast.error(error.response?.data?.message || 'Error updatng poroperty state')
+    toast.error(error.response?.data?.message || 'Error updating property state')
   }
 
 }
@@ -212,7 +212,7 @@ catch(error){
               key={property._id}
               icon={property.type === 'garbage-bin' ? {url: faChair}
               :property.type === 'bench' ? {url: faTrash}
-              : {url: streetLightIcon}
+              : {url: streetLightIcon, scaledSize: new google.maps.Size(40,40)}
               }
               position={{lat:property.location.coordinates.lat,
                 lng:property.location.coordinates.lng}
@@ -294,9 +294,9 @@ catch(error){
       <select name="updatedState"
       value={updatedState.state}
       onChange ={ (e) =>(
-      setUpdatedState(prev =>({...prev, state: e.target.value})))}
-    id="">
-      <option value="">Select State</option>
+      setUpdatedState(prev =>({...prev, state: e.target.value})))}>
+
+    <option value="">Select State</option>
     <option value="working">Working</option>
     <option value="damaged">Damaged</option>
     <option value="pending">Pending</option>
@@ -313,7 +313,7 @@ catch(error){
     </>
   )
 }
-      {ShowNewPropertyForm && (<MarkerF position={NewProperty} icon={{ url: streetLightIcon, scaledSize: new window.google.maps.Size(40, 40),}} />)}
+      {ShowNewPropertyForm && (<MarkerF position={NewProperty} icon={{ url: streetLightIcon}} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
       <>

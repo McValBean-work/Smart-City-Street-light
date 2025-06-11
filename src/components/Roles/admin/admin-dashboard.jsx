@@ -1,10 +1,9 @@
-import TopSection from "../../dashboard/top-section";
 import { useState , useEffect } from "react";
 import '../../dashboard/dashboard.css'
-import SideBar from "../../layout/sidebar";
-import Main from "../../layout/main"
 import api from "../../api/axios-instance"
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import PropertyTable from "../property-table";
 import TaskTable from "../task-table";
 import ReportsTable from '../reports-table';
@@ -19,6 +18,8 @@ function UserTable(){
         const [showPopUpId, setShowPopUpId] = useState(null);
         const [showDeletePrompt, setShowDeletePrompt] = useState(null);
         const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);
+        const [searchedUser, setSearchedUser] = useState();
+        const [searchResults, setSearchResults] = useState();
         const [userDeleteEmail, setUserDeleteEmail] = useState({
             email:null
         });
@@ -40,12 +41,18 @@ function UserTable(){
                 console.log("this is the supervisors set use state", supervisors);
                 console.log("this is the engineers set use state", engineers);
             }
-
                 useEffect(()=>{
                     getUsers();
                     console.log("useEffect get users called");
                     },[]);
 
+        function GetSearchedUser(){
+
+          console.log(searchedUser);
+          setSearchResults(allUsers.filter(user => user.fullName.toLowerCase().includes(searchedUser.toLowerCase())));
+        }
+
+ console.log(searchResults);
         function HandleUserOnClick(userEmail, userId){
             console.log(userId);
             console.log(userEmail);
@@ -83,8 +90,30 @@ function UserTable(){
 
     return(
         <>
-        
+        <div className='search-bar-div'>
+          <button onClick={GetSearchedUser} className='search-button'>
+            <FontAwesomeIcon icon ={faMagnifyingGlass} className ='search-button-icon' />
+          </button>
+          <input type="text"
+          placeholder="Enter user name here"
+          value={searchedUser}
+          onChange={ (e) =>
+            {setSearchedUser(e.target.value); {GetSearchedUser} }
+          } />
+          <button className='clear-button' onClick={() => {setSearchedUser(''); setSearchResults('')}}>X</button>
+        </div>
+        {Array.isArray(searchResults) && (
+          <div className="search-dropdown">
+             { searchResults.map(result => (
+            <span key={result._id}>
+            {result.fullName}
+            </span>
+
+            ))}
+          </div>
+        )}
         <div>
+
         <h1>All Users : {totalUsers}</h1>
         <table>
             <tr>
@@ -167,21 +196,16 @@ function UserTable(){
 
 function AdminDashboard(){
     return(
-        <div className="dashboard">
-        <TopSection />
-        <div className="dashboard-body">
-                <SideBar />
-                <Main className='client-main'>
-                <div className="dashboard-layout">
-                  <UserTable />
-                  <PropertyTable />
-                  <ReportsTable />
-                  <TaskTable />
-                  
-                </div>
-                </Main>
-        </div>
-        </div>
+      <>
+      <div className="dashboard-layout">
+          <UserTable />
+          <PropertyTable />
+          <ReportsTable />
+          <TaskTable />
+
+
+      </div>
+      </>
     )
 }
 

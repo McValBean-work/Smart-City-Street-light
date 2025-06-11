@@ -296,6 +296,13 @@ function Tasks(){
                 <p>{infoTask.status}</p>
                 <p>{infoTask.assignedTo.fullName}</p>
                 <p>{infoTask.updatedAt.split('T')[0]}</p>
+                <p>
+                    <Link
+                to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}
+                target="_blank">
+                Get directions to property
+                </Link>
+                </p>
                 </>
             )
 
@@ -315,9 +322,7 @@ function Tasks(){
                 target="_blank">
                 Get directions to property
                 </Link>
-
                 </p>
-               
                 </>
             )
             }

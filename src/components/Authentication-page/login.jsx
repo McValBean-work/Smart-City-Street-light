@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 
 
-function LoginForm({ onLogin = () => {} }){
+function LoginForm(){
   const navigate = useNavigate();
   const [showPassword , setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false)
@@ -32,8 +32,7 @@ function LoginForm({ onLogin = () => {} }){
      localStorage.setItem("role", response.data.user.role);
      console.log(response.data);
      console.log('Hello', getRole());
-     toast.success(response.data.message || 'Login successful')
-     onLogin();
+     toast.success(response.data.message || 'Login successful');
      navigate("/portal/dashboard");
     }
     catch(error)
@@ -101,12 +100,12 @@ function LoginForm({ onLogin = () => {} }){
     );
   }
 
-  function LoginPage({ onLogin }){
+  function LoginPage(){
       return(
           <>
           <div className="authentication-page-grid">
           <div className="landing-page-form-div">
-          <LoginForm onLogin={onLogin} />
+          <LoginForm />
           </div>
           <AuthenticationHero />
           </div>

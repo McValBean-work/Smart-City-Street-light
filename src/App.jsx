@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
-import {useEffect , useState} from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
@@ -16,31 +15,14 @@ import SignUpPage from './components/Authentication-page/sign-up'
 import ForgotPasswordPage from'./components/Authentication-page/forgot-password'
 import PropertiesPage from './components/dashboard/properties-page'
 import ReportForm from './components/landing-page/report-form'
-import AdminDashboard from './components/Roles/admin/admin-dashboard'
-import SupervisorDashboard from './components/Roles/supervisor/supervisor-dashboard'
-import EngineerDashboard from './components/Roles/engineer/engineer-dashboard'
 import TasksPage from './components/Roles/tasks'
 import ReportsPage from './components/Roles/reports'
+import Dashboard from './components/dashboard/dashboard';
 
 
 function App(){
 
-  const [role, setRole] = useState(null);
-
-  // Get role on initial mount (e.g., refresh)
-  useEffect(() => {
-    const storedRole = getRole();
-    if (storedRole) {
-      setRole(storedRole);
-    }
-  }, []);
-
-  // Update role after login
-  const handleLogin = () => {
-    const updatedRole = getRole();
-    setRole(updatedRole);
-  };
-
+const role = getRole();
   return (
     <>
       <Router>
@@ -50,7 +32,7 @@ function App(){
           <Route path="/about" element={<AboutPage />}/>
           <Route path="/contact-Us" element={<ContactUsPage />}/>
           <Route path="/report" element={<ReportForm />} />
-          <Route path="/login" element={<LoginPage onLogin ={handleLogin} />}/>
+          <Route path="/login" element={<LoginPage />}/>
           <Route path="/sign-up" element={
             <ProtectedRoute allowedUsers={["admin"]} >
               <SignUpPage />
@@ -58,14 +40,8 @@ function App(){
             } />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
-          <Route path="/portal/dashboard" element={
-          role === "admin"
-           ? <AdminDashboard />
-          :role === "supervisor"
-           ? <SupervisorDashboard />
-          :role === "engineer"
-          ? <EngineerDashboard />
-          : <Navigate to="/login" /> } />
+          <Route path="/portal/dashboard" element={ role ? <Dashboard />
+         : <Navigate to="/login" /> } />
           <Route path="/portal/properties" element={
             <ProtectedRoute allowedUsers={["admin" ,"supervisor", "engineer"]} >
               <PropertiesPage />
@@ -95,7 +71,7 @@ function App(){
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="dark"
+      theme="light"
       toastStyle={{
         fontSize: '16px',
         padding: '16px',
