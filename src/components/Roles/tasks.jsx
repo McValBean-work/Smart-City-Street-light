@@ -190,10 +190,16 @@ function Tasks(){
                                         {myTask.status}
                                         <button
                                         className='more-options'
-                                        onClick={() =>HandleTaskOnClick(myTask._id)}>:</button>
+                                        onClick={()=>
+                                        HandleTaskOnClick(myTask._id)}>:</button>
                                         {showPopUpId === myTask._id && (
                                             <div className='pop-up-div'>
-                                                <button onClick={()=> {setShowUpdateStatePopUp(true);
+                                                <button onClick={()=>
+                                                {setShowCommentPopUp(true);
+                                                setShowPopUpId(null);
+                                                }}>Comment</button>
+                                                <button onClick={()=>
+                                                 {setShowUpdateStatePopUp(true);
                                                 setShowPopUpId(null);
                                                 }}>
                                                 Update state
@@ -219,8 +225,9 @@ function Tasks(){
                 <>
                 <div className='form-overlay'>
            <div className="confirm-delete">
-           <button onClick={()=> setShowUpdateStatePopUp(false)}>X</button>
-          <select name="updatedTaskStatus"
+           <button onClick={()=> setShowUpdateStatePopUp(false)}
+            className='close-pop-up-button'>X</button>
+            <select name="updatedTaskStatus"
           value={updatedTaskStatus.status}
            onChange={(e) => setUpdatedTaskStatus({status: e.target.value})}>
             <option value="">Select status</option>
@@ -239,67 +246,71 @@ function Tasks(){
                 </>
             )}
             {showCommentPopup && (
-                                   <div className='form-overlay'>
-                                     <div className='confirm-delete'>
-                                     <span
-                                     onClick={()=>
-                                    setShowCommentPopUp(false)}>
-                                        X
-                                    </span>
+   <div className='form-overlay'>
+     <div className='confirm-delete'>
+      <button  onClick={()=>
+         setShowCommentPopUp(false)}
+          className='close-pop-up-button'>
+            X
+       </button>
+            <label htmlFor="comment">
+         Comment
+        </label>
+        <textarea
+        value={comment.text}
+        onChange={(e) =>
+        setComment(prev => ({...prev, text: e.target.value}))} />
 
-                                    <label htmlFor="comment">
-                                                    Comment
-                                                    </label>
-                                                <textarea
-                                                value={comment.text}
-                                                onChange={(e) =>
-                                                    setComment(prev => ({...prev, text: e.target.value}))} />
+       <input type="submit" className='submit' onClick={HandleCommentSubmit} value="Comment" />
+        </div>
 
-                                                <input type="submit" className='submit' onClick={HandleCommentSubmit} value="Comment" />
-
-                                                </div>
-                                            </div>
-                                        )}
-                                        {
-  showDeletePrompt && (
+      </div>
+       )}
+{showDeletePrompt && (
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <button onClick={() => setShowDeletePrompt(false)}>
+        <button onClick={() => setShowDeletePrompt(false)}
+            className='close-pop-up-button'>
         X
       </button>
-
-      <span>Are you sure you want to delete this task?</span>
+      <div>
+        <span>Are you sure you want to delete this task?</span>
       <button onClick={ConfirmDelete} className="confirm-delete-button">Confirm delete</button>
-
-
       </div>
+  </div>
 
     </div>
     </>
   )
 }
-{
-    showMoreInfo && (
+{showMoreInfo && (
         <>
         <div className='form-overlay'>
             <div className='confirm-delete'>
-            <p>
-                <button onClick={()=> setShowMoreInfo(false)}>X</button>
-            </p>
+
+                <button onClick={()=> setShowMoreInfo(false)}
+                    className='close-pop-up-button'>X</button>
             {['admin', 'supervisor'].includes(role) &&(
                 <>
-                <p>{infoTask.property.propertyId}</p>
-                <p>{infoTask.property.type}</p>
-                <p>{infoTask.property.location.address}</p>
-                <p>{infoTask.report.description}</p>
-                <p>{infoTask.status}</p>
-                <p>{infoTask.assignedTo.fullName}</p>
-                <p>{infoTask.updatedAt.split('T')[0]}</p>
+                <p className="property-id">{infoTask.property.propertyId}</p>
+                <p><span className="show-more-title">Type:</span>
+                {infoTask.property.type}
+                </p>
+                <p><span className="show-more-title">Address:</span>
+                    {infoTask.property.location.address}</p>
+                <p><span className="show-more-title">Description:</span>
+                    {infoTask.report.description}</p>
+                <p><span className="show-more-title">Status:</span>
+                    {infoTask.status}</p>
+                <p> <span className="show-more-title">Assigned to:</span>
+                    {infoTask.assignedTo.fullName}</p>
+                <p> <span className="show-more-title">Date Assigned:</span>
+                    {infoTask.updatedAt.split('T')[0]}</p>
                 <p>
                     <Link
                 to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}
-                target="_blank">
+                target="_blank" >
                 Get directions to property
                 </Link>
                 </p>
@@ -309,13 +320,20 @@ function Tasks(){
             }
             {showMoreInfo && role === 'engineer' && (
                 <>
-                <p>{infoTask.property.propertyId}</p>
-                <p>{infoTask.property.type}</p>
-                <p>{infoTask.property.location.address}</p>
-                <p>{infoTask.report.description}</p>
-                <p>{infoTask.status}</p>
-                <p>{infoTask.assignedBy.fullName}</p>
-                <p>{infoTask.updatedAt.split('T')[0]}</p>
+                <p className="property-id">{infoTask.property.propertyId}</p>
+                <p><span className="show-more-title">Type:</span> 
+                {infoTask.property.type}.
+                </p>
+                <p><span className="show-more-title">Address:</span>
+                    {infoTask.property.location.address}.</p>
+                <p><span className="show-more-title">Description:</span>
+                    {infoTask.report.description}.</p>
+                <p><span className="show-more-title">Status:</span>
+                    {infoTask.status}.</p>
+                <p> <span className="show-more-title">Assigned by:</span>
+                    {infoTask.assignedBy.fullName}.</p>
+                <p> <span className="show-more-title">Date Assigned:</span>
+                    {infoTask.updatedAt.split('T')[0]}.</p>
                 <p>
                     <Link
                 to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}

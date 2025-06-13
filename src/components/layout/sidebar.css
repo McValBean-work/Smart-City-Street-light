@@ -42,7 +42,11 @@
     color:darkred;
     opacity: 100%;
 }
-.sidebar-link>*{
+.sidebar-link.logout:hover{
+    color:darkred;
+    opacity: 100%;
+}
+.sidebar-link>* {
     margin-right: 0.5rem;
     white-space: nowrap;
     font-weight:500;
@@ -51,6 +55,5 @@
    background: #bbe6d4;
    color:#1a7;
    opacity:100%;
-
 }
 

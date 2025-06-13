@@ -106,7 +106,7 @@ function UserTable(){
           <div className="search-dropdown">
              { searchResults.map(result => (
             <span key={result._id}>
-            {result.fullName}
+              <Link to ='#${result._id}'>{result.fullName}</Link>
             </span>
 
             ))}
@@ -123,7 +123,7 @@ function UserTable(){
             </tr>
              { Array.isArray(allUsers) &&
        allUsers.map((user)=>(
-        <tr key={user._id}>
+        <tr key={user._id} id={user._id}>
             <td>{user.role}</td>
             <td>{user.fullName}</td>
             <td>
@@ -134,7 +134,7 @@ function UserTable(){
                 onClick={() =>HandleUserOnClick(user.email , user._id)}>:</button>
                 {showPopUpId === user._id && (
                                     <div className='pop-up-div'>
-                                      <span
+                                      <button
                                         className="delete"
                                         onClick={() => {
                                           setShowDeletePrompt(true);
@@ -143,7 +143,7 @@ function UserTable(){
                                           setActiveUserId(user._id);
                                         }}>
                                         delete user
-                                      </span>
+                                      </button>
                                       <button onClick={()=> HandleMoreInfoOnClick(user)}>
                                         More Info
                                       </button>
@@ -159,16 +159,20 @@ function UserTable(){
         {showDeletePrompt && (
         <div className='form-overlay'>
            <div className="confirm-delete">
+
+              <button onClick={()=> setShowDeletePrompt(false)}
+                className='close-pop-up-button'>X</button>
             <div>
-              <button onClick={()=> setShowDeletePrompt(false)}>x</button>
-            </div>
-          <span>Are you sure you want to delete {userToDelete}'s account?</span>
+              <span>Are you sure you want to delete {userToDelete}'s account?</span>
           <button
             onClick={HandleDeleteUser}
             className="confirm-delete-button"
           >
             Confirm Delete
           </button>
+
+            </div>
+
         </div>
         </div>
 
@@ -176,14 +180,18 @@ function UserTable(){
     {showMoreInfoUser && (
         <div className='form-overlay'>
            <div className="confirm-delete">
-            <button onClick={()=> setShowMoreInfoUser(null)}>X</button>
-           <ul style={{ listStyle: 'none', paddingLeft: '10px' }}>
-          <li><strong>Full Name:</strong>  {showMoreInfoUser.fullName}</li>
-          <li><strong>Email address:</strong> {showMoreInfoUser.email}</li>
-          <li><strong>Phone number:</strong> {showMoreInfoUser.phoneNumber}</li>
-          <li><strong>Role:</strong> {showMoreInfoUser.role}</li>
-          <li><strong>Date joined:</strong> {showMoreInfoUser.createdAt.split("T")[0]}</li>
+            <button onClick={()=> setShowMoreInfoUser(null)}
+              className='close-pop-up-button'>X</button>
+            
+            <ul style={{ listStyle: 'none', paddingLeft: '10px' }}>
+          <li><span className='show-more-title'>Full Name:</span>  {showMoreInfoUser.fullName}</li>
+          <li><span className='show-more-title'>Email address:</span> {showMoreInfoUser.email}</li>
+          <li><span className='show-more-title'>Phone number:</span> {showMoreInfoUser.phoneNumber}</li>
+          <li><span className='show-more-title'>Role:</span> {showMoreInfoUser.role}</li>
+          <li><span className='show-more-title'>Date joined:</span> {showMoreInfoUser.createdAt.split("T")[0]}</li>
         </ul>
+
+            
         </div>
         </div>
 

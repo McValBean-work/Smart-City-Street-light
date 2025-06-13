@@ -2,11 +2,15 @@ import  { useEffect, useState } from "react";
 import api from '../api/axios-instance'
 import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
 import './map.css'
+import './dashboard.css'
 import streetLightIcon from '../../assets/icons/streetlight.svg'
+import bench from '../../assets/icons/bench.svg'
+import garbageBin from '../../assets/icons/garbage-basket.svg'
 import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faTrash, faChair } from "@fortawesome/free-solid-svg-icons/faCircleXmark";
+import { faCircleXmark} from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 import { toast } from "react-toastify";
+import { Link } from 'react-router-dom'
 
 
 
@@ -210,8 +214,8 @@ catch(error){
                 <>
               <MarkerF
               key={property._id}
-              icon={property.type === 'garbage-bin' ? {url: faChair}
-              :property.type === 'bench' ? {url: faTrash}
+              icon={property.type === 'garbage-bin' ? {url: garbageBin, scaledSize: new google.maps.Size(40,40)}
+              :property.type === 'bench' ? {url: bench, scaledSize: new google.maps.Size(60,40)}
               : {url: streetLightIcon, scaledSize: new google.maps.Size(40,40)}
               }
               position={{lat:property.location.coordinates.lat,
@@ -231,27 +235,27 @@ catch(error){
 
                     <>
                     <p className="property-id">{property.propertyId}</p>
-                    <p><span className='property-keys'>Type:</span>
+                    <p><span className='show-more-title'>Type:</span>
                     {property.type}
                     </p>
                     <p>
-                      <span className='property-keys'>State:</span>
+                      <span className='show-more-title'>State:</span>
                       {property.state}
                       </p>
-                    <p><span className='property-keys'>Address:</span>
+                    <p><span className='show-more-title'>Address:</span>
                         {property.location.address}
                         </p>
-                    <p>Get Directions</p>
                     <p>
-                      <button onClick={()=>{HandleUpdateStateOnClick(property._id)}}>
-                          Update status
+                      <button onClick={()=>{HandleUpdateStateOnClick(property._id)}}
+                        className='update-btn'>
+                          Update
                         </button>
-                    </p>
-                      <p>
-                        <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}>
+                        <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}
+                          className="delete-btn">
                         Delete
                         </button>
-                      </p>
+                    </p>
+                      <p><Link to ={`https://www.google.com/maps?q=${property.location.coordinates.lat},${property.location.coordinates.lng}`} target='_blank' >Get directions to property</Link></p>
                         </>
 
                 </InfoWindowF>
@@ -269,14 +273,16 @@ catch(error){
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <button onClick={() => setShowDeletePrompt(false)}>
+        <button onClick={() => setShowDeletePrompt(false)}
+          className="close-pop-up-button">
         X
       </button>
-
-      <span>Are you sure you want to delete this property?</span>
+      <div>
+        <span>Are you sure you want to delete this property?</span>
       <button onClick={DeletePropertySubmit} className="confirm-delete-button">
          Confirm delete
       </button>
+      </div>
       </div>
 
     </div>
@@ -288,7 +294,8 @@ catch(error){
     <>
     <div className='form-overlay'>
       <div className='confirm-delete'>
-        <button onClick={() => setShowUpdatePrompt(false)}>
+        <button onClick={() => setShowUpdatePrompt(false)}
+          className='close-pop-up-button'>
         X
       </button>
       <select name="updatedState"
@@ -343,7 +350,7 @@ catch(error){
           <option value="">select type</option>
           <option value="streetlight">Streetlight </option>
           <option value="bench">Bench</option>
-          <option value="garbage bin">Garbage bin</option>
+          <option value="garbage-bin">Garbage bin</option>
         </select>
         <label htmlFor="state">State</label>
         <select name="state" value={NewProperty.state} onChange={(e) =>

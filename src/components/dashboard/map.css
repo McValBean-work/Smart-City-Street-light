@@ -111,3 +111,26 @@ p{
     font-family:monospace;
     font-size:150%;
 }
+.update-btn {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding:0.2rem 0.5rem;
+  border-radius: 5px;
+  margin-right:0.5rem;
+}
+
+.update-btn:hover {
+  background-color: #388E3C;
+}
+
+/* Delete button */
+.delete-btn {
+  background-color: #F44336; /* Red */
+  color: white;
+  padding:0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+.delete-btn:hover {
+  background-color: #D32F2F;
+}

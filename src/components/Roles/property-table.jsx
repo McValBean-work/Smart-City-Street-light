@@ -2,6 +2,7 @@ import api from "../api/axios-instance";
 import { useState, useEffect } from "react";
 import '../dashboard/dashboard.css'
 import { toast } from "react-toastify";
+import { Link } from 'react-router-dom'
 
 export default function PropertyTable(){
   const [properties, setProperties] = useState([]);
@@ -140,11 +141,15 @@ export default function PropertyTable(){
         <button className="close-pop-up-button" onClick={() => setShowDeletePrompt(false)}>
         X
       </button>
-
-      <span>Are you sure you want to delete this property?</span>
+      <div>
+        <span>Are you sure you want to delete this property?</span>
       <button onClick={DeletePropertySubmit} className="confirm-delete-button">
          Confirm delete
       </button>
+
+      </div>
+
+      
       </div>
 
     </div>
@@ -186,7 +191,7 @@ export default function PropertyTable(){
   <div className="form-overlay">
   <div className='confirm-delete'>
     <button className ='close-button' onClick={()=> setShowMoreInfoPopUp(false)}>X</button>
-    <div>
+
       <p className="property-id">
       <span>{currentProperty.propertyId}</span>
        </p>
@@ -201,10 +206,10 @@ export default function PropertyTable(){
                     <p><span className='property-keys'>Address:</span>
                         {currentProperty.location.address}
                         </p>
-                    <p>Get Directions</p>
+                    <p><Link to ={`https://www.google.com/maps?q=${currentProperty.location.coordinates.lat},${currentProperty.location.coordinates.lng}`} target='_blank' >Get directions to property</Link></p>
     </div>
   </div>
-  </div>
+
 )
 
 }

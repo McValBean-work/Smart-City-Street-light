@@ -25,7 +25,9 @@ function Reports() {
   const [showPopUpId, setShowPopUpId] = useState(null);
   const [showAssignTaskForm, setShowAssignTaskForm] = useState(false);
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+  const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [activeReportId, setActiveReportId] = useState(null);
+  const [activeReport, setActiveReport] = useState(null);
 
   const Engineers = GetUsers().filter(user => user.role === 'engineer');
   const totalReports = allReports.length;
@@ -64,9 +66,11 @@ function Reports() {
     }
   }
 
-  function handleReportOptionsClick(reportId, propertyId) {
+  function handleReportOptionsClick(report,reportId, propertyId) {
+    console.log(report);
     console.log(propertyId);
     console.log(reportId);
+    setActiveReport(report);
     setActiveReportId(reportId);
     const property = allProperties.find(p => p.propertyId === propertyId);
 setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
@@ -143,7 +147,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                   {report.description}
                   <button
                     className='more-options'
-                    onClick={() => {handleReportOptionsClick(report._id, report.propertyId); setActiveReportId(report._id)}}
+                    onClick={() => {handleReportOptionsClick(report,report._id, report.propertyId); setActiveReportId(report._id)}}
                   >
                     :
                   </button>
@@ -156,19 +160,18 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                       }}>
                         Assign task
                       </button>
-                      <span
+                      <button
                         className="delete"
                         onClick={() => {
                           setShowDeletePrompt(true);
                           setShowPopUpId(null);
                           setActiveReportId(report._id);
-                        }}
-                      >
+                        }}>
                         Delete report
-                      </span>
-                      <span>
+                      </button>
+                      <button onClick={() => {setShowMoreInfo(true); setShowPopUpId(null); setActiveReport(report)}}>
                         More Info
-                      </span>
+                      </button>
                     </div>
                   )}
                 </span>
@@ -185,9 +188,10 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         <div className='form-overlay'>
           <div className="confirm-delete">
 
-          <button onClick={()=> setShowAssignTaskForm(false)}>X</button>
+          <button onClick={()=> setShowAssignTaskForm(false)}
+            className='close-pop-up-button'>X
+            </button>
 
-          <form onSubmit={handleAssignTaskSubmit}>
             <label>Assign to:</label>
             <select
               name="engineerId"
@@ -203,8 +207,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                 </option>
               ))}
             </select>
-            <input type="submit" className='submit' value="Assign" />
-          </form>
+            <input type="submit" className='submit' value="Assign" onClick={handleAssignTaskSubmit} />
         </div>
         </div>
 
@@ -214,23 +217,49 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
       {showDeletePrompt && (
         <div className='form-overlay'>
            <div className="confirm-delete">
-
-          <button onClick={()=> setShowDeletePrompt(false)}>X</button>
-
-          <span>Are you sure you want to delete this report?</span>
+          <button
+          onClick={()=> setShowDeletePrompt(false)}
+          className='close-pop-up-button'>
+            X
+            </button>
+            <div>
+              <span>Are you sure you want to delete this report?</span>
           <button
             onClick={handleDeleteReport}
-            className="confirm-delete-button"
-          >
+            className="confirm-delete-button">
             Confirm Delete
           </button>
+            </div>
         </div>
         </div>
 
       )}
+       {showMoreInfo &&(
+    <div className="form-overlay">
+      <div className="confirm-delete">
+        <button onClick={()=> setShowMoreInfo(false)}
+        className='close-pop-up-button'>
+          X
+        </button>
+        <p className="stat
+        ">
+              <span>{activeReport.propertyId}</span>
+               </p>
+                        
+                            <p>
+                              <span className='property-keys'>Description:</span>
+                              {activeReport.description}
+                              </p>
+
+      </div>
+
+
+    </div>
+  )}
     </div>
   );
 }
+
 
 function ReportsPage() {
   return (

@@ -31,7 +31,7 @@
     width:100%;
     min-height:100%;
 }
-.dashboard-layout div{
+.dashboard-layout>div{
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding:0.5rem;
     flex:1;
@@ -81,28 +81,33 @@ button{
 }
 .confirm-delete{
     position: absolute;
-    width:30%;
-    align-items: center;
     z-index: auto;
+    min-width: 30%;
     display:flex;
     flex-direction: column;
     padding: 1rem;
     background: white;
     border-radius: 0.5rem;
-    white-space:wrap;
+    white-space:nowrap;
 }
 .close-pop-up-button{
 align-self: flex-end;
-width:100%;
+width: min-content;
 justify-self: flex-end;
+margin-bottom:1rem;
 }
-.confirm-delete>*{
+.confirm-delete div{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
     white-space: wrap;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     width:100%;
     height:100%;
 }
-
+.confirm-delete div>*{
+    margin-bottom:0.5rem;
+}
 .confirm-delete-button{
     width: min-content;
     white-space: nowrap;
@@ -178,4 +183,8 @@ justify-self: flex-end;
     border-radius: 0.5rem;
     white-space:wrap;
 
+}
+.show-more-title{
+    font-weight:500;
+    margin-right:0.5rem;
 }
