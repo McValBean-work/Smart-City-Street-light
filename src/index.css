@@ -14,7 +14,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 html, body, #root {
-
+background: white;
 width:100%;
 height:100%;
 }
@@ -39,7 +39,6 @@ form{
     display: flex;
     flex-direction: column;
     width: 40%;
-    margin-top: 3rem;
     padding: 1rem;
     border-radius: 2rem;
     background-color: white;
@@ -84,7 +83,6 @@ form input , form textarea, select{
       margin-bottom: 1rem;
     }
 }
-
 @media only screen and (min-width:481px) and (max-width:768px){
 
     form{
@@ -97,6 +95,6 @@ form input , form textarea, select{
 @media (min-width:769px) and (max-width:1024px){
 
     form{
-        width:50%;
+        width:60%;
     }
 }

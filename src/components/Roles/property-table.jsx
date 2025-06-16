@@ -186,7 +186,6 @@ export default function PropertyTable(){
     </>
   )
 }
-
 {showMoreInfoPopUp && (
   <div className="form-overlay">
   <div className='confirm-delete'>
@@ -209,9 +208,7 @@ export default function PropertyTable(){
                     <p><Link to ={`https://www.google.com/maps?q=${currentProperty.location.coordinates.lat},${currentProperty.location.coordinates.lng}`} target='_blank' >Get directions to property</Link></p>
     </div>
   </div>
-
 )
-
 }
     </div>
   )

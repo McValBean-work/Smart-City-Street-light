@@ -1,19 +1,23 @@
 .about-section{
-    font-size: 1.5rem;
-    padding:1rem;
+    font-size: 1.2rem;
+    padding:0.2rem;
     display:flex;
-    width:80%;
-    justify-content:center;
-    justify-self: center;
     flex-direction: column;
-    background:#1CAC78;
+    max-width:90%;
     border-radius: 1rem;
+}
+.about-title{
+    white-space: nowrap;
+    font-size: x-larger;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 .about-section p {
     margin-bottom: 1rem;
 }
 .about-section h1, .about-section h3{
     font-weight: 600;
+    margin-bottom: 0.5rem;
 }
 
 @media (max-width:319){
@@ -26,4 +30,7 @@
          font-weight: normal;
          white-space: wrap;
     }
+}
+@media(min-width:320) and (max-width:768) {
+
 }
