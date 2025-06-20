@@ -10,7 +10,8 @@ import '../../assets/icons/streetlight.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark} from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 import { toast } from "react-toastify";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import NewGeolocationPropertyForm from '../Roles/supervisor/create-property-geolocation-form'
 
 
 
@@ -21,6 +22,7 @@ import { Link } from 'react-router-dom'
 
 function StreetLightMap(){
 
+const [showForm, setShowForm]= useState(false);
 const [properties , setProperties] = useState([]);
 const [selectedMarker , setSelectedMarker] = useState();
 const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -170,8 +172,13 @@ catch(error){
   toast.error(error?.response?.data.message || 'Error creating property')
 }
 
-
+finally{
+  setShowNewPropertyForm(false);
+  setNewProperty(InitialNewPropertyState);
   console.log(NewProperty);
+}
+
+  
 };
 
   const center = {
@@ -185,6 +192,9 @@ catch(error){
 
   return isLoaded ? (
     <>
+    <p>Click on map to add new property or <button onClick={()=> setShowForm(true)}
+      style={{color:'blue'}}> use your location </button></p>
+
     <GoogleMap
       mapContainerClassName="map-container"
       center={center}
@@ -369,6 +379,11 @@ catch(error){
     </div>
 
     </>
+    )}
+    {showForm && (
+      <>
+      <NewGeolocationPropertyForm onClose={() => setShowForm(false)} />
+      </>
     )}
 
     </>

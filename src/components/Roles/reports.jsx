@@ -241,14 +241,17 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         className='close-pop-up-button'>
           X
         </button>
-        <p className="stat
-        ">
-              <span>{activeReport.propertyId}</span>
+              <p className="property-id">
+                  {activeReport.propertyId}
                </p>
                         
                             <p>
                               <span className='property-keys'>Description:</span>
                               {activeReport.description}
+                              </p>
+                              <p>
+                                <span className="property-keys">Submitted At:</span>
+                                {activeReport.submittedAt.split('T')[0]}
                               </p>
 
       </div>

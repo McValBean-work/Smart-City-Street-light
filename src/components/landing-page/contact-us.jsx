@@ -5,10 +5,8 @@ function ContactUsForm(){
         <>
         <form action="" className='contact-us-form'>
             <h1 className='form-header'>Reach Out To Us</h1>
-            <label htmlFor="FirstName">First Name</label>
+            <label htmlFor="FirstName">Full Name</label>
             <input type="text" placeholder='Enter Your First Name' required/>
-            <label htmlFor="LastName">Last Name</label>
-            <input type="text" placeholder='Enter Your Last Name' required/>
             <label htmlFor="EmailAddress">Email Address</label>
             <input type="text" placeholder='Enter Email Address' required/>
             <label htmlFor="PhoneNumber">Phone Number</label>
