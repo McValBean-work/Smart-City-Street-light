@@ -28,9 +28,9 @@ const role = getRole();
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/landing page" element={<LandingPage />} />
+          <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />}/>
-          <Route path="/contact-Us" element={<ContactUsPage />}/>
+          <Route path="/contact-us" element={<ContactUsPage />}/>
           <Route path="/report" element={<ReportForm />} />
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/sign-up" element={

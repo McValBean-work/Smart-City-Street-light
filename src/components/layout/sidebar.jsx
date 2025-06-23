@@ -13,6 +13,14 @@ function SideBar(){
         console.log(localStorage.getItem("role"));
     };
 
+    const sidebarLinks = [
+  { to: "/portal/dashboard", title: "dashboard", icon: faHome, label: "Dashboard" },
+  { to: "/portal/tasks", title: "tasks", icon: faListCheck, label: "Tasks" },
+  { to: "/portal/properties", title: "properties", icon: faLocationDot, label: "Properties" },
+  { to: "/portal/reports", title: "view reports", icon: faFile, label: "Reports" },
+];
+
+
     return(
         <>
         <nav className="sidebar">
@@ -20,30 +28,30 @@ function SideBar(){
                 <>
                 <div className="sidebar-links">
                 <NavLink to="/portal/dashboard" title="dashboard" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faHome}  />
+                <FontAwesomeIcon icon={faHome} className='sidebar-icon' />
                 <span>Dashboard</span>
                 </NavLink>
                 <NavLink to="/portal/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faListCheck}  />
+                <FontAwesomeIcon icon={faListCheck}  className='sidebar-icon'  />
                 <span>Tasks</span>
                 </NavLink>
                 <NavLink to="/portal/properties" title="properties" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faLocationDot}  />
+                <FontAwesomeIcon icon={faLocationDot}  className='sidebar-icon'  />
                 <span>Properties</span>
                 </NavLink>
                 <NavLink to="/portal/reports" title="view reports" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faFile}  />
+                <FontAwesomeIcon icon={faFile}  className='sidebar-icon' />
                 <span>Reports</span>
                 </NavLink>
                 <Link to="/sign-Up" title="create user" className="sidebar-link" >
-                <FontAwesomeIcon icon={faUserPlus}  />
+                <FontAwesomeIcon icon={faUserPlus}  className='sidebar-icon' />
                 <span>Create User</span>
                 </Link>
             </div>
             <div className="sidebar-links">
 
             <Link to="/login" title="logout" onClick={logout} className="sidebar-link logout">
-                <FontAwesomeIcon icon={faRightFromBracket}  />
+                <FontAwesomeIcon icon={faRightFromBracket}  className='sidebar-icon' />
                 <span>Logout</span>
                 </Link>
             </div>
@@ -53,27 +61,25 @@ function SideBar(){
             {role === 'supervisor' && (
                 <>
                 <div className="sidebar-links">
-                <NavLink to="/portal/dashboard" title="dashboard" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faHome}  />
-                <span>Dashboard</span>
-                </NavLink>
-                <NavLink to="/portal/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faListCheck}  />
-                <span>Tasks</span>
-                </NavLink>
-                <NavLink to="/portal/properties" title="properties" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faLocationDot}  />
-                <span>Properties</span>
-                </NavLink>
-                <NavLink to="/portal/reports" title="view reports" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faFile}  />
-                <span>Reports</span>
-                </NavLink>
-            </div>
+  {sidebarLinks.map(({ to, title, icon, label }) => (
+    <NavLink
+      key={to}
+      to={to}
+      title={title}
+      className={({ isActive }) =>
+        isActive ? "sidebar-link active" : "sidebar-link"
+      }
+    >
+      <FontAwesomeIcon icon={icon} className="sidebar-icon" />
+      <span>{label}</span>
+    </NavLink>
+  ))}
+</div>
+
             <div className="sidebar-links">
 
             <Link to="/login" title="logout" onClick={logout} className="sidebar-link logout">
-                <FontAwesomeIcon icon={faRightFromBracket}  />
+                <FontAwesomeIcon icon={faRightFromBracket}  className='sidebar-icon'  />
                 <span>Logout</span>
                 </Link>
             </div>
@@ -85,18 +91,18 @@ function SideBar(){
                 <>
                 <div className="sidebar-links">
                 <NavLink to="/portal/dashboard" title="dashboard" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faHome}  />
+                <FontAwesomeIcon icon={faHome}  className='sidebar-icon' />
                 <span>Dashboard</span>
                 </NavLink>
                 <NavLink to="/portal/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
-                <FontAwesomeIcon icon={faListCheck}  />
+                <FontAwesomeIcon icon={faListCheck}  className='sidebar-icon' />
                 <span>Tasks</span>
                 </NavLink>
             </div>
             <div className="sidebar-links">
 
             <Link to="/login" title="logout" onClick={logout} className="sidebar-link logout">
-                <FontAwesomeIcon icon={faRightFromBracket}  />
+                <FontAwesomeIcon icon={faRightFromBracket}  className='sidebar-icon' />
                 <span>Logout</span>
                 </Link>
             </div>

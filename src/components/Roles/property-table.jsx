@@ -2,10 +2,16 @@ import api from "../api/axios-instance";
 import { useState, useEffect } from "react";
 import '../dashboard/dashboard.css'
 import { toast } from "react-toastify";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function PropertyTable(){
+  const location = useLocation();
+  const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
   const [properties, setProperties] = useState([]);
+  const propertiesToDisplay = onDashboard ? properties.slice(-5) : properties;
   const [showPopUpId, setShowPopUpId] = useState(false);
   const [currentProperty, setCurrentProperty] = useState();
   const [showMoreInfoPopUp, setShowMoreInfoPopUp] = useState(false);
@@ -78,7 +84,7 @@ export default function PropertyTable(){
 
   return(
     <div>
-    <h1>All properties: {properties.length}</h1>
+    <h1>{onDashboard ? `New Properties: ${propertiesToDisplay.length}` : `All properties: ${properties.length}`}</h1>
     <table>
       <thead>
         <tr>
@@ -90,7 +96,7 @@ export default function PropertyTable(){
 
       </thead>
       <tbody>
-        {Array.isArray(properties) && properties.map(property =>(
+        {Array.isArray(propertiesToDisplay) && propertiesToDisplay.map(property =>(
           <tr key={property._id}>
             <td>{property.propertyId}</td>
             <td>{property.type}</td>
@@ -209,6 +215,14 @@ export default function PropertyTable(){
     </div>
   </div>
 )
+}
+
+{onDashboard && (
+  <>
+  <Link to='/portal/properties' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
+  </>
+)
+
 }
     </div>
   )

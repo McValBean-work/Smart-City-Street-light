@@ -7,7 +7,7 @@ function NavBar(){
     return(
         <>
         <nav className="landing-navbar">
-            <NavLink to="/landing page" className='main-icon-link'>
+            <NavLink to="/landing-page" className='main-icon-link'>
             <img src={MainIcon} alt="omni street light" className="main-icon" />
             </NavLink>
             <div>
