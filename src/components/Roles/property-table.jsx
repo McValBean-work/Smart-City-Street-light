@@ -12,7 +12,7 @@ export default function PropertyTable(){
   const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
   const [properties, setProperties] = useState([]);
   const propertiesToDisplay = onDashboard ? properties.slice(-5) : properties;
-  const [showPopUpId, setShowPopUpId] = useState(false);
+  const [showPopUpId, setShowPopUpId] = useState(null);
   const [currentProperty, setCurrentProperty] = useState();
   const [showMoreInfoPopUp, setShowMoreInfoPopUp] = useState(false);
   const [showDeletePrompt , setShowDeletePrompt]= useState(false);
@@ -83,7 +83,7 @@ export default function PropertyTable(){
   }
 
   return(
-    <div>
+    <div className="table-div">
     <h1>{onDashboard ? `New Properties: ${propertiesToDisplay.length}` : `All properties: ${properties.length}`}</h1>
     <table>
       <thead>
@@ -217,13 +217,11 @@ export default function PropertyTable(){
 )
 }
 
-{onDashboard && (
-  <>
-  <Link to='/portal/properties' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
-  </>
-)
+ { onDashboard && propertiesToDisplay.length > 5 && (
 
-}
+        <Link to='/portal/properties' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
+      )
+      } 
     </div>
   )
 }

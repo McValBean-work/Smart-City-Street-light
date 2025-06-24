@@ -36,6 +36,12 @@
     padding:0.5rem;
     flex:1;
 }
+.table-div{
+    margin-top: 2rem;
+    width:100%;
+    flex:1;
+    height:100%;
+}
 table{
     margin: 1rem 0 0 0;
     width:100%;
@@ -187,5 +193,8 @@ margin-bottom:1rem;
 .show-more-title{
     font-weight:500;
     margin-right:0.5rem;
+}
+.view-more-link{
+    margin-top:1rem;
 }
 

@@ -110,7 +110,7 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
 
         return(
             <>
-            <div>
+            <div className="table-div">
                 <h1>All reports: {allReports.length}</h1>
                 <table>
                     <thead>

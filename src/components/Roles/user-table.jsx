@@ -1,10 +1,11 @@
 import { useState , useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import api from '../api/axios-instance';
 import '../dashboard/dashboard.css';
-import api from "../api/axios-instance";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 
 
@@ -55,6 +56,7 @@ export function UserSearchBar(){
 }
 
   function UserTable(){
+        const [allUsers , setAllUsers] = useState([]);
         const location = useLocation();
         const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is
         const usersToDisplay = onDashboard ? allUsers.slice(-5) : allUsers;
@@ -62,8 +64,7 @@ export function UserSearchBar(){
         const [userToDelete, setUserToDelete] = useState(null);
         const [showPopUpId, setShowPopUpId] = useState(null);
         const [showDeletePrompt, setShowDeletePrompt] = useState(null);
-        const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);      
-        const [allUsers , setAllUsers] = useState([]);
+        const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);        
         const [supervisors, setSupervisors] = useState([]);
         const [engineers, setEngineers] = useState([]);
        
@@ -131,9 +132,9 @@ export function UserSearchBar(){
     return(
         <>
        
-        <div>
+        <div className="table-div">
 
-        <h1>{onDashboard ? `Recent Users ${usersToDisplay.length}` : `All Users : ${usersToDisplay.length}`}</h1>
+        <h1>{onDashboard ? `Recent Users:` : `All Users : `} {usersToDisplay.length}</h1>
         <table>
             <tr>
                 <th>Role</th>
@@ -174,6 +175,17 @@ export function UserSearchBar(){
         ))
        }
         </table>
+        {usersToDisplay.length > 5 ? (
+          <>
+          {onDashboard && (
+        <>
+        <Link to='/portal/user-management' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
+        </>
+      )
+      } </>
+          
+        ): ''}
+        
         </div>
         {showDeletePrompt && (
         <div className='form-overlay'>
@@ -215,13 +227,7 @@ export function UserSearchBar(){
         </div>
 
       )}
-      {onDashboard && (
-        <>
-        <Link to='/portal/user-management' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
-        </>
-      )
       
-      }
         </>
     )
 

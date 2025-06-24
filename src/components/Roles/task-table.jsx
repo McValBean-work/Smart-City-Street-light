@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios-instance";
-import '../dashboard/dashboard.css'
+import '../dashboard/dashboard.css';
 import { toast } from "react-toastify";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function TaskTable(){
     const CurrentUser = JSON.parse(localStorage.getItem("userData") || "{}");
     const [allTasks, setAllTasks] = useState([]);
+    const location = useLocation();
+    const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
+    const tasksToDisplay = onDashboard ? allTasks.slice(-5) : allTasks;
     const [showPopUpId , setShowPopUpId] = useState(null);
     const [showMoreInfo ,setShowMoreInfo] = useState(false);
     const [infoTask, setInfoTask] = useState(null);
@@ -91,8 +97,8 @@ export default function TaskTable(){
 
 return(
     <>
-    <div>
-        <h1>All Tasks: {allTasks.length}</h1>
+    <div className="table-div">
+        <h1>{onDashboard ? `New tasks: ` : `All tasks: `}  {tasksToDisplay.length}</h1>
     <table>
         <thead>
             <tr>
@@ -103,7 +109,7 @@ return(
             </tr>
         </thead>
         <tbody>
-            {Array.isArray(allTasks) && allTasks.map(task =>(
+            {Array.isArray(tasksToDisplay) && tasksToDisplay.map(task =>(
                 <tr key={task._id}>
                     <td>{task.property?.propertyId}</td>
                     <td>{task.updatedAt.split('T')[0]}</td>
@@ -149,6 +155,13 @@ return(
             }
         </tbody>
     </table>
+    {onDashboard && (
+  <>
+  <Link to='/portal/tasks' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
+  </>
+)
+
+}
     </div>
 {showUpdateStatePopUp && (
                 <>
@@ -268,6 +281,7 @@ return(
         </>
     )
 }
+
     </>
 )
 }

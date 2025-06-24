@@ -2,6 +2,7 @@ import SideBar from "../layout/sidebar"
 import './dashboard.css'
 import Main from "../layout/main"
 import StreetLightMap from "./map";
+import PropertyTable from "../Roles/property-table";
 import TopSection from "./top-section";
 
 function PropertiesPage(){
@@ -13,6 +14,7 @@ function PropertiesPage(){
                 <SideBar />
                 <Main className='client-main'>
                     <StreetLightMap />
+                    <PropertyTable />
                 </Main>
     </div>
     </div>

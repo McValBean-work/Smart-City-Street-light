@@ -4,7 +4,7 @@ import getRole from "../Authentication-page/auth";
 import './sidebar.css'
 {/* import  { useState } from "react" */}
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot , faHome , faFile ,faRightFromBracket, faUserPlus, faListCheck} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot , faHome , faFile ,faRightFromBracket, faUserPlus, faListCheck, faUsers} from "@fortawesome/free-solid-svg-icons";
 function SideBar(){
     const role = getRole();
 
@@ -30,6 +30,10 @@ function SideBar(){
                 <NavLink to="/portal/dashboard" title="dashboard" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faHome} className='sidebar-icon' />
                 <span>Dashboard</span>
+                </NavLink>
+                <NavLink to="/portal/user-management" title="User management" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
+                <FontAwesomeIcon icon={faUsers}  className='sidebar-icon'  />
+                <span>User Management</span>
                 </NavLink>
                 <NavLink to="/portal/tasks" title="tasks" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
                 <FontAwesomeIcon icon={faListCheck}  className='sidebar-icon'  />
