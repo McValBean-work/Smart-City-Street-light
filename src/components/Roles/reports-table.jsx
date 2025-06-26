@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLocation } from "react";
 import api from "../api/axios-instance";
 import { toast } from "react-toastify";
 import GetUsers from "./get-users";
@@ -16,6 +16,11 @@ export default function ReportsTable(){
     
     const [newTask, setNewTask] = useState(InitialNewTaskState);
     const [allReports, setAllReports] = useState([]);
+    const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
+  const [loadingToast, setLoadingToast] = useState(false);
+  const reportsToDisplay = onDashboard ? allReports.slice(-5) : allReports;
+    const [filterdReports, setFilteredReports] = useState('');
+    const [filterText, setFilterText] = useState('');
     const [showAssignTaskForm, setShowAssignTaskForm] = useState(false);
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const [showMoreInfo, setShowMoreInfo] = useState(false);
@@ -28,22 +33,30 @@ export default function ReportsTable(){
     
 
     async function getReports() {
-        const toastId = toast.loading('loading...');
+        setLoadingToast(true);
         try {
           const res = await api.get("api/reports");
           setAllReports(res.data.reports);
+          setFilteredReports(res.data.reports);
           console.log(res.data.reports)
-          toast.update(toastId, {render: 'Success!',
-          type: 'success',
-          isLoading: false,
-          autoClose: 2000})
         } catch (error) {
           console.log("Error fetching reports:", error);
+        }
+        finally{
+          setLoadingToast(false);
         }
       }
       useEffect(() => {
           getReports();
         }, []);
+
+        useEffect(() => {
+          if (filterText && filterText !== 'all_reports') {
+            setFilteredReports(allReports.filter(report => report.role === filterText));
+          } else {
+            setFilteredReports(allReports);
+          }
+        }, [filterText, allReports]);
 
         function handleReportOptionsClick(report,reportId, propertyId) {
     console.log(report);
@@ -102,7 +115,6 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
           console.log("Delete Report Error:", error);
           toast.error(error?.response?.data?.message || 'Error deleting report')
         }
-    
         setShowDeletePrompt(false);
         setShowPopUpId(null);
         setActiveReportId(null);
@@ -111,7 +123,18 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         return(
             <>
             <div className="table-div">
-                <h1>All reports: {allReports.length}</h1>
+                <h1>{onDashboard ? 'Latest Reports' : (
+        <>
+        <select name='filterText'
+        value={filterText}
+        onChange={(e)=> setFilterText(e.target.value)}
+        className="filter-select">
+          <option value="all_reports">All Reports</option>
+          <option value="assigned">Assigned</option>
+          <option value="not_assigned">Not Assigned</option>
+        </select>
+        
+        </>)}</h1>
                 <table>
                     <thead>
                         <tr>

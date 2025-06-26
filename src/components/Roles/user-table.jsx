@@ -64,10 +64,11 @@ export function UserSearchBar(){
         const [userToDelete, setUserToDelete] = useState(null);
         const [showPopUpId, setShowPopUpId] = useState(null);
         const [showDeletePrompt, setShowDeletePrompt] = useState(null);
-        const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);        
-        const [supervisors, setSupervisors] = useState([]);
-        const [engineers, setEngineers] = useState([]);
-       
+        const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);
+        const [filterText, setFilterText] = useState('');
+        const [filteredUsers ,setFilteredUsers] = useState([]);
+        
+       console.log(filteredUsers)
         
         const [userDeleteEmail, setUserDeleteEmail] = useState({
             email:null
@@ -77,23 +78,27 @@ export function UserSearchBar(){
         async function getUsers() {
                 const response = await api.get("api/users");
                 setAllUsers(response.data.accounts);
-                const FilterSupervisors = response.data.accounts.filter(user => user.role === "supervisor");
-                const FilterEngineers = response.data.accounts.filter(user => user.role === "engineer");
-                console.log(response.data.accounts);
-
-                setSupervisors(FilterSupervisors);
-                setEngineers(FilterEngineers);
+                setFilteredUsers(response.data.accounts);
 
                 console.log("this is all users set use state", allUsers);
-                console.log("this is the supervisors set use state", supervisors);
-                console.log("this is the engineers set use state", engineers);
             }
                 useEffect(()=>{
                     getUsers();
                     console.log("useEffect get users called");
                     },[]);
+                    
+  useEffect(() => {
+  if (filterText && ['admin', 'supervisor', 'engineer'].includes(filterText)) {
+    setFilteredUsers(allUsers.filter(user => user.role === filterText));
+  } else {
+    setFilteredUsers(allUsers);
+  }
+}, [filterText, allUsers]);
 
- 
+
+
+
+
         function HandleUserOnClick(userEmail, userId){
             console.log(userId);
             console.log(userEmail);
@@ -134,15 +139,28 @@ export function UserSearchBar(){
        
         <div className="table-div">
 
-        <h1>{onDashboard ? `Recent Users:` : `All Users : `} {usersToDisplay.length}</h1>
+        <h1>{onDashboard ? `Recent Users:` 
+        : (
+        <>
+        <select name='filterText'
+        value={filterText}
+        onChange={(e)=> setFilterText(e.target.value)}
+        className="filter-select">
+          <option value="all_users">All Users</option>
+          <option value="admin">Admins</option>
+          <option value="supervisor">Supervisors</option>
+          <option value="engineer">Engineers</option>
+        </select>
+        
+        </>)}{filteredUsers.length}</h1>
         <table>
             <tr>
                 <th>Role</th>
                 <th>FullName</th>
                 <th>Email Address</th>
             </tr>
-             { Array.isArray(usersToDisplay) &&
-       usersToDisplay.map((user)=>(
+             { Array.isArray(filteredUsers) &&
+       filteredUsers.map((user)=>(
         <tr key={user._id} id={user._id}>
             <td>{user.role}</td>
             <td>{user.fullName}</td>
@@ -175,16 +193,15 @@ export function UserSearchBar(){
         ))
        }
         </table>
-        {usersToDisplay.length > 5 ? (
-          <>
-          {onDashboard && (
+        {allUsers.length > 5 && onDashboard && (
+        
+          
         <>
         <Link to='/portal/user-management' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
         </>
-      )
-      } </>
+      
           
-        ): ''}
+          )}
         
         </div>
         {showDeletePrompt && (

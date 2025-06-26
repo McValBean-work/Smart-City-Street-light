@@ -11,6 +11,7 @@ export default function PropertyTable(){
   const location = useLocation();
   const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
   const [properties, setProperties] = useState([]);
+  const [loadingToast, setLoadingToast] = useState(false);
   const propertiesToDisplay = onDashboard ? properties.slice(-5) : properties;
   const [showPopUpId, setShowPopUpId] = useState(null);
   const [currentProperty, setCurrentProperty] = useState();
@@ -20,9 +21,19 @@ export default function PropertyTable(){
   const [updatedState, setUpdatedState]= useState({ state:null });
 
   async function getProperties(){
-    const res = await api.get( "api/properties");
+    setLoadingToast(true);
+    try{
+const res = await api.get( "api/properties");
     setProperties(res.data);
     console.log(res.data);
+    }
+    catch(error){
+      toast.error(error?.response?.data?.message || 'Error fetching properties')
+    }
+    finally{
+      setLoadingToast(false);
+    }
+    
   }
   useEffect(()=>{
     getProperties();
@@ -36,8 +47,7 @@ export default function PropertyTable(){
 
   async function UpdateStateSubmit(e){
     e.preventDefault()
-    console.log(currentProperty)
-
+    console.log(currentProperty) 
     try{
       const res = await api.patch(`api/properties/${currentProperty._id}`,updatedState);
       console.log(res.data);
@@ -84,7 +94,7 @@ export default function PropertyTable(){
 
   return(
     <div className="table-div">
-    <h1>{onDashboard ? `New Properties: ${propertiesToDisplay.length}` : `All properties: ${properties.length}`}</h1>
+    <h1>{onDashboard ? 'Latest Properties' :`All properties: ${properties.length}`}</h1>
     <table>
       <thead>
         <tr>
@@ -96,6 +106,9 @@ export default function PropertyTable(){
 
       </thead>
       <tbody>
+        {loadingToast && (
+          <span className='loading-span'>Loading....</span>
+        ) }
         {Array.isArray(propertiesToDisplay) && propertiesToDisplay.map(property =>(
           <tr key={property._id}>
             <td>{property.propertyId}</td>
@@ -217,7 +230,7 @@ export default function PropertyTable(){
 )
 }
 
- { onDashboard && propertiesToDisplay.length > 5 && (
+ {onDashboard && properties.length > 5 && (
 
         <Link to='/portal/properties' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
       )

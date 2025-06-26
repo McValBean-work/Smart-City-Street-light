@@ -1,6 +1,6 @@
-import  { useEffect, useState } from "react";
+import  { useEffect, useState, useRef } from "react";
 import api from '../api/axios-instance'
-import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF} from "@react-google-maps/api";
+import { GoogleMap,useJsApiLoader, MarkerF, InfoWindowF, Circle} from "@react-google-maps/api";
 import './map.css'
 import './dashboard.css'
 import streetLightIcon from '../../assets/icons/streetlight.svg'
@@ -24,6 +24,8 @@ function StreetLightMap(){
 
 const [showForm, setShowForm]= useState(false);
 const [properties , setProperties] = useState([]);
+const [mapZoom, setMapZoom] = useState(13);
+const mapRef = useRef();
 const [selectedMarker , setSelectedMarker] = useState();
 const [showDeletePrompt, setShowDeletePrompt] = useState(false);
 const [showUpdatePrompt, setShowUpdatePrompt] = useState(false);
@@ -198,7 +200,7 @@ finally{
     <GoogleMap
       mapContainerClassName="map-container"
       center={center}
-      zoom={13}
+      zoom={mapZoom}
       onClick={MapOnclick}
       options={
         {
@@ -222,6 +224,17 @@ finally{
               Array.isArray(properties) &&
               properties.map((property) => (
                 <>
+                <Circle
+              center={{
+                lat:property.location.coordinates.lat, 
+                lng:property.location.coordinates.lng
+              }}
+              radius={{scaledSize: new google.maps.Size(40,40)}}
+              options={{
+                fillColor: property.state === 'working' ? 'green' : 'red',
+                fillOpacity:0.6,
+                zIndex:0
+              }} />
               <MarkerF
               key={property._id}
               icon={property.type === 'garbage-bin' ? {url: garbageBin, scaledSize: new google.maps.Size(40,40)}
@@ -233,8 +246,10 @@ finally{
               }
               onClick={() => {HandleMarkerClick(property._id);
 }}
+zIndex={1}
               >
               </MarkerF>
+              
                {
                 selectedMarker === property._id &&(
                 <InfoWindowF

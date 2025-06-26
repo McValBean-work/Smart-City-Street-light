@@ -155,7 +155,7 @@ return(
             }
         </tbody>
     </table>
-    {onDashboard && (
+    {allTasks.length > 5 && onDashboard && (
   <>
   <Link to='/portal/tasks' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
   </>
