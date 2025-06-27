@@ -35,7 +35,6 @@ try{
   const res = api.post('/api/users' , newUser);
   console.log(res.message);
   toast.success(res.message || 'New user created');
-  setTimeout(navigate(-1), 10000) ;
 }
 catch(e){
   toast.error(e.response?.data?.message || 'Error creating user')

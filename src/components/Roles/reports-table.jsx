@@ -1,9 +1,11 @@
-import { useState, useEffect, useLocation } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import api from "../api/axios-instance";
 import { toast } from "react-toastify";
 import GetUsers from "./get-users";
 
 export default function ReportsTable(){
+  
     const CurrentUser = JSON.parse(localStorage.getItem("userData") || "{}");
   console.log(CurrentUser)
 
@@ -16,10 +18,11 @@ export default function ReportsTable(){
     
     const [newTask, setNewTask] = useState(InitialNewTaskState);
     const [allReports, setAllReports] = useState([]);
+    const location = useLocation();
     const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
   const [loadingToast, setLoadingToast] = useState(false);
   const reportsToDisplay = onDashboard ? allReports.slice(-5) : allReports;
-    const [filterdReports, setFilteredReports] = useState('');
+    const [filteredReports, setFilteredReports] = useState('');
     const [filterText, setFilterText] = useState('');
     const [showAssignTaskForm, setShowAssignTaskForm] = useState(false);
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -28,6 +31,7 @@ export default function ReportsTable(){
     const [activeReportId, setActiveReportId] = useState(null);
     const [activeReport, setActiveReport] = useState(null);
     const [allProperties, setAllProperties] = useState([]);
+    const [allTasks, setAllTasks] =useState([]);
     const Engineers = GetUsers().filter(user => user.role === 'engineer');
     
     
@@ -50,10 +54,23 @@ export default function ReportsTable(){
           getReports();
         }, []);
 
+        async function getTasks(){
+                    const res = await api.get("api/tasks");
+                    setAllTasks(res.data);
+    }
+         useEffect(()=>{
+                getTasks();
+                console.log(allTasks);
+         },[]);
+
         useEffect(() => {
-          if (filterText && filterText !== 'all_reports') {
-            setFilteredReports(allReports.filter(report => report.role === filterText));
-          } else {
+          if (filterText && filterText =='assigned')  {
+            const assignedReports = allTasks.map(task => task.report);
+  setFilteredReports(allReports.filter(report => assignedReports.includes(report)));
+} else if (filterText === 'not_assigned') {
+  const assignedReports = allTasks.map(task => task.report);
+  setFilteredReports(allReports.filter(report => !assignedReports.includes(report)));
+} else {
             setFilteredReports(allReports);
           }
         }, [filterText, allReports]);
@@ -129,23 +146,26 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         value={filterText}
         onChange={(e)=> setFilterText(e.target.value)}
         className="filter-select">
-          <option value="all_reports">All Reports</option>
+          <option value="all_reports" selected>All Reports</option>
           <option value="assigned">Assigned</option>
           <option value="not_assigned">Not Assigned</option>
         </select>
         
-        </>)}</h1>
-                <table>
-                    <thead>
+        </>)}
+        </h1>
+            <table>
+                  <thead>
                         <tr>
                             <th>Property ID</th>
+                            <th>Submission Date</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(allReports) && allReports.map(report=> (
+                        {Array.isArray(filteredReports) && filteredReports.map(report=> (
                             <tr key={report._id}>
                                 <td>{report.propertyId}</td>
+                                <td>{report.submittedAt.split('T')[0]}</td>
                                 <td>
                                     <span>
                                         {report.description}

@@ -19,12 +19,15 @@ export default function PropertyTable(){
   const [showDeletePrompt , setShowDeletePrompt]= useState(false);
   const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
   const [updatedState, setUpdatedState]= useState({ state:null });
+  const [filterText, setFilterText] = useState('');
+  const [filteredProperties ,setFilteredProperties] = useState([]);
 
   async function getProperties(){
     setLoadingToast(true);
     try{
 const res = await api.get( "api/properties");
     setProperties(res.data);
+    setFilteredProperties(res.data);
     console.log(res.data);
     }
     catch(error){
@@ -39,6 +42,19 @@ const res = await api.get( "api/properties");
     getProperties();
     console.log("use effect get properties called");
   },[]);
+
+ useEffect(() => {
+  if (filterText && ['streetlights', 'benches', 'garbage_bins'].includes(filterText)) {
+    setFilteredProperties(properties.filter(property => property.type === filterText));
+  } else if(filterText && filterText == 'state') {
+    setFilteredProperties(properties.filter(property => property.state === filterText));
+
+  }
+  
+  else {
+    setFilteredProperties(properties);
+  }
+}, [filterText, properties]);
 
   function HandleMoreInfoOnClick(property){
     setShowMoreInfoPopUp(true);
@@ -94,7 +110,21 @@ const res = await api.get( "api/properties");
 
   return(
     <div className="table-div">
-    <h1>{onDashboard ? 'Latest Properties' :`All properties: ${properties.length}`}</h1>
+    <h1>{onDashboard ? 'Latest Properties' 
+    : (
+        <>
+        <select name='filterText'
+        value={filterText}
+        onChange={(e)=> setFilterText(e.target.value)}
+        className="filter-select">
+          <option value="all_properties">All Properties</option>
+          <option value="streetlights">Streetlights</option>
+          <option value="garbage_bins">Garbage Bins</option>
+          <option value="benches">Benches</option>
+        </select>
+        
+        </>)}
+     {filteredProperties.length}</h1>
     <table>
       <thead>
         <tr>
@@ -109,7 +139,7 @@ const res = await api.get( "api/properties");
         {loadingToast && (
           <span className='loading-span'>Loading....</span>
         ) }
-        {Array.isArray(propertiesToDisplay) && propertiesToDisplay.map(property =>(
+        {Array.isArray(filteredProperties) && filteredProperties.map(property =>(
           <tr key={property._id}>
             <td>{property.propertyId}</td>
             <td>{property.type}</td>

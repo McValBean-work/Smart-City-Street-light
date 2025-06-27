@@ -6,12 +6,15 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import getRole from "../Authentication-page/auth";
 
 export default function TaskTable(){
     const CurrentUser = JSON.parse(localStorage.getItem("userData") || "{}");
+    const role = getRole();
     const [allTasks, setAllTasks] = useState([]);
+    const [currentUserTasks , setCurrentUserTasks] = useState([]);
     const location = useLocation();
-    const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
+    const onDashboard = location.pathname === "/portal/dashboard";          
     const tasksToDisplay = onDashboard ? allTasks.slice(-5) : allTasks;
     const [showPopUpId , setShowPopUpId] = useState(null);
     const [showMoreInfo ,setShowMoreInfo] = useState(false);
@@ -20,7 +23,9 @@ export default function TaskTable(){
     const [updatedTaskStatus , setUpdatedTaskStatus] = useState({status: null});
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const [showCommentPopUp,setShowCommentPopUp] = useState(false);
-     const [activeTaskId, setActiveTaskId] = useState(null);
+    const [activeTaskId, setActiveTaskId] = useState(null);
+    const [filterText, setFilterText] = useState('');
+    const [filteredTasks ,setFilteredTasks] = useState([]);
     const [comment, setComment]= useState({
             text:null,
             userId:CurrentUser.id
@@ -29,11 +34,40 @@ export default function TaskTable(){
     async function getTasks(){
                     const res = await api.get("api/tasks");
                     setAllTasks(res.data);
+                    
+                    if(role === 'engineer'){
+                    await setCurrentUserTasks(res.data.filter((myTasks) =>
+                        myTasks.assignedTo && myTasks.assignedTo.fullName === CurrentUser.fullName
+                    ))
+                    setFilteredTasks(currentUserTasks);
+                }
+                else if(role === "admin" || role === "supervisor"){
+                    setCurrentUserTasks(res.data.filter((myTasks) =>
+                        myTasks.assignedBy && myTasks.assignedBy.fullName === CurrentUser.fullName
+                    ))
+                    setFilteredTasks(allTasks);
+                }
+                    
     }
          useEffect(()=>{
                 getTasks();
                 console.log(allTasks);
          },[]);
+
+useEffect(() => {
+  if (filterText && ['pending', 'in_progress', 'fixed', 'cannot_fix'].includes(filterText)) {
+    setFilteredTasks(allTasks.filter(task => task.status === filterText));
+  }else if(filterText == 'my_tasks'){
+    setFilteredTasks(currentUserTasks);
+  } 
+  else if( role === 'engineer') {
+    setFilteredTasks(currentUserTasks);
+  }
+  else{
+    setFilteredTasks(allTasks);
+  }
+}, [filterText, allTasks]);
+
 
          function HandleTaskOnClick(taskId){
         setActiveTaskId(taskId);
@@ -98,22 +132,73 @@ export default function TaskTable(){
 return(
     <>
     <div className="table-div">
-        <h1>{onDashboard ? `New tasks: ` : `All tasks: `}  {tasksToDisplay.length}</h1>
+        <h1>{onDashboard ? `Latest tasks: ` : (
+        <>
+        <select name='filterText'
+        value={filterText}
+        onChange={(e)=> setFilterText(e.target.value)}
+        className="filter-select">
+         {['admin', 'supervisor'].includes(role) &&
+         <option value="all_tasks">All Tasks</option>
+         } 
+          <option value="my_tasks">My Tasks</option>
+          <option value="pending">Pending</option>
+          <option value="fixed">Completed</option>
+          <option value="in_progress">In Progress</option>
+          <option value="cannot_fix">Cannot Fix</option>
+        </select>
+        
+        </>)} {filteredTasks.length}</h1>
     <table>
         <thead>
             <tr>
+                {onDashboard ? (
+                <>
                 <th>Property ID</th>
                 <th>Date Assigned</th>
                 <th>Assigned To</th>
+                <th>Assigned By</th>
                 <th>Status</th>
+                </>
+                )
+                :
+                (
+                    <>
+                    {['admin', 'supervisor'].includes(role) ? (
+
+                <>
+                <th>Property ID</th>
+                <th>Date Assigned</th>
+                <th>Assigned To</th>
+                <th>Assigned By</th>
+                <th>Status</th> 
+                </>
+                    )
+                    :
+                    (
+                    <>
+                <th>Property ID</th>
+                <th>Date Assigned</th>
+                <th>Assigned To(you)</th>
+                <th>Assigned By</th>
+                <th>Status</th>
+                    </>
+                    )
+                        
+                    }
+                    </>
+                )
+            }
+                
             </tr>
         </thead>
         <tbody>
-            {Array.isArray(tasksToDisplay) && tasksToDisplay.map(task =>(
+            {onDashboard && Array.isArray(tasksToDisplay) ? tasksToDisplay.map(task =>(
                 <tr key={task._id}>
                     <td>{task.property?.propertyId}</td>
                     <td>{task.updatedAt.split('T')[0]}</td>
                     <td>{task.assignedTo?.fullName}</td>
+                    <td>{task.assignedBy?.fullName}</td>
                     <td>
                         <span>
                             {task.status}
@@ -151,11 +236,114 @@ return(
                         </span>
                     </td>
                 </tr>
-            ))
+            )):(
+                <>
+                {['admin', 'supervisor'].includes(role) && Array.isArray(filteredTasks) && filteredTasks.map(task =>
+                    (
+                    <tr key={task._id}>
+                    <td>{task.property?.propertyId}</td>
+                    <td>{task.updatedAt.split('T')[0]}</td>
+                    <td>{task.assignedTo?.fullName}</td>
+                    <td>{task.assignedBy?.fullName}</td>
+                    <td>
+                        <span>
+                            {task.status}
+                            <button onClick={()=> HandleTaskOnClick(task._id)}
+                            className="more-options"
+                            >
+                                :
+                            </button>
+                            {showPopUpId === task._id && (
+                                            <div className='pop-up-div'>
+                                                <button onClick={()=>
+                                                {setShowCommentPopUp(true);
+                                                setShowPopUpId(null);
+                                                }}>Comment</button>
+                                                <button onClick={()=>
+                                                {setShowUpdateStatePopUp(true);
+                                                setShowPopUpId(null);
+                                                }}>
+                                                Update state
+                                                </button>
+                                                <button onClick={()=> {
+                                                        setShowDeletePrompt(true);
+                                                        setShowPopUpId(null);
+                                                 ;
+                                                    }}>Delete Task
+                                                    </button>
+                                                <button onClick={()=>{
+                                                setShowMoreInfo(true);
+                                                setInfoTask(task);
+                                                setShowPopUpId(null);}}>
+                                                More info
+                                                </button>
+                                            </div>
+                                        )}
+                        </span>
+                    </td>
+
+                    
+                    </tr>
+                    )
+                )
+                }
+                {role === 'engineer' && Array.isArray(filteredTasks) && filteredTasks.map(task =>
+                    (
+                    <tr key={task._id}>
+                    <td>{task.property?.propertyId}</td>
+                    <td>{task.updatedAt.split('T')[0]}</td>
+                    <td>{task.assignedTo?.fullName}</td>
+                    <td>{task.assignedBy?.fullName}</td>
+                    <td>
+                        <span>
+                            {task.status}
+                            <button onClick={()=> HandleTaskOnClick(task._id)}
+                            className="more-options"
+                            >
+                                :
+                            </button>
+                            {showPopUpId === task._id && (
+                                            <div className='pop-up-div'>
+                                                <button onClick={()=>
+                                                {setShowCommentPopUp(true);
+                                                setShowPopUpId(null);
+                                                }}>Comment</button>
+                                                <button onClick={()=>
+                                                {setShowUpdateStatePopUp(true);
+                                                setShowPopUpId(null);
+                                                }}>
+                                                Update state
+                                                </button>
+                                                <button onClick={()=> {
+                                                        setShowDeletePrompt(true);
+                                                        setShowPopUpId(null);
+                                                 ;
+                                                    }}>Delete Task
+                                                    </button>
+                                                <button onClick={()=>{
+                                                setShowMoreInfo(true);
+                                                setInfoTask(task);
+                                                setShowPopUpId(null);}}>
+                                                More info
+                                                </button>
+                                            </div>
+                                        )}
+                        </span>
+                    </td>
+
+                    
+                    </tr>
+                    )
+                )
+
+                }
+                </>
+
+            )
             }
         </tbody>
     </table>
-    {allTasks.length > 5 && onDashboard && (
+    {allTasks.length > 5 && onDashboard && ['admin', 'supervisor'].includes(role)(
   <>
   <Link to='/portal/tasks' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
   </>
@@ -175,7 +363,7 @@ return(
             <option value="">Select status</option>
             <option value='in_progress'>In progress</option>
             <option value='pending'>Pending</option>
-            <option value='fixed'>Fixed</option>
+            <option value='fixed'>Completed</option>
             <option value='cannot_fix'>Cannot Fix</option>
           </select>
           <input type="submit"
@@ -230,43 +418,52 @@ return(
         <>
         <div className='form-overlay'>
             <div className='confirm-delete'>
-            <p>
+
                 <button onClick={()=> setShowMoreInfo(false)}
                     className='close-pop-up-button'>X</button>
-            </p>
-
-                <p className="property-id">
-                    {infoTask.property.propertyId}
-
+            {['admin', 'supervisor'].includes(role) &&(
+                <>
+                <p className="property-id">{infoTask.property.propertyId}</p>
+                <p><span className="show-more-title">Type:</span>
+                {infoTask.property.type}
                 </p>
+                <p><span className="show-more-title">Address:</span>
+                    {infoTask.property.location.address}</p>
+                <p><span className="show-more-title">Description:</span>
+                    {infoTask.report.description}</p>
+                <p><span className="show-more-title">Status:</span>
+                    {infoTask.status}</p>
+                <p> <span className="show-more-title">Assigned to:</span>
+                    {infoTask.assignedTo.fullName}</p>
+                <p> <span className="show-more-title">Date Assigned:</span>
+                    {infoTask.updatedAt.split('T')[0]}</p>
                 <p>
-                    <span className="show-more-title">Type:</span>
-                     {infoTask.property.type}
-                    </p>
-                <p>
-                    <span className="show-more-title">Address:</span>
-                     {infoTask.property.location.address}
-                    </p>
-                <p>
-                    <span className="show-more-title">Description:</span> 
-                    {infoTask.report.description}
-                    </p>
-                <p>
-                    <span className="show-more-title">Status:</span> 
-                    {infoTask.status}
-                    </p>
-                <p>
-                    <span className="show-more-title">Assigned by:</span>
-                     {infoTask.assignedBy.fullName}
-                    </p>
-                <p>
-                    <span className="show-more-title">Assigned to:</span> 
-                    {infoTask.assignedTo.fullName}
-                    </p>
-                <p>
-                    <span className="show-more-title">Date Assigned:</span> 
-                    {infoTask.updatedAt.split('T')[0]}
-                    </p>
+                    <Link
+                to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}
+                target="_blank" >
+                Get directions to property
+                </Link>
+                </p>
+                </>
+            )
+
+            }
+            {showMoreInfo && role === 'engineer' && (
+                <>
+                <p className="property-id">{infoTask.property.propertyId}</p>
+                <p><span className="show-more-title">Type:</span> 
+                {infoTask.property.type}.
+                </p>
+                <p><span className="show-more-title">Address:</span>
+                    {infoTask.property.location.address}.</p>
+                <p><span className="show-more-title">Description:</span>
+                    {infoTask.report.description}.</p>
+                <p><span className="show-more-title">Status:</span>
+                    {infoTask.status}.</p>
+                <p> <span className="show-more-title">Assigned by:</span>
+                    {infoTask.assignedBy.fullName}.</p>
+                <p> <span className="show-more-title">Date Assigned:</span>
+                    {infoTask.updatedAt.split('T')[0]}.</p>
                 <p>
                     <Link
                 to ={`https://www.google.com/maps?q=${infoTask.property.location.coordinates.lat},${infoTask.property.location.coordinates.lng}`}
@@ -274,13 +471,16 @@ return(
                 Get directions to property
                 </Link>
                 </p>
-
+                </>
+            )
+            }
         </div>
 
         </div>
         </>
     )
 }
+
 
     </>
 )
