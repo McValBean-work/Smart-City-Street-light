@@ -11,8 +11,10 @@ export default function PropertyTable(){
   const location = useLocation();
   const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
   const [properties, setProperties] = useState([]);
+  const [filteredProperties ,setFilteredProperties] = useState([]);
   const [loadingToast, setLoadingToast] = useState(false);
-  const propertiesToDisplay = onDashboard ? properties.slice(-5) : properties;
+  const propertiesToDisplay = onDashboard ? properties.slice(-5) : filteredProperties;
+
   const [showPopUpId, setShowPopUpId] = useState(null);
   const [currentProperty, setCurrentProperty] = useState();
   const [showMoreInfoPopUp, setShowMoreInfoPopUp] = useState(false);
@@ -20,7 +22,7 @@ export default function PropertyTable(){
   const [showUpdatePopUp, setShowUpdatePopUp] = useState(false);
   const [updatedState, setUpdatedState]= useState({ state:null });
   const [filterText, setFilterText] = useState('');
-  const [filteredProperties ,setFilteredProperties] = useState([]);
+  
 
   async function getProperties(){
     setLoadingToast(true);
@@ -44,7 +46,7 @@ const res = await api.get( "api/properties");
   },[]);
 
  useEffect(() => {
-  if (filterText && ['streetlights', 'benches', 'garbage_bins'].includes(filterText)) {
+  if (filterText && ['streetlight', 'bench', 'garbage-bin'].includes(filterText)) {
     setFilteredProperties(properties.filter(property => property.type === filterText));
   } else if(filterText && filterText == 'state') {
     setFilteredProperties(properties.filter(property => property.state === filterText));
@@ -118,13 +120,14 @@ const res = await api.get( "api/properties");
         onChange={(e)=> setFilterText(e.target.value)}
         className="filter-select">
           <option value="all_properties">All Properties</option>
-          <option value="streetlights">Streetlights</option>
-          <option value="garbage_bins">Garbage Bins</option>
-          <option value="benches">Benches</option>
+          <option value="streetlight">Streetlights</option>
+          <option value="garbage-bin">Garbage Bins</option>
+          <option value="bench">Benches</option>
         </select>
+        {filteredProperties.length}
         
         </>)}
-     {filteredProperties.length}</h1>
+     </h1>
     <table>
       <thead>
         <tr>
@@ -139,7 +142,7 @@ const res = await api.get( "api/properties");
         {loadingToast && (
           <span className='loading-span'>Loading....</span>
         ) }
-        {Array.isArray(filteredProperties) && filteredProperties.map(property =>(
+        {Array.isArray(propertiesToDisplay) && propertiesToDisplay.map(property =>(
           <tr key={property._id}>
             <td>{property.propertyId}</td>
             <td>{property.type}</td>

@@ -102,6 +102,10 @@ function SideBar(){
                 <FontAwesomeIcon icon={faListCheck}  className='sidebar-icon' />
                 <span>Tasks</span>
                 </NavLink>
+                <NavLink to="/portal/properties" title="properties" className={({ isActive })=> isActive ? 'sidebar-link active' : 'sidebar-link'}>
+                <FontAwesomeIcon icon={faLocationDot}  className='sidebar-icon'  />
+                <span>Properties</span>
+                </NavLink>
             </div>
             <div className="sidebar-links">
 

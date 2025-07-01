@@ -57,16 +57,17 @@ export function UserSearchBar(){
 
   function UserTable(){
         const [allUsers , setAllUsers] = useState([]);
+        const [filteredUsers ,setFilteredUsers] = useState([]);
         const location = useLocation();
         const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is
-        const usersToDisplay = onDashboard ? allUsers.slice(-5) : allUsers;
+        const usersToDisplay = onDashboard ? allUsers.slice(-5) : filteredUsers;
         const [activeUserId , setActiveUserId] = useState(null);
         const [userToDelete, setUserToDelete] = useState(null);
         const [showPopUpId, setShowPopUpId] = useState(null);
         const [showDeletePrompt, setShowDeletePrompt] = useState(null);
         const [showMoreInfoUser, setShowMoreInfoUser] = useState(null);
         const [filterText, setFilterText] = useState('');
-        const [filteredUsers ,setFilteredUsers] = useState([]);
+        
         
        console.log(filteredUsers)
         
@@ -139,7 +140,7 @@ export function UserSearchBar(){
        
         <div className="table-div">
 
-        <h1>{onDashboard ? `Recent Users:` 
+        <h1>{onDashboard ? `Latest User: ${usersToDisplay.length}`
         : (
         <>
         <select name='filterText'
@@ -151,16 +152,16 @@ export function UserSearchBar(){
           <option value="supervisor">Supervisors</option>
           <option value="engineer">Engineers</option>
         </select>
-        
-        </>)}{filteredUsers.length}</h1>
+         {filteredUsers.length}
+        </>)}</h1>
         <table>
             <tr>
                 <th>Role</th>
                 <th>FullName</th>
                 <th>Email Address</th>
             </tr>
-             { Array.isArray(filteredUsers) &&
-       filteredUsers.map((user)=>(
+             {Array.isArray(usersToDisplay) &&
+       usersToDisplay.map((user)=>(
         <tr key={user._id} id={user._id}>
             <td>{user.role}</td>
             <td>{user.fullName}</td>

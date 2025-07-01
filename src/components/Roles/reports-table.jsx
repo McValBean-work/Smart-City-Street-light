@@ -19,10 +19,11 @@ export default function ReportsTable(){
     const [newTask, setNewTask] = useState(InitialNewTaskState);
     const [allReports, setAllReports] = useState([]);
     const location = useLocation();
-    const onDashboard = location.pathname === "/portal/dashboard"; // or whatever your dashboard path is         
+    const onDashboard = location.pathname === "/portal/dashboard"; 
+    const [filteredReports, setFilteredReports] = useState([]);         
   const [loadingToast, setLoadingToast] = useState(false);
-  const reportsToDisplay = onDashboard ? allReports.slice(-5) : allReports;
-    const [filteredReports, setFilteredReports] = useState('');
+  const reportsToDisplay = onDashboard ? allReports.slice(-5) : filteredReports;
+    
     const [filterText, setFilterText] = useState('');
     const [showAssignTaskForm, setShowAssignTaskForm] = useState(false);
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -63,19 +64,44 @@ export default function ReportsTable(){
                 console.log(allTasks);
          },[]);
 
+         async function getProperties(){
+             setLoadingToast(true);
+             try{
+         const res = await api.get( "api/properties");
+             setAllProperties(res.data);
+             console.log(res.data);
+             }
+             catch(error){
+               toast.error(error?.response?.data?.message || 'Error fetching properties')
+             }
+             finally{
+               setLoadingToast(false);
+             }
+             
+           }
+           useEffect(()=>{
+               getProperties();
+               console.log("use effect get properties called");
+             },[]);
+
         useEffect(() => {
           if (filterText && filterText =='assigned')  {
-            const assignedReports = allTasks.map(task => task.report);
-  setFilteredReports(allReports.filter(report => assignedReports.includes(report)));
+            const assignedReportsId = allTasks.map(task => task.report._id);
+  setFilteredReports(allReports.filter(report => assignedReportsId.includes(report._id)));
 } else if (filterText === 'not_assigned') {
-  const assignedReports = allTasks.map(task => task.report);
-  setFilteredReports(allReports.filter(report => !assignedReports.includes(report)));
+  const assignedReportsId = allTasks.map(task => task.report._id);
+  setFilteredReports(allReports.filter(report => !assignedReportsId.includes(report._id)));
+} 
+else if (filterText === 'resolved') {
+  const resolvedReportsId = allTasks.map(task => task.report._id);
+  setFilteredReports(allReports.filter(report => resolvedReportsId.includes(report._id)));
 } else {
-            setFilteredReports(allReports);
+        setFilteredReports(allReports);
           }
         }, [filterText, allReports]);
 
         function handleReportOptionsClick(report,reportId, propertyId) {
+          console.log(allProperties)
     console.log(report);
     console.log(propertyId);
     console.log(reportId);
@@ -94,9 +120,10 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
      async function handleAssignTaskSubmit(e) {
         e.preventDefault();
         console.log(activeReportId);
+        console.log(newTask);
     
         try {
-            setNewTask({
+          setNewTask({
           reportId: newTask.reportId,
           propertyId: newTask.propertyId,
           engineerId: newTask.engineerId,
@@ -146,9 +173,10 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         value={filterText}
         onChange={(e)=> setFilterText(e.target.value)}
         className="filter-select">
-          <option value="all_reports" selected>All Reports</option>
+          <option value="all_reports">All Reports</option>
           <option value="assigned">Assigned</option>
           <option value="not_assigned">Not Assigned</option>
+          <option value="resolved">Resolved</option>
         </select>
         
         </>)}

@@ -12,6 +12,7 @@ import { faCircleXmark} from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 import { toast } from "react-toastify";
 import { Link } from 'react-router-dom';
 import NewGeolocationPropertyForm from '../Roles/supervisor/create-property-geolocation-form'
+import getRole from "../Authentication-page/auth";
 
 
 
@@ -33,6 +34,7 @@ const [currentPropertyId, setCurrentPropertyId] = useState(null);
 const [updatedState, setUpdatedState] = useState({
   state:null
 })
+const role = getRole();
 
 
 
@@ -201,7 +203,7 @@ finally{
       mapContainerClassName="map-container"
       center={center}
       zoom={mapZoom}
-      onClick={MapOnclick}
+      onClick={ ['admin', 'supervisor'].includes(role) && MapOnclick}
       options={
         {
         draggable: true,
@@ -229,7 +231,7 @@ finally{
                 lat:property.location.coordinates.lat, 
                 lng:property.location.coordinates.lng
               }}
-              radius={{scaledSize: new google.maps.Size(40,40)}}
+              radius={200}
               options={{
                 fillColor: property.state === 'working' ? 'green' : 'red',
                 fillOpacity:0.6,
@@ -275,10 +277,10 @@ zIndex={1}
                         className='update-btn'>
                           Update
                         </button>
-                        <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}
+                        {['admin','supervisor'].includes(role) && <button onClick={()=> {HandleDeleteButtonOnClick(property._id)}}
                           className="delete-btn">
                         Delete
-                        </button>
+                        </button>}
                     </p>
                       <p><Link to ={`https://www.google.com/maps?q=${property.location.coordinates.lat},${property.location.coordinates.lng}`} target='_blank' >Get directions to property</Link></p>
                         </>
@@ -345,7 +347,7 @@ zIndex={1}
     </>
   )
 }
-      {ShowNewPropertyForm && (<MarkerF position={NewProperty} icon={{ url: streetLightIcon}} />)}
+      {ShowNewPropertyForm && (<MarkerF position={NewProperty} />)}
     </GoogleMap>
     {ShowNewPropertyForm && (
       <>
