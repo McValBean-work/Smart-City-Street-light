@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 import api from "../api/axios-instance";
 import { toast } from "react-toastify";
 import GetUsers from "./get-users";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function ReportsTable(){
   
@@ -88,12 +91,17 @@ export default function ReportsTable(){
           if (filterText && filterText =='assigned')  {
             const assignedReportsId = allTasks.map(task => task.report._id);
   setFilteredReports(allReports.filter(report => assignedReportsId.includes(report._id)));
-} else if (filterText === 'not_assigned') {
+} else if (filterText === 'unassigned') {
   const assignedReportsId = allTasks.map(task => task.report._id);
   setFilteredReports(allReports.filter(report => !assignedReportsId.includes(report._id)));
 } 
 else if (filterText === 'resolved') {
-  const resolvedReportsId = allTasks.map(task => task.report._id);
+  const resolvedReportsId = allTasks.filter(task => task.status === "fixed").map(task => task.report._id);
+  console.log(resolvedReportsId);
+  setFilteredReports(allReports.filter(report => resolvedReportsId.includes(report._id)));
+}else if (filterText === 'unresolved') {
+  const resolvedReportsId = allTasks.filter(task => task.status !== "fixed").map(task => task.report._id);
+  console.log(resolvedReportsId);
   setFilteredReports(allReports.filter(report => resolvedReportsId.includes(report._id)));
 } else {
         setFilteredReports(allReports);
@@ -175,11 +183,14 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
         className="filter-select">
           <option value="all_reports">All Reports</option>
           <option value="assigned">Assigned</option>
-          <option value="not_assigned">Not Assigned</option>
+          <option value="unassigned">Unassigned</option>
           <option value="resolved">Resolved</option>
+          <option value="unresolved">Unresolved</option>
         </select>
         
-        </>)}
+        </>
+      )
+      }
         </h1>
             <table>
                   <thead>
@@ -190,10 +201,14 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(filteredReports) && filteredReports.map(report=> (
+                        {Array.isArray(reportsToDisplay) && reportsToDisplay.map(report=> (
                             <tr key={report._id}>
                                 <td>{report.propertyId}</td>
-                                <td>{report.submittedAt.split('T')[0]}</td>
+                                <td>{new Date(report.submittedAt.split('T')[0]).toLocaleDateString('en-us', {
+                                   year: "numeric",
+  month: "short",
+  day: "2-digit"
+                                })}</td>
                                 <td>
                                     <span>
                                         {report.description}
@@ -307,6 +322,11 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
 
     </div>
   )}
+  {onDashboard && allReports.length > 5 && (
+  
+          <Link to='/portal/reports' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
+        )
+        } 
             </div>
             </>
         )

@@ -145,7 +145,7 @@ const res = await api.get( "api/properties");
         {Array.isArray(propertiesToDisplay) && propertiesToDisplay.map(property =>(
           <tr key={property._id}>
             <td>{property.propertyId}</td>
-            <td>{property.type}</td>
+            <td>{property.type.replace('-',' ')}</td>
             <td>{property.location.address}</td>
             <td>
               <span>{property.state}

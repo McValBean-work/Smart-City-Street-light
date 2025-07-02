@@ -68,6 +68,13 @@ function HandleMarkerClick(children){
   setSelectedMarker(children);
 }
 
+function getRadiusForZoom(zoom) {
+  const baseZoom = 15;
+  const baseRadius = 200; // radius in meters
+  return baseRadius * Math.pow(2, baseZoom - zoom);
+}
+
+
 async function HandleUpdateStateOnClick(propertyId){
   setCurrentPropertyId(propertyId);
   console.log(propertyId)
@@ -203,6 +210,10 @@ finally{
       mapContainerClassName="map-container"
       center={center}
       zoom={mapZoom}
+      onZoomChanged={() => {
+    const newZoom = mapRef.current?.getZoom();
+    if (newZoom !== undefined) setMapZoom(newZoom);
+  }}
       onClick={ ['admin', 'supervisor'].includes(role) && MapOnclick}
       options={
         {
@@ -231,7 +242,7 @@ finally{
                 lat:property.location.coordinates.lat, 
                 lng:property.location.coordinates.lng
               }}
-              radius={200}
+              radius={getRadiusForZoom(mapZoom)}
               options={{
                 fillColor: property.state === 'working' ? 'green' : 'red',
                 fillOpacity:0.6,
