@@ -123,9 +123,7 @@ const res = await api.get( "api/properties");
           <option value="streetlight">Streetlights</option>
           <option value="garbage-bin">Garbage Bins</option>
           <option value="bench">Benches</option>
-        </select>
-        {filteredProperties.length}
-        
+        </select>      
         </>)}
      </h1>
     <table>
@@ -153,6 +151,7 @@ const res = await api.get( "api/properties");
                 className='more-options'>:</button>
                 {showPopUpId === property._id && (
                                     <div className='pop-up-div'>
+                                    
                                       <button onClick={() => {setShowUpdatePopUp(true);
                                         setShowPopUpId(null);
                                       setCurrentProperty(property)}
@@ -268,6 +267,13 @@ const res = await api.get( "api/properties");
         <Link to='/portal/properties' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
       )
       } 
+      {!onDashboard && (
+          <>
+          {filteredProperties.length} out of {properties.length}
+          </>
+        )}
+      
+      
     </div>
   )
 }

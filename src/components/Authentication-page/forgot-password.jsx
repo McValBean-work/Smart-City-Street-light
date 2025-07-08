@@ -32,7 +32,7 @@ function ForgotPasswordForm(){
     return(
       <>
       <div className="authentication-page-grid">
-      <div className="landing-page-form-div">
+      <div className="authentication-form-div">
         <ForgotPasswordForm />
       </div>
       <AuthenticationHero />

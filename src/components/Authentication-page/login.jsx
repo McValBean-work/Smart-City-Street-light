@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEye , faEyeSlash} from "@fortawesome/free-regular-svg-icons"
 import { toast } from "react-toastify";
+//import '../../index.jsx'
 
 
 
@@ -52,10 +53,10 @@ function LoginForm(){
 }
     return(
       <>
-      <div className='Authentication-page-form-div'>
-      <h1 className="authentication-page-header">OmniStreet Lights</h1>
+      <div className="authentication-page-form-div">
+        <form action="" onSubmit={LoginSubmit} id="loginForm" className="authentication-page-form">
+        <h1>Smart City Platform</h1>
       <h2>Please enter your account details</h2>
-      <form action="" onSubmit={LoginSubmit} id="loginForm" className="authentication-page-form">
       <div className="form-data">
       <label htmlFor="loginEmail">Email</label>
       <input type="email"
@@ -69,7 +70,7 @@ function LoginForm(){
       <label htmlFor="loginPassword">Password</label>
       <div className='show-password-div'>
         <input
-      type={ showPassword ? 'text' : "password" }
+      type={showPassword ? 'text' : 'password'}
       id="loginPassword"
       value={loginCredentials.password}
       onChange={ (e) =>
@@ -84,30 +85,25 @@ function LoginForm(){
                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}  />
               </button>
       </div>
-      <Link to="/portalForgot-password" className='form-links'>Forgot password?</Link>
+      <Link to="/forgot-password" className='form-links'>Forgot password?</Link>
       <input type="submit" value={isLoggingIn? 'logging in...' : 'login'} className="authentication-input submit" />
        </div>
     </form>
-    </div>
+
+      </div>
     </>
     )
-  }
-  function AuthenticationHero(){
-    return(
-        <div className="authentication-page-hero-div">
-          <div className="authentication-page-hero"></div>
-        </div>
-    );
   }
 
   function LoginPage(){
       return(
           <>
-          <div className="authentication-page-grid">
-          <div className="landing-page-form-div">
+          <div className="authentication-page-form-div">
           <LoginForm />
+          <div className='flex bg-blue-600 text-white font-medium px-30 w-100 m-60'>
+            hi nigga
+
           </div>
-          <AuthenticationHero />
           </div>
           </>
       );

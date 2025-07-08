@@ -327,6 +327,11 @@ setNewTask(prev => ({ ...prev, reportId, propertyId: property?._id }));
           <Link to='/portal/reports' className="view-more-link"> View more <FontAwesomeIcon icon={faArrowRight} /></Link>
         )
         } 
+        {!onDashboard && (
+          <>
+          {filteredReports.length} out of {allReports.length}
+          </>
+        )}
             </div>
             </>
         )

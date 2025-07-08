@@ -49,7 +49,7 @@ finally{
     return(
       <>
       <form id="SignUpForm" onSubmit={SignUpSubmit} className="authentication-page-form">
-      <h1 className="authentication-page-header">Welcome to Omni Street Lights</h1>
+      <h1>Welcome to Omni Street Lights</h1>
       <h2>Add New User</h2>
       <div className="form-data">
       <label htmlFor="role">Role:</label>
@@ -112,22 +112,12 @@ finally{
     )
 
   }
-  function AuthenticationHero(){
-    return(
-        <div className="authentication-page-hero-div">
-          <div className="authentication-page-hero"></div>
-        </div>
-    );
-  }
 
   function SignUpPage(){
     return(
       <>
-      <div className="authentication-page-grid">
-      <div className="landing-page-form-div">
+      <div className="authentication-form-div">
         <SignUpForm />
-      </div>
-      <AuthenticationHero />
       </div>
       </>
     );

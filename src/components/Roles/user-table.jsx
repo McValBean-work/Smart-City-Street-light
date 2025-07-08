@@ -74,7 +74,7 @@ export function UserSearchBar(){
         const [userDeleteEmail, setUserDeleteEmail] = useState({
             email:null
         });
-        const totalUsers = allUsers.length;
+        
 
         async function getUsers() {
                 const response = await api.get("api/users");
@@ -140,7 +140,7 @@ export function UserSearchBar(){
        
         <div className="table-div">
 
-        <h1>{onDashboard ? `Latest User: ${usersToDisplay.length}`
+        <h1>{onDashboard ? `Latest Users`
         : (
         <>
         <select name='filterText'
@@ -152,7 +152,6 @@ export function UserSearchBar(){
           <option value="supervisor">Supervisors</option>
           <option value="engineer">Engineers</option>
         </select>
-         {filteredUsers.length}
         </>)}</h1>
         <table>
             <tr>
@@ -203,6 +202,11 @@ export function UserSearchBar(){
       
           
           )}
+          {!onDashboard && (
+          <>
+          {filteredUsers.length} out of {allUsers.length}
+          </>
+        )}
         
         </div>
         {showDeletePrompt && (
@@ -245,6 +249,8 @@ export function UserSearchBar(){
         </div>
 
       )}
+      
+      
       
         </>
     )

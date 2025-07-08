@@ -132,7 +132,7 @@ useEffect(() => {
 return(
     <>
     <div className="table-div">
-        <h1>{onDashboard ? `Latest tasks: ` : (
+        <h1>{onDashboard ? `Latest tasks ` : (
         <>
         <select name='filterText'
         value={filterText}
@@ -148,7 +148,7 @@ return(
           <option value="cannot_fix">Cannot Fix</option>
         </select>
         
-        </>)} {filteredTasks.length}</h1>
+        </>)}</h1>
     <table>
         <thead>
             <tr>
@@ -350,6 +350,11 @@ return(
 )
 
 }
+{!onDashboard && (
+          <>
+          {filteredTasks.length} out of {allTasks.length}
+          </>
+        )}
     </div>
 {showUpdateStatePopUp && (
                 <>
@@ -480,6 +485,8 @@ return(
         </>
     )
 }
+
+      
 
 
     </>
