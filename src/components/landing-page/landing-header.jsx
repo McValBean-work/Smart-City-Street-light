@@ -14,8 +14,8 @@ function NavBar(){
             <NavLink to="/landing-page" className='main-icon-link'>
             <img src={MainIcon} alt="omni street light" className="main-icon" />
             </NavLink>
-            <button onClick={() => setShowMobileMenu(true)}>
-                <FontAwesomeIcon icon={faBars} className='menubar'/>
+            <button onClick={() => setShowMobileMenu( prev => !prev )}>
+                <FontAwesomeIcon icon={faBars} className='menubar' />
             </button>
             
             <div>
@@ -29,8 +29,7 @@ function NavBar(){
             </div>
         </nav>
         { showMobileMenu && (
-            <div className=" backdrop-blur-4 z-100000 w-full min-h-full absolute">
-            <div className="flex-col p-4 w-full z-100001 absolute min-h-full bg-red-500 text-green-500 border-red-500">
+            <div className="flex-col p-4 w-full z-10 min-h-lvh bg-red-500 text-green-500 border-red-500 absolute">
             <div className='flex justify-between p-4'>
                 <img src={MainIcon} alt="" className="w-1/2 flex"/>
                 <button onClick={()=> setShowMobileMenu(false)}>
@@ -45,7 +44,6 @@ function NavBar(){
             </div>
             </div>
             
-            </div>
         )
 
         }
