@@ -8,13 +8,11 @@ import Footer from '../layout/footer.jsx'
 function HomePage(){
     return(
         <>
-        <div className='user-grid-layout'>
         <LandingHeader />
         <Main>
         <ReportForm />
         </Main>
         <Footer />
-        </div>
         </>
     )
 }
