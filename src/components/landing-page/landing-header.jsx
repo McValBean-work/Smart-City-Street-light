@@ -10,7 +10,7 @@ function NavBar(){
     
     return(
         <>
-        <nav className="landing-navbar">
+        <nav className="flex p-4 h-max">
             <NavLink to="/landing-page" className='main-icon-link'>
             <img src={MainIcon} alt="omni street light" className="main-icon" />
             </NavLink>
@@ -29,7 +29,7 @@ function NavBar(){
             </div>
         </nav>
         { showMobileMenu && (
-            <div className="flex-col p-4 w-full z-10 min-h-lvh bg-red-500 text-green-500 border-red-500 absolute">
+            <div className="flex flex-col p-10 w-full z-10000 min-h-1vh  bg-neutral-300 text-green-500 border-red-500 absolute" >
             <div className='flex justify-between p-4'>
                 <img src={MainIcon} alt="" className="w-1/2 flex"/>
                 <button onClick={()=> setShowMobileMenu(false)}>

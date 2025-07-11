@@ -10,7 +10,7 @@ export default function UserManagementPage (){
                 <TopSection />
                 <div className='dashboard-body'>
                     <SideBar />
-                    <Main className='client-main'>
+                    <Main className='flex flex-col p-1 bg-neutral-50 justify-center'>
                         <UserTable />
                     </Main>
                 </div>
