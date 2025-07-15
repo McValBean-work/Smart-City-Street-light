@@ -10,28 +10,28 @@ function NavBar(){
     
     return(
         <>
-        <nav className="flex p-4 h-max">
-            <NavLink to="/landing-page" className='main-icon-link'>
-            <img src={MainIcon} alt="omni street light" className="main-icon" />
-            </NavLink>
-            <button onClick={() => setShowMobileMenu( prev => !prev )}>
-                <FontAwesomeIcon icon={faBars} className='menubar' />
+        <nav className="flex px-5 w-screen h-max justify-between items-center">
+            <NavLink to="/landing-page" className='w-1/3 md:w-1/4 h-min p-0 m-0'>
+            <img src={MainIcon} alt="Smart City Logo" className="w-full h-fit" />
+            </NavLink>            
+            <div>
+                 <button onClick={() => setShowMobileMenu( prev => !prev )}
+                className='flex sm:hidden w-full h-fit'>
+                <FontAwesomeIcon icon={faBars}  />
             </button>
             
-            <div>
-            
             </div>
-            <div className="user-nav-links">
+            <div className="hidden sm:flex p-4 h-full w-min">
                 <NavLink to="/" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link' }>Home</NavLink>
                 <NavLink to="/about" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>About</NavLink>
                 <NavLink to="/contact-us" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>Contact Us</NavLink>
                 <NavLink to="/faqs" className={({ isActive })=> isActive ? 'user-nav-link active' : 'user-nav-link'}>FAQs</NavLink>
             </div>
         </nav>
-        { showMobileMenu && (
-            <div className="flex flex-col p-10 w-full z-10000 min-h-1vh  bg-neutral-300 text-green-500 border-red-500 absolute" >
-            <div className='flex justify-between p-4'>
-                <img src={MainIcon} alt="" className="w-1/2 flex"/>
+        {showMobileMenu && (
+            <div className="transition-all flex flex-col min-h-screen min-w-screen z-10000 bg-neutral-300 text-green-500 border-red-500 absolute" >
+            <div className='flex w-full justify-between p-8 mb-10'>   
+                <img src={MainIcon} alt="" className="w-1/2 h-min flex"/>
                 <button onClick={()=> setShowMobileMenu(false)}>
                     <FontAwesomeIcon icon={faCircleXmark} className='flex w-fit'/>
                 </button>
