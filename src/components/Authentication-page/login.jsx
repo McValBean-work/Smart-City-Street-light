@@ -53,11 +53,11 @@ function LoginForm(){
 }
     return(
       <>
-      <div className="authentication-page-form-div">
-        <form action="" onSubmit={LoginSubmit} id="loginForm" className="authentication-page-form">
+      <div className="flex flex-col p-4 justify-center items-center">
+        <form action="" onSubmit={LoginSubmit} id="loginForm" className="flex flex-col p-888888 w-full h-full justify-cneter items-center">
         <h1>Smart City Platform</h1>
       <h2>Please enter your account details</h2>
-      <div className="form-data">
+      <div className="">
       <label htmlFor="loginEmail">Email</label>
       <input type="email"
       id="loginEmail"
@@ -100,10 +100,6 @@ function LoginForm(){
           <>
           <div className="authentication-page-form-div">
           <LoginForm />
-          <div className='flex bg-blue-600 text-white font-medium px-30 w-100 m-60'>
-            hi nigga
-
-          </div>
           </div>
           </>
       );
